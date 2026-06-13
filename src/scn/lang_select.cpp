@@ -3,6 +3,7 @@
 #include "scn/scene_context.h"
 #include "scn/scene_stack.h"
 #include "ut/configs.h"
+#include "ut/enum_utils.h"
 
 #include <bn_colors.h>
 #include <bn_fixed.h>
@@ -23,7 +24,7 @@ constexpr auto LANG_NAMES = ut::get_config_entity(ldtk::gen::entity_ident::syste
                                 .get_field(ldtk::gen::entity_field_ident::ENTITY_system_texts_FIELD_lang_names)
                                 .get<bn::span<const bn::string_view>>();
 
-static_assert(LANG_NAMES.size() == (int)ldtk::gen::lang::max_count,
+static_assert(LANG_NAMES.size() == ut::size_of_enum<ldtk::gen::lang>(),
               "language name is missing in system_texts.lang_names");
 
 } // namespace
