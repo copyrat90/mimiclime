@@ -51,6 +51,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.c4e50155-5877-47da-94c0-69027dc6d016.Frames.06d96919-41d9-4801-84dd-55d29fd1af3f.CollisionInfo]
+[Animations.c4e50155-5877-47da-94c0-69027dc6d016.Frames.06d96919-41d9-4801-84dd-55d29fd1af3f.CollisionInfo.9497417f-e36f-450a-a65c-8f5aa024fc99]
+ID = "9497417f-e36f-450a-a65c-8f5aa024fc99"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.c4e50155-5877-47da-94c0-69027dc6d016.Frames.06d96919-41d9-4801-84dd-55d29fd1af3f.CollisionInfo.9497417f-e36f-450a-a65c-8f5aa024fc99.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.529eb6ce-4522-4c54-a567-75bb791faef8]
 ID = "529eb6ce-4522-4c54-a567-75bb791faef8"
 Name = "walk"
@@ -395,6 +412,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.bc00296c-c760-4f7d-ba8a-2965c6b47add.CollisionInfo]
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.bc00296c-c760-4f7d-ba8a-2965c6b47add.CollisionInfo.8b3069d3-c432-47fd-a772-ed651bc35891]
+ID = "8b3069d3-c432-47fd-a772-ed651bc35891"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.bc00296c-c760-4f7d-ba8a-2965c6b47add.CollisionInfo.8b3069d3-c432-47fd-a772-ed651bc35891.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.869f0dca-0130-4e6a-9707-f146468844eb]
 ID = "869f0dca-0130-4e6a-9707-f146468844eb"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -415,6 +449,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.869f0dca-0130-4e6a-9707-f146468844eb.CollisionInfo]
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.869f0dca-0130-4e6a-9707-f146468844eb.CollisionInfo.9656a222-f050-47ed-b791-181160d942d9]
+ID = "9656a222-f050-47ed-b791-181160d942d9"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.869f0dca-0130-4e6a-9707-f146468844eb.CollisionInfo.9656a222-f050-47ed-b791-181160d942d9.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.6bcb48e2-0106-4e8e-82f8-8d67e75c0154]
 ID = "6bcb48e2-0106-4e8e-82f8-8d67e75c0154"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -435,6 +486,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.6bcb48e2-0106-4e8e-82f8-8d67e75c0154.CollisionInfo]
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.6bcb48e2-0106-4e8e-82f8-8d67e75c0154.CollisionInfo.0af66351-9b9c-41a7-ade1-e6066ecef0de]
+ID = "0af66351-9b9c-41a7-ade1-e6066ecef0de"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.6bcb48e2-0106-4e8e-82f8-8d67e75c0154.CollisionInfo.0af66351-9b9c-41a7-ade1-e6066ecef0de.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.aef0460c-8698-43bf-b708-7e11f1ec7ebf]
 ID = "aef0460c-8698-43bf-b708-7e11f1ec7ebf"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -455,6 +523,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.aef0460c-8698-43bf-b708-7e11f1ec7ebf.CollisionInfo]
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.aef0460c-8698-43bf-b708-7e11f1ec7ebf.CollisionInfo.3876fdde-e080-4bd4-9b93-5c009daad81c]
+ID = "3876fdde-e080-4bd4-9b93-5c009daad81c"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.aef0460c-8698-43bf-b708-7e11f1ec7ebf.CollisionInfo.3876fdde-e080-4bd4-9b93-5c009daad81c.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.08bfc8e6-2b43-413a-95ba-480b1a71e046]
 ID = "08bfc8e6-2b43-413a-95ba-480b1a71e046"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -475,6 +560,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.08bfc8e6-2b43-413a-95ba-480b1a71e046.CollisionInfo]
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.08bfc8e6-2b43-413a-95ba-480b1a71e046.CollisionInfo.a0fcdc37-9ab5-4fa0-b0b6-75a39b311274]
+ID = "a0fcdc37-9ab5-4fa0-b0b6-75a39b311274"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.08bfc8e6-2b43-413a-95ba-480b1a71e046.CollisionInfo.a0fcdc37-9ab5-4fa0-b0b6-75a39b311274.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.a9cd6015-3e54-4050-a5af-91920a20584e]
 ID = "a9cd6015-3e54-4050-a5af-91920a20584e"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -495,6 +597,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.a9cd6015-3e54-4050-a5af-91920a20584e.CollisionInfo]
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.a9cd6015-3e54-4050-a5af-91920a20584e.CollisionInfo.068210ef-614a-4926-9c3b-3d7564be2624]
+ID = "068210ef-614a-4926-9c3b-3d7564be2624"
+Width = 18
+Height = 9
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.a9cd6015-3e54-4050-a5af-91920a20584e.CollisionInfo.068210ef-614a-4926-9c3b-3d7564be2624.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.27e58c6d-794c-46a2-b905-ea906b7e0f7d]
 ID = "27e58c6d-794c-46a2-b905-ea906b7e0f7d"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -515,6 +634,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.27e58c6d-794c-46a2-b905-ea906b7e0f7d.CollisionInfo]
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.27e58c6d-794c-46a2-b905-ea906b7e0f7d.CollisionInfo.5a844010-6052-4079-8f0e-89ea0fea2590]
+ID = "5a844010-6052-4079-8f0e-89ea0fea2590"
+Width = 18
+Height = 9
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.27e58c6d-794c-46a2-b905-ea906b7e0f7d.CollisionInfo.5a844010-6052-4079-8f0e-89ea0fea2590.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.8208371f-251b-435a-88a9-31c725d5abd4]
 ID = "8208371f-251b-435a-88a9-31c725d5abd4"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -535,6 +671,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.8208371f-251b-435a-88a9-31c725d5abd4.CollisionInfo]
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.8208371f-251b-435a-88a9-31c725d5abd4.CollisionInfo.93fd9eff-d793-42c8-9d25-41a964136f17]
+ID = "93fd9eff-d793-42c8-9d25-41a964136f17"
+Width = 18
+Height = 9
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames.8208371f-251b-435a-88a9-31c725d5abd4.CollisionInfo.93fd9eff-d793-42c8-9d25-41a964136f17.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d]
 ID = "2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d"
 Name = "walk_north"
@@ -562,6 +715,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.9220cab1-af78-4dc8-a36f-475397a778b3.CollisionInfo]
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.9220cab1-af78-4dc8-a36f-475397a778b3.CollisionInfo.9e9c096e-cbac-499a-a5c2-af214dcaf055]
+ID = "9e9c096e-cbac-499a-a5c2-af214dcaf055"
+Width = 18
+Height = 9
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.9220cab1-af78-4dc8-a36f-475397a778b3.CollisionInfo.9e9c096e-cbac-499a-a5c2-af214dcaf055.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.6cdabf35-7851-4ece-824e-91d92e45fd03]
 ID = "6cdabf35-7851-4ece-824e-91d92e45fd03"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -582,6 +752,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.6cdabf35-7851-4ece-824e-91d92e45fd03.CollisionInfo]
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.6cdabf35-7851-4ece-824e-91d92e45fd03.CollisionInfo.82dfddde-e83b-40e5-997e-01249d04e589]
+ID = "82dfddde-e83b-40e5-997e-01249d04e589"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.6cdabf35-7851-4ece-824e-91d92e45fd03.CollisionInfo.82dfddde-e83b-40e5-997e-01249d04e589.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.34daca3b-9cb1-4ce4-9869-2d0bd8efc242]
 ID = "34daca3b-9cb1-4ce4-9869-2d0bd8efc242"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -602,6 +789,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.34daca3b-9cb1-4ce4-9869-2d0bd8efc242.CollisionInfo]
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.34daca3b-9cb1-4ce4-9869-2d0bd8efc242.CollisionInfo.b365233a-0f84-4ee5-8692-196a1117292f]
+ID = "b365233a-0f84-4ee5-8692-196a1117292f"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.34daca3b-9cb1-4ce4-9869-2d0bd8efc242.CollisionInfo.b365233a-0f84-4ee5-8692-196a1117292f.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.12d26d92-3e52-4179-a009-2a1b85625493]
 ID = "12d26d92-3e52-4179-a009-2a1b85625493"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -622,6 +826,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.12d26d92-3e52-4179-a009-2a1b85625493.CollisionInfo]
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.12d26d92-3e52-4179-a009-2a1b85625493.CollisionInfo.b716ad0c-3be2-4136-8d46-67ea89be0ee2]
+ID = "b716ad0c-3be2-4136-8d46-67ea89be0ee2"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.12d26d92-3e52-4179-a009-2a1b85625493.CollisionInfo.b716ad0c-3be2-4136-8d46-67ea89be0ee2.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.4a618e52-be41-4e9f-801d-88947e588c70]
 ID = "4a618e52-be41-4e9f-801d-88947e588c70"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -642,6 +863,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.4a618e52-be41-4e9f-801d-88947e588c70.CollisionInfo]
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.4a618e52-be41-4e9f-801d-88947e588c70.CollisionInfo.91c2f69d-0c85-4004-bf95-add657415176]
+ID = "91c2f69d-0c85-4004-bf95-add657415176"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.4a618e52-be41-4e9f-801d-88947e588c70.CollisionInfo.91c2f69d-0c85-4004-bf95-add657415176.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.c0c477c6-b456-456e-a842-0536e887c953]
 ID = "c0c477c6-b456-456e-a842-0536e887c953"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -662,6 +900,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.c0c477c6-b456-456e-a842-0536e887c953.CollisionInfo]
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.c0c477c6-b456-456e-a842-0536e887c953.CollisionInfo.ffadcd0b-79a4-4375-b219-b5c6c586add6]
+ID = "ffadcd0b-79a4-4375-b219-b5c6c586add6"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.c0c477c6-b456-456e-a842-0536e887c953.CollisionInfo.ffadcd0b-79a4-4375-b219-b5c6c586add6.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.c6cbf15f-2b28-43f2-93ec-7bdc005c7372]
 ID = "c6cbf15f-2b28-43f2-93ec-7bdc005c7372"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -682,6 +937,23 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.c6cbf15f-2b28-43f2-93ec-7bdc005c7372.CollisionInfo]
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.c6cbf15f-2b28-43f2-93ec-7bdc005c7372.CollisionInfo.4924c75d-41a4-499b-8e6e-af3c8eb27fcf]
+ID = "4924c75d-41a4-499b-8e6e-af3c8eb27fcf"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.c6cbf15f-2b28-43f2-93ec-7bdc005c7372.CollisionInfo.4924c75d-41a4-499b-8e6e-af3c8eb27fcf.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.f8d91e53-ae05-4abf-b8e7-591c986bd1de]
 ID = "f8d91e53-ae05-4abf-b8e7-591c986bd1de"
 BankID = "27e147e6-15f0-41a3-acac-7d13ade65eb0"
@@ -702,3 +974,20 @@ ObjectMode = 0
 X = 104.0
 Y = 49.0
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.f8d91e53-ae05-4abf-b8e7-591c986bd1de.CollisionInfo]
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.f8d91e53-ae05-4abf-b8e7-591c986bd1de.CollisionInfo.3bfd4da6-2d00-43d6-b2f8-387253bb10d2]
+ID = "3bfd4da6-2d00-43d6-b2f8-387253bb10d2"
+Width = 18
+Height = 10
+PosX = 111
+PosY = 67
+Mask = 1
+CustomMask = 0
+[Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames.f8d91e53-ae05-4abf-b8e7-591c986bd1de.CollisionInfo.3bfd4da6-2d00-43d6-b2f8-387253bb10d2.Color]
+A = 110
+R = 255
+G = 0
+B = 0
+ScA = 0.4313725531101227
+ScR = 1.0
+ScG = 0.0
+ScB = 0.0
