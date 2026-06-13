@@ -3,6 +3,7 @@
 mimiclime is a top-down exploration game for the Game Boy Advance,\
 where you play as a slime who becomes a monster it devours.
 
+
 ## Setup
 
 ### Setting up build environment
@@ -26,3 +27,23 @@ where you play as a slime who becomes a monster it devours.
 ### Using stats viewer
 
 Open [`libs/iso-butano/tools/ibn_stats.lua`](libs/iso-butano/tools/ibn_stats.lua) with `Debug > Script Window` in [MesenCE](https://github.com/nesdev-org/MesenCE).
+
+
+## Edit
+
+### Editing levels
+
+To edit the levels, open [`levels/mimiclime.ldtk`](levels/mimiclime.ldtk) with [LDtk](https://ldtk.io/) v1.5.3
+
+Just saving the LDtk project is enough, the build process automatically takes care of the importing.
+
+### Editing characters
+
+To edit the characters, open [`characters/mimiclime/`](characters/mimiclime/) directory with [GBATool](https://github.com/DarkKodKod/GBATool).
+
+Release Version 1.0.0 is rather old, so you need to build GBATool yourself.\
+**Comment out** [this line](https://github.com/DarkKodKod/GBATool/blob/ba80abc4cf35a66e76eb9383909fc56ffea331df/GBATool/Utils/Utils.cs#L306) before building,
+so that the generated source doesn't have a timestamp.
+
+After editing a character, you need to re-generate the source.\
+Pressing **F5** or `Project > Build Project...` will do the trick.
