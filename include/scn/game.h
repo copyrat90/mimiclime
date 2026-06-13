@@ -2,6 +2,11 @@
 
 #include "scn/scene.h"
 
+#include "gm/ecs/actor_registry.h"
+#include "gm/ecs/singleton_registry.h"
+
+#include "ldtk_gen_idents_fwd.h"
+
 namespace mc::scn
 {
 
@@ -12,6 +17,15 @@ public:
 
 public:
     bool update() override;
+
+private:
+    auto get_initial_entrance() const -> gm::cfg::room_entrance;
+
+private:
+    gm::ecs::singleton_registry _singleton_registry;
+    // gm::ecs::actor_registry _actor_registry;
+
+    const gba::entity _singleton_entity;
 };
 
 } // namespace mc::scn
