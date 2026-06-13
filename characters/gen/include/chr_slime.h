@@ -39,7 +39,7 @@ public:
     Chr_Slime();
 
 protected:
-    bn::vector<bn::sprite_ptr, 2> _frameSprites;
+    bn::vector<bn::sprite_ptr, 1> _frameSprites;
 
 public: // Sprite items
     // idle_frame_1
@@ -47,14 +47,12 @@ public: // Sprite items
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_1_slime_walk_vertically_0Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
         bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
-    // sprite_item, bnk_slime_1_slime_walk_vertically_0, already declared in a previous frame
 
     // walk_frame_1
-    static constexpr bn::sprite_item bnk_slime_1_slime_walk_0 = bn::sprite_item(
+    static constexpr bn::sprite_item bnk_slime_0_slime_walk_0 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
-        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_1_slime_walk_0Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_0_slime_walk_0Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
         bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
-    // sprite_item, bnk_slime_1_slime_walk_vertically_0, already declared in a previous frame
 
     // walk_frame_2
     static constexpr bn::sprite_item bnk_slime_0_slime_walk_1 = bn::sprite_item(
