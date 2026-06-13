@@ -1,0 +1,222 @@
+{
+	"__header__": {
+		"fileType": "LDtk Project JSON",
+		"app": "LDtk",
+		"doc": "https://ldtk.io/json",
+		"schema": "https://ldtk.io/files/JSON_SCHEMA.json",
+		"appAuthor": "Sebastien 'deepnight' Benard",
+		"appVersion": "1.5.3",
+		"url": "https://ldtk.io"
+	},
+	"identifier": "configs",
+	"iid": "140c8fb0-48b0-11f1-a411-47d827fc24d0",
+	"uid": 0,
+	"worldX": 0,
+	"worldY": 0,
+	"worldDepth": 0,
+	"pxWid": 240,
+	"pxHei": 160,
+	"__bgColor": "#000000",
+	"bgColor": null,
+	"useAutoIdentifier": false,
+	"bgRelPath": null,
+	"bgPos": null,
+	"bgPivotX": 0.5,
+	"bgPivotY": 0.5,
+	"__smartColor": "#737373",
+	"__bgPos": null,
+	"externalRelPath": null,
+	"fieldInstances": [],
+	"layerInstances": [
+		{
+			"__identifier": "entities",
+			"__type": "Entities",
+			"__cWid": 240,
+			"__cHei": 160,
+			"__gridSize": 1,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": null,
+			"__tilesetRelPath": null,
+			"iid": "90b62a80-48b0-11f1-8ad9-a51c8e598de7",
+			"levelId": 0,
+			"layerDefUid": 1,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 6864398,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": [
+				{
+					"__identifier": "system_texts",
+					"__grid": [16,16],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": { "tilesetUid": 4, "x": 144, "y": 32, "w": 16, "h": 16 },
+					"__smartColor": "#808080",
+					"iid": "9654ead0-48b0-11f1-8ad9-5754227b1fb9",
+					"width": 16,
+					"height": 16,
+					"defUid": 3,
+					"px": [16,16],
+					"fieldInstances": [
+						{ "__identifier": "lang_names", "__type": "Array<String>", "__value": [ "English", "한국어" ], "__tile": null, "defUid": 5, "realEditorValues": [ {
+							"id": "V_String",
+							"params": ["English"]
+						}, {
+							"id": "V_String",
+							"params": ["한국어"]
+						} ] },
+						{ "__identifier": "buttons", "__type": "Array<String>", "__value": [ "Confirm", "Back", "결정", "뒤로" ], "__tile": null, "defUid": 7, "realEditorValues": [ {
+							"id": "V_String",
+							"params": ["Confirm"]
+						}, {
+							"id": "V_String",
+							"params": ["Back"]
+						}, {
+							"id": "V_String",
+							"params": ["결정"]
+						}, {
+							"id": "V_String",
+							"params": ["뒤로"]
+						} ] },
+						{ "__identifier": "title_menus", "__type": "Array<String>", "__value": [ "Start", "Options", "시작", "설정" ], "__tile": null, "defUid": 6, "realEditorValues": [ {
+							"id": "V_String",
+							"params": ["Start"]
+						}, {
+							"id": "V_String",
+							"params": ["Options"]
+						}, {
+							"id": "V_String",
+							"params": ["시작"]
+						}, {
+							"id": "V_String",
+							"params": ["설정"]
+						} ] },
+						{ "__identifier": "title_options_menus", "__type": "Array<String>", "__value": [ "Licenses", "라이선스" ], "__tile": null, "defUid": 11, "realEditorValues": [ {
+							"id": "V_String",
+							"params": ["Licenses"]
+						}, {
+							"id": "V_String",
+							"params": ["라이선스"]
+						} ] }
+					],
+					"__worldX": 16,
+					"__worldY": 16
+				}
+			]
+		},
+		{
+			"__identifier": "entrances",
+			"__type": "Entities",
+			"__cWid": 240,
+			"__cHei": 160,
+			"__gridSize": 1,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": null,
+			"__tilesetRelPath": null,
+			"iid": "2b45ed10-48b0-11f1-9807-a1effbd0a36c",
+			"levelId": 0,
+			"layerDefUid": 32,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 1628007,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": []
+		},
+		{
+			"__identifier": "exits",
+			"__type": "Entities",
+			"__cWid": 240,
+			"__cHei": 160,
+			"__gridSize": 1,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": null,
+			"__tilesetRelPath": null,
+			"iid": "047081e0-48b0-11f1-8e53-3f6cb0fa220c",
+			"levelId": 0,
+			"layerDefUid": 31,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 9022994,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": [
+				{
+					"__identifier": "exit",
+					"__grid": [8,28],
+					"__pivot": [0,0],
+					"__tags": ["exit"],
+					"__tile": null,
+					"__smartColor": "#6ABDD3",
+					"iid": "308ff110-48b0-11f1-83b8-435b26e61a5e",
+					"width": 16,
+					"height": 16,
+					"defUid": 19,
+					"px": [8,28],
+					"fieldInstances": [{ "__identifier": "destination", "__type": "EntityRef", "__value": {
+						"entityIid": "88533f20-48b0-11f1-83b8-57c9e11794fb",
+						"layerIid": "2b461420-48b0-11f1-9807-77aa0d83a79e",
+						"levelIid": "8226e4d0-48b0-11f1-83b8-d19e57531a62",
+						"worldIid": "140c68a1-48b0-11f1-a411-f37bc73a2017"
+					}, "__tile": null, "defUid": 21, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["88533f20-48b0-11f1-83b8-57c9e11794fb"]
+					}] }],
+					"__worldX": 8,
+					"__worldY": 28
+				}
+			]
+		},
+		{
+			"__identifier": "terrain",
+			"__type": "IntGrid",
+			"__cWid": 15,
+			"__cHei": 10,
+			"__gridSize": 16,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": 14,
+			"__tilesetRelPath": "placeholder_tileset.png",
+			"iid": "9ff7be80-48b0-11f1-83b8-6943753d1098",
+			"levelId": 0,
+			"layerDefUid": 15,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+				0,0,0,0,0,0,0,0,0,0
+			],
+			"autoLayerTiles": [],
+			"seed": 5913083,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": []
+		}
+	],
+	"__neighbours": [{ "levelIid": "2bf1b930-48b0-11f1-8010-95c3bb6e3700", "dir": "e" }]
+}

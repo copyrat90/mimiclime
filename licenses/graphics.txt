@@ -1,0 +1,3 @@
+* GBA Jam 2026 logo
+  * made by GBA Jam 2026 Organizers, licensed under [CC BY-NC](https://creativecommons.org/licenses/by-nc/4.0/).
+  * logo text font - [H. H. Samuel by deFharo](https://fontlibrary.org/en/font/h-h-samuel), licensed under [OFL](https://openfontlicense.org/).

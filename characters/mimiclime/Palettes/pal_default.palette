@@ -1,0 +1,5 @@
+GUID = "8f52e425-9398-489b-a312-54a94cc57339"
+Version = "1.0.0"
+DoNotExport = false
+Colors = [65280, 0, 16777215, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+LinkedPalettes = []

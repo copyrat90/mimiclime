@@ -1,0 +1,18 @@
+Version = 0
+Name = "mimiclime"
+ProjectTitle = "MIMICLIME"
+SoftwareVersion = 0
+ProjectInitials = "MC"
+DeveloperId = "CR"
+SpritePatternFormat = 0
+[Build]
+GeneratedSourcePath = ""
+GeneratedAssetsPath = ""
+GeneratedHeadersPath = "../gen/include"
+GeneratedCPPsPath = "../gen/src"
+OutputFormatHeader = 0
+OutputFormatPalettes = 3
+OutputFormatMaps = 0
+OutputFormatCharacters = 3
+OutputFormatScreenBlock = 3
+OutputFormatBackground = 0

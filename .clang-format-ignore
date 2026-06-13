@@ -1,0 +1,6 @@
+# external libs
+libs/**
+
+# GBATool generated sources
+characters/gen/include/*
+characters/gen/src/*

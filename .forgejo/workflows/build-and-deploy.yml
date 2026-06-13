@@ -1,0 +1,137 @@
+name: Build and deploy to itch.io
+
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  ROMFILE_NAME: ${{ vars.ROMFILE_NAME || github.event.repository.name }}
+  ITCHIO_ACCOUNT: ${{ vars.ITCHIO_ACCOUNT || github.repository_owner }}
+  ITCHIO_PROJECT_NAME: ${{ vars.ITCHIO_PROJECT_NAME || github.event.repository.name }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: 'recursive'
+
+      - name: Setup Python3
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14.5'
+          cache: 'pip'
+
+      - name: Install Python3 dependencies
+        run: pip install -r libs/butano-ldtk/requirements.txt
+
+      - name: Check update for wonderful toolchain `target-gba-syslibs`
+        id: gba-syslibs-latest-commit
+        uses: https://github.com/nmbgeek/github-action-get-latest-commit@main
+        with:
+          repository: WonderfulToolchain/target-gba-syslibs
+
+      - name: Check update for wonderful toolchain `wf-picolibc`
+        id: wf-picolibc-latest-commit
+        uses: https://github.com/nmbgeek/github-action-get-latest-commit@main
+        with:
+          repository: WonderfulToolchain/wf-picolibc
+
+      - name: Check update for blocksds sdk
+        id: blocksds-latest-commit
+        uses: https://github.com/nmbgeek/github-action-get-latest-commit@main
+        with:
+          repository: blocksds/sdk
+
+      - name: Cache wonderful toolchain
+        id: cache-wonderful
+        uses: actions/cache@v5
+        env:
+          cache-name: wonderful-toolchain
+        with:
+          path: /opt/wonderful
+          key: ${{runner.os}}-wf-sys-${{steps.gba-syslibs-latest-commit.outputs.shorthash}}-pico-${{steps.wf-picolibc-latest-commit.outputs.shorthash}}-blocksds-${{steps.blocksds-latest-commit.outputs.shorthash}}
+
+      - name: Install wonderful toolchain
+        if: ${{steps.cache-wonderful.outputs.cache-hit != 'true'}}
+        run: |
+          mkdir -p /opt/wonderful
+          cd /opt/wonderful
+          wget -qO- https://wonderful.asie.pl/bootstrap/wf-bootstrap-aarch64.tar.gz | tar xvz
+          export PATH=/opt/wonderful/bin:$PATH
+          export WONDERFUL_TOOLCHAIN=/opt/wonderful
+          wf-pacman -Syu wf-tools --noconfirm
+          wf-pacman -Syu wf-tools --noconfirm
+          wf-config repo enable blocksds
+          wf-pacman -Syu --noconfirm
+          wf-pacman -S target-gba --noconfirm
+          wf-pacman -S blocksds-toolchain --noconfirm
+
+      - name: Build
+        run: |
+          export PATH=/opt/wonderful/bin:$PATH
+          export WONDERFUL_TOOLCHAIN=/opt/wonderful
+          make -j$(nproc) MC_DEVBUILD=
+
+      - name: Pack
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          mkdir -p build_release
+          mv *.elf ${{ env.ROMFILE_NAME }}-${{ github.ref_name }}.elf
+          mv *.gba ${{ env.ROMFILE_NAME }}-${{ github.ref_name }}.gba
+          zip -r build_release/${{ env.ROMFILE_NAME }}-${{ github.ref_name }}.zip *.gba README.md LICENSE licenses/
+          zip -r build_release/${{ env.ROMFILE_NAME }}-${{ github.ref_name }}.elf.zip *.elf
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/forgejo-release@v2.12.0
+        with:
+          direction: upload
+          release-dir: build_release
+
+      # If we were to download the above release on `deploy`,
+      # even with `${{ secrets.GITHUB_TOKEN }}`, "404 Not Found" happens for the private repo.
+      #
+      # Workaround: Upload and download a seperate artifact.
+      - name: Upload artifact
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-zip-artifact
+          path: build_release/${{ env.ROMFILE_NAME }}-${{ github.ref_name }}.zip
+
+  deploy:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: release-zip-artifact
+
+      - name: Checkout gbatemplate
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ github.repository_owner }}/gbatemplate
+          path: gbatemplate
+          token: ${{ secrets.GBATEMPLATE_PAT }}
+
+      - name: Copy GBA ROM
+        run: |
+          mv ${{ env.ROMFILE_NAME }}-${{ github.ref_name }}.zip ${{ env.ROMFILE_NAME }}.zip
+          unzip ${{ env.ROMFILE_NAME }}.zip
+          mv *.gba gbatemplate/game.gba
+
+      - name: Setup butler
+        uses: https://github.com/remarkablegames/setup-butler@v3
+
+      - name: Deploy to itch.io
+        run: |
+          butler login
+          butler push ${{ env.ROMFILE_NAME }}.zip ${{ env.ITCHIO_ACCOUNT }}/${{ env.ITCHIO_PROJECT_NAME }}:gba --userversion ${{ github.ref_name }}
+          butler push gbatemplate/ ${{ env.ITCHIO_ACCOUNT }}/${{ env.ITCHIO_PROJECT_NAME }}:html --userversion ${{ github.ref_name }}
