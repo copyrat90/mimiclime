@@ -1,0 +1,7 @@
+GUID = "dfcc2913-3825-4a0a-b7fc-086d506d6cdb"
+Version = "1.0.0"
+DoNotExport = false
+ImagePath = "Images\\img_slime_idle.bmp"
+ImageWidth = 32
+ImageHeight = 96
+Sprites = [{ID = "04299cc3-f6e1-42cc-bed6-3510a32c0842", Shape = 0, Size = 2, PosX = 0, PosY = 0, TileSetID = "dfcc2913-3825-4a0a-b7fc-086d506d6cdb", Alias = "slime_idle_0"}, {ID = "246b436b-3429-4db1-8e58-a7fd2f4fb371", Shape = 0, Size = 2, PosX = 0, PosY = 32, TileSetID = "dfcc2913-3825-4a0a-b7fc-086d506d6cdb", Alias = "slime_idle_1"}, {ID = "dd61fdcb-21f7-48fe-a195-c7dd8057a7e8", Shape = 0, Size = 2, PosX = 0, PosY = 64, TileSetID = "dfcc2913-3825-4a0a-b7fc-086d506d6cdb", Alias = "slime_idle_2"}]

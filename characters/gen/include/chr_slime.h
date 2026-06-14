@@ -12,8 +12,9 @@
 #include "bn_sprite_builder.h"
 #include "bn_sprite_ptr.h"
 
-#include "bank_bnk_slime_1.h"
+#include "bank_bnk_slime_2.h"
 #include "bank_bnk_slime_0.h"
+#include "bank_bnk_slime_1.h"
 
 #include "palette_pal_default.h"
 
@@ -43,10 +44,25 @@ protected:
 
 public: // Sprite items
     // idle_frame_1
-    static constexpr bn::sprite_item bnk_slime_1_slime_walk_vertically_0 = bn::sprite_item(
+    static constexpr bn::sprite_item bnk_slime_2_slime_idle_0 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
-        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_1_slime_walk_vertically_0Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_2_slime_idle_0Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
         bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // idle_frame_2
+    static constexpr bn::sprite_item bnk_slime_2_slime_idle_1 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_2_slime_idle_1Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // idle_frame_3
+    static constexpr bn::sprite_item bnk_slime_2_slime_idle_2 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_2_slime_idle_2Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // idle_frame_4
+    // sprite_item, bnk_slime_2_slime_idle_1, already declared in a previous frame
 
     // walk_frame_1
     static constexpr bn::sprite_item bnk_slime_0_slime_walk_0 = bn::sprite_item(
@@ -97,7 +113,10 @@ public: // Sprite items
         bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
     // walk_south_frame_1
-    // sprite_item, bnk_slime_1_slime_walk_vertically_0, already declared in a previous frame
+    static constexpr bn::sprite_item bnk_slime_1_slime_walk_vertically_0 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_1_slime_walk_vertically_0Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
     // walk_south_frame_2
     static constexpr bn::sprite_item bnk_slime_1_slime_walk_vertically_1 = bn::sprite_item(
