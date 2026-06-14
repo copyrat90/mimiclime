@@ -30,6 +30,7 @@ public:
     {
         HITBOX,
         HURTBOX,
+        CUSTOM_0,
     };
 
     struct Animation
