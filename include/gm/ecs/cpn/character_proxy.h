@@ -17,6 +17,11 @@ public:
     void change_species(ldtk::gen::species_kind);
 
 public:
+    auto species() const -> ldtk::gen::species_kind
+    {
+        return _species;
+    }
+
     auto character() -> gbatool::Character&
     {
         return *std::launder(reinterpret_cast<gbatool::Character*>(_character_buffer));
@@ -43,6 +48,8 @@ private:
     static constexpr auto MAX_CHR_ALIGN = std::max({alignof(gbatool::Chr_Slime)});
 
     alignas(MAX_CHR_ALIGN) std::byte _character_buffer[MAX_CHR_SIZE];
+
+    ldtk::gen::species_kind _species;
 };
 
 } // namespace mc::gm::ecs::cpn

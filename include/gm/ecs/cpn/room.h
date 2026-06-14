@@ -1,10 +1,15 @@
 #pragma once
 
+#include "gm/cfg/room_entrance.h"
+
 #include "ldtk_level_bgs_ptr.h"
 
-#include "ldtk_gen_idents_fwd.h"
+#include <bn_optional.h>
+#include <bn_top_left_fixed_rect.h>
 
 #include <cstdint>
+
+#include "ldtk_gen_idents_fwd.h"
 
 namespace ldtk
 {
@@ -33,6 +38,9 @@ public:
     int get_terrain_cell(const bn::fixed_point& position) const;
 
     auto dimensions() const -> bn::fixed_point;
+
+    bool collide_with_wall(const bn::fixed_point& position) const;
+    auto collide_with_exit(const bn::top_left_fixed_rect& collision) const -> bn::optional<cfg::room_entrance>;
 
 public:
     auto level() const -> decltype(_level)

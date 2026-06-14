@@ -40,6 +40,8 @@ void character_proxy::construct_character(ldtk::gen::species_kind species, const
         BN_ERROR("Invalid species_kind: ", static_cast<int>(species));
     }
 
+    _species = species;
+
     auto& chara = character();
     chara.set_top_left_position(top_left_position);
     chara.set_camera(camera);

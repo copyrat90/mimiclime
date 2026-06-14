@@ -75,6 +75,35 @@ auto room::dimensions() const -> bn::fixed_point
     return {dimensions.width(), dimensions.height()};
 }
 
+bool room::collide_with_wall(const bn::fixed_point& position) const
+{
+    const int cell_int = get_terrain_cell(position);
+    if (cell_int == -1)
+        return true;
+
+    const ldtk::int_grid_value_info* cell_info = TERRAIN_LAYER_DEF.get_int_grid_value_info(cell_int);
+    if (!cell_info)
+        return false;
+
+    return cell_info->group_uid() ==
+           (int)ldtk::gen::layer_int_grid_value_group_ident::LAYER_terrain_INT_GRID_VALUE_GROUP_walls;
+}
+
+auto room::collide_with_exit(const bn::top_left_fixed_rect& collision) const -> bn::optional<cfg::room_entrance>
+{
+    const auto exit_entities = _level->get_layer(ldtk::gen::layer_ident::exits).entity_instances();
+    for (const ldtk::entity& exit_entity : exit_entities)
+    {
+        const bn::top_left_fixed_rect exit_collision(exit_entity.px().x(), exit_entity.px().y(), exit_entity.width(),
+                                                     exit_entity.height());
+
+        if (collision.intersects(exit_collision))
+            return cfg::room_entrance::from_exit(exit_entity);
+    }
+
+    return bn::nullopt;
+}
+
 room::room(ldtk::gen::level_ident level_id, const bn::camera_ptr& camera)
     : _level(&ldtk::gen::gen_project.get_level(level_id)),
       _terrain(_level->get_layer(ldtk::gen::layer_ident::terrain).int_grid()),

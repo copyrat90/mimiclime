@@ -5,6 +5,7 @@
 
 #include "gm/ecs/sys/character_update.h"
 #include "gm/ecs/sys/room_change.h"
+#include "gm/ecs/sys/player_character_control.h"
 
 namespace mc::scn
 {
@@ -24,12 +25,14 @@ game::game(scene_context& ctx) : scene(ctx), _singleton_entity(_singleton_regist
     auto& chara_proxy = _actor_registry.emplace<gm::ecs::cpn::character_proxy>(player, ldtk::gen::species_kind::slime,
                                                                                initial_entrance.position(), camera);
     chara_proxy.character().load_animation(gbatool::Chr_Slime::AnimationID::IDLE);
+    _actor_registry.emplace<gm::ecs::cpn::player_character_controller>(player);
 }
 
 bool game::update()
 {
     gm::ecs::sys::room_change(_singleton_registry, _singleton_entity, context().transitions());
-    gm::ecs::sys::character_update(_actor_registry);
+    gm::ecs::sys::player_character_control(_actor_registry);
+    gm::ecs::sys::character_update(_actor_registry, _singleton_registry, _singleton_entity);
 
     return false;
 }
