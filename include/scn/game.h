@@ -23,7 +23,7 @@ private:
 
 private:
     gm::ecs::singleton_registry _singleton_registry;
-    // gm::ecs::actor_registry _actor_registry;
+    gm::ecs::actor_registry _actor_registry;
 
     const gba::entity _singleton_entity;
 };
