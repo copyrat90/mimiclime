@@ -16,7 +16,7 @@ constexpr std::int8_t TRANSITION_DURATION = 30;
 
 } // namespace
 
-void room_change(singleton_registry& registry, const gba::entity singleton_entity)
+void room_change(singleton_registry& registry, const gba::entity singleton_entity, ibn::transitions& transitions)
 {
     auto* room_change_states = registry.try_get<cpn::room_change_states>(singleton_entity);
 
@@ -29,7 +29,6 @@ void room_change(singleton_registry& registry, const gba::entity singleton_entit
         case fade_state::FADE_OUT:
             if (--room_change_states->countdown <= 0)
             {
-                ibn::transitions& transitions = room_change_states->transitions;
                 transitions.set_alpha(TRANSITION_KINDS, 1);
                 transitions.start(TRANSITION_KINDS, TRANSITION_DURATION, 0);
 
@@ -45,7 +44,6 @@ void room_change(singleton_registry& registry, const gba::entity singleton_entit
         case fade_state::FADE_IN:
             if (--room_change_states->countdown <= 0)
             {
-                ibn::transitions& transitions = room_change_states->transitions;
                 transitions.set_alpha(TRANSITION_KINDS, 0);
                 transitions.clear(TRANSITION_KINDS);
 

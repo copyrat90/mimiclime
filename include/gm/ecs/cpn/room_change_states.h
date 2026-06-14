@@ -22,7 +22,6 @@ struct room_change_states final
 
     cfg::room_entrance entrance;
 
-    ibn::transitions& transitions;
     fade_state fade;
     std::int8_t countdown;
 };

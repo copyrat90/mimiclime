@@ -18,8 +18,7 @@ game::game(scene_context& ctx) : scene(ctx), _singleton_entity(_singleton_regist
     auto& camera = _singleton_registry.emplace<bn::camera_ptr>(_singleton_entity, bn::camera_ptr::create());
     _singleton_registry.emplace<gm::ecs::cpn::room>(_singleton_entity, initial_entrance.room_id(), camera);
     _singleton_registry.emplace<gm::ecs::cpn::room_change_states>(
-        _singleton_entity, initial_entrance, ctx.transitions(), gm::ecs::cpn::room_change_states::fade_state::FADE_OUT,
-        1);
+        _singleton_entity, initial_entrance, gm::ecs::cpn::room_change_states::fade_state::FADE_OUT, 1);
 
     const gba::entity player = _actor_registry.create();
     auto& chara_proxy = _actor_registry.emplace<gm::ecs::cpn::character_proxy>(player, ldtk::gen::species_kind::slime,
@@ -29,7 +28,7 @@ game::game(scene_context& ctx) : scene(ctx), _singleton_entity(_singleton_regist
 
 bool game::update()
 {
-    gm::ecs::sys::room_change(_singleton_registry, _singleton_entity);
+    gm::ecs::sys::room_change(_singleton_registry, _singleton_entity, context().transitions());
     gm::ecs::sys::character_update(_actor_registry);
 
     return false;
