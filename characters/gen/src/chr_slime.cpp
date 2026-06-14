@@ -8,12 +8,15 @@
 namespace gbatool
 {
 
-static constexpr Chr_Slime::Animation animations[4] = {{1, 4, 0}, {8, 4, 0}, {8, 4, 0}, {8, 4, 0}};
+static constexpr Chr_Slime::Animation animations[4] = {{4, 6, 0}, {8, 4, 0}, {8, 4, 0}, {8, 4, 0}};
 
-static constexpr Chr_Slime::Frame frames[25] = {{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}, {7, 7}, {8, 8}, {9, 9}, {10, 10}, {11, 11}, {12, 12}, {13, 13}, {14, 14}, {15, 15}, {16, 16}, {17, 17}, {18, 18}, {19, 19}, {20, 20}, {21, 21}, {22, 22}, {23, 23}, {24, 24}};
+static constexpr Chr_Slime::Frame frames[28] = {{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}, {7, 7}, {8, 8}, {9, 9}, {10, 10}, {11, 11}, {12, 12}, {13, 13}, {14, 14}, {15, 15}, {16, 16}, {17, 17}, {18, 18}, {19, 19}, {20, 20}, {21, 21}, {22, 22}, {23, 23}, {24, 24}, {25, 25}, {26, 26}, {27, 27}};
 
-static constexpr Chr_Slime::Sprite sprites[25] = {
-    { &Chr_Slime::bnk_slime_1_slime_walk_vertically_0, 0, -15, 0 },
+static constexpr Chr_Slime::Sprite sprites[28] = {
+    { &Chr_Slime::bnk_slime_2_slime_idle_0, 0, -14, 0 },
+    { &Chr_Slime::bnk_slime_2_slime_idle_1, 0, -14, 0 },
+    { &Chr_Slime::bnk_slime_2_slime_idle_2, 0, -14, 0 },
+    { &Chr_Slime::bnk_slime_2_slime_idle_1, 0, -14, 0 },
     { &Chr_Slime::bnk_slime_0_slime_walk_0, 0, -15, 0 },
     { &Chr_Slime::bnk_slime_0_slime_walk_1, 0, -15, 0 },
     { &Chr_Slime::bnk_slime_0_slime_walk_2, 0, -15, 0 },
@@ -41,7 +44,7 @@ static constexpr Chr_Slime::Sprite sprites[25] = {
 };
 
 static constexpr Character::Collisions::RelativeRect idle_frame_0_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-9, -12, 18, 8),
+    Character::Collisions::RelativeRect(-9, -11, 18, 8),
 };
 
 static constexpr bn::span<const Character::Collisions::RelativeRect> idle_frame_0_collisions_spans[] = {
@@ -51,8 +54,44 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> idle_frame_
 
 static constexpr Character::Collisions idle_frame_0_collisions(idle_frame_0_collisions_spans);
 
+static constexpr Character::Collisions::RelativeRect idle_frame_1_mask_hurtbox_collisions[] = {
+    Character::Collisions::RelativeRect(-9, -11, 18, 8),
+};
+
+static constexpr bn::span<const Character::Collisions::RelativeRect> idle_frame_1_collisions_spans[] = {
+    bn::span<const Character::Collisions::RelativeRect>{},
+    idle_frame_1_mask_hurtbox_collisions,
+};
+
+static constexpr Character::Collisions idle_frame_1_collisions(idle_frame_1_collisions_spans);
+
+static constexpr Character::Collisions::RelativeRect idle_frame_2_mask_hurtbox_collisions[] = {
+    Character::Collisions::RelativeRect(-9, -10, 18, 7),
+};
+
+static constexpr bn::span<const Character::Collisions::RelativeRect> idle_frame_2_collisions_spans[] = {
+    bn::span<const Character::Collisions::RelativeRect>{},
+    idle_frame_2_mask_hurtbox_collisions,
+};
+
+static constexpr Character::Collisions idle_frame_2_collisions(idle_frame_2_collisions_spans);
+
+static constexpr Character::Collisions::RelativeRect idle_frame_3_mask_hurtbox_collisions[] = {
+    Character::Collisions::RelativeRect(-9, -11, 18, 8),
+};
+
+static constexpr bn::span<const Character::Collisions::RelativeRect> idle_frame_3_collisions_spans[] = {
+    bn::span<const Character::Collisions::RelativeRect>{},
+    idle_frame_3_mask_hurtbox_collisions,
+};
+
+static constexpr Character::Collisions idle_frame_3_collisions(idle_frame_3_collisions_spans);
+
 static constexpr const Character::Collisions idle_collisions[] = {
     idle_frame_0_collisions,
+    idle_frame_1_collisions,
+    idle_frame_2_collisions,
+    idle_frame_3_collisions,
 };
 
 static constexpr Character::Collisions::RelativeRect walk_frame_0_mask_hurtbox_collisions[] = {
@@ -362,8 +401,8 @@ static constexpr const bn::span<const Character::Collisions> collisions[] = {
 Chr_Slime::Chr_Slime() :
     Character(
         bn::span<const Chr_Slime::Animation>(animations, 4), 
-        bn::span<const Chr_Slime::Frame>(frames, 25), 
-        bn::span<const Chr_Slime::Sprite>(sprites, 25),
+        bn::span<const Chr_Slime::Frame>(frames, 28), 
+        bn::span<const Chr_Slime::Sprite>(sprites, 28),
         collisions, _frameSprites
     )
 {

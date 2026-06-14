@@ -3,5 +3,5 @@ Version = "1.0.0"
 DoNotExport = false
 BitsPerPixel = 4
 IsBackground = false
-TransparentColor = 0
+TransparentColor = 65280
 Sprites = [{SpriteID = "27e11ed2-0418-428c-b9a9-5d30be2a9111", TileSetID = "82ef42a5-2a34-467d-82ec-518b783c0419"}, {SpriteID = "ee3c5bc7-77c3-4fd4-88e1-3afac7ef411f", TileSetID = "82ef42a5-2a34-467d-82ec-518b783c0419"}, {SpriteID = "c6dc9e80-4dd5-44a1-8cb4-b6d21e408f89", TileSetID = "82ef42a5-2a34-467d-82ec-518b783c0419"}, {SpriteID = "c441a922-5ce4-422f-8572-464beeaa4e19", TileSetID = "82ef42a5-2a34-467d-82ec-518b783c0419"}, {SpriteID = "55da78ab-9398-46bb-8ce6-aedf4e5bbcac", TileSetID = "82ef42a5-2a34-467d-82ec-518b783c0419"}, {SpriteID = "ece6660c-c6ab-426b-935e-5827f1998f48", TileSetID = "82ef42a5-2a34-467d-82ec-518b783c0419"}, {SpriteID = "84629744-c110-49df-8f7c-e8028b74cfd5", TileSetID = "82ef42a5-2a34-467d-82ec-518b783c0419"}, {SpriteID = "537e494f-7527-4907-8f10-312270ea1c11", TileSetID = "82ef42a5-2a34-467d-82ec-518b783c0419"}]
