@@ -16,8 +16,9 @@ struct room_change_states final
 {
     enum class fade_state : std::uint8_t
     {
-        FADE_OUT,
-        FADE_IN,
+        INIT,
+        FADING_OUT,
+        FADING_IN,
     };
 
     cfg::room_entrance entrance;

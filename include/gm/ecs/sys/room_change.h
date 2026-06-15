@@ -1,10 +1,11 @@
 #pragma once
 
+#include "gm/ecs/actor_registry.h"
 #include "gm/ecs/singleton_registry.h"
 
 namespace mc::gm::ecs::sys
 {
 
-void room_change(singleton_registry&, const gba::entity singleton_entity, ibn::transitions&);
+void room_change(singleton_registry&, const gba::entity singleton_entity, ibn::transitions&, actor_registry&);
 
 }
