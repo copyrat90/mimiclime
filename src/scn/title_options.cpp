@@ -151,7 +151,7 @@ void title_options::redraw_all()
     // Heading
     gen_head.generate_top_left(HEADING_POS,
                                TITLE_MENUS[(int)config_save.language() * ut::size_of_enum<ldtk::gen::title_menu>() +
-                                           ut::size_of_enum<ldtk::gen::title_menu>()],
+                                           (int)ldtk::gen::title_menu::options],
                                _heading_sprites);
 
     // Menus
@@ -180,9 +180,9 @@ void title_options::redraw_all()
         {
             // `-2`: Exclude `lang` & `back`
             // `-1`: Exclude `lang`
-            const auto menu_text =
-                TITLE_OPTIONS_MENUS[(int)config_save.language() * (ut::size_of_enum<ldtk::gen::title_options_menu>() - 2) +
-                                    (menu_idx - 1)];
+            const auto menu_text = TITLE_OPTIONS_MENUS[(int)config_save.language() *
+                                                           (ut::size_of_enum<ldtk::gen::title_options_menu>() - 2) +
+                                                       (menu_idx - 1)];
             gen.generate_top_left(MENUS_X, MENUS_Y[menu_idx], menu_text, _menus_sprites);
         }
     }
