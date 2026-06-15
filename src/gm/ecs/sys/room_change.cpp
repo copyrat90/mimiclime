@@ -4,6 +4,8 @@
 
 #include "ibn_transitions.h"
 
+#include <bn_display.h>
+
 namespace mc::gm::ecs::sys
 {
 
@@ -13,6 +15,8 @@ namespace
 constexpr auto TRANSITION_KINDS = ibn::transitions::kinds::FADE | ibn::transitions::kinds::SPRITES_MOSAIC_VERTICAL |
                                   ibn::transitions::kinds::BGS_MOSAIC_VERTICAL;
 constexpr std::int8_t TRANSITION_DURATION = 30;
+
+constexpr bn::fixed_point CAMERA_CENTER_OFFSET(-bn::display::width() / 2, -bn::display::height() / 2);
 
 } // namespace
 
@@ -48,15 +52,28 @@ void room_change(singleton_registry& singleton_reg, const gba::entity singleton_
                 BN_ASSERT(room);
                 room->reset(room_change_states->entrance.room_id());
 
+                const bn::fixed_point entrance_position = room_change_states->entrance.position();
+
                 actor_reg.view<cpn::character_proxy>().each(
                     [&](const gba::entity entity, cpn::character_proxy& chara_proxy) {
-                        // Move the player to the entrance position
-                        if (actor_reg.all_of<cpn::player_character_controller>(entity))
-                            chara_proxy.character().set_top_left_position(room_change_states->entrance.position());
+                        if (auto* controller = actor_reg.try_get<cpn::player_character_controller>(entity);
+                            controller != nullptr)
+                        {
+                            // Reset held direction
+                            controller->held_direction = direction::NONE;
+
+                            // Move the player to the entrance position
+                            chara_proxy.character().set_top_left_position(entrance_position);
+                        }
                         // Remove character entity if it's not the player
                         else
                             actor_reg.destroy(entity);
                     });
+
+                // Reset camera to entrance position
+                auto* camera = singleton_reg.try_get<bn::camera_ptr>(singleton_entity);
+                BN_ASSERT(camera);
+                camera->set_position(entrance_position + CAMERA_CENTER_OFFSET);
 
                 room_change_states->fade = fade_state::FADING_IN;
                 room_change_states->countdown = TRANSITION_DURATION;
