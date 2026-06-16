@@ -236,7 +236,7 @@ ScB = 0.2158605307340622
 [Animations.529eb6ce-4522-4c54-a567-75bb791faef8]
 ID = "529eb6ce-4522-4c54-a567-75bb791faef8"
 Name = "walk"
-Speed = 0.06700000166893005
+Speed = 0.032999999821186066
 Repeat = 1
 Looping = true
 [Animations.529eb6ce-4522-4c54-a567-75bb791faef8.Frames]
@@ -675,7 +675,7 @@ ScB = 0.2158605307340622
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490]
 ID = "01d1db6f-768b-4b7b-be61-b1b168c9a490"
 Name = "walk_south"
-Speed = 0.06700000166893005
+Speed = 0.032999999821186066
 Repeat = 1
 Looping = true
 [Animations.01d1db6f-768b-4b7b-be61-b1b168c9a490.Frames]
@@ -1114,7 +1114,7 @@ ScB = 0.2158605307340622
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d]
 ID = "2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d"
 Name = "walk_north"
-Speed = 0.06700000166893005
+Speed = 0.032999999821186066
 Repeat = 1
 Looping = true
 [Animations.2ef13bc0-fd0b-42ee-aa8d-c17a29476f9d.Frames]
