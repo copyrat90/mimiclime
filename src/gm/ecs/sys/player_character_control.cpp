@@ -28,7 +28,7 @@ void player_character_control(actor_registry& actor_reg, const singleton_registr
 
             controller.held_direction = get_direction_from_held_keypad();
 
-            velocity->velocity = to_fixed_point(controller.held_direction) * species_infos.speed();
+            velocity->velocity = to_normal_vector(controller.held_direction) * species_infos.speed();
         });
 }
 

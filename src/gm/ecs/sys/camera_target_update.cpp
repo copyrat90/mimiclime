@@ -21,7 +21,7 @@ void camera_target_update(actor_registry& actor_reg)
             if (auto* controller = actor_reg.try_get<cpn::player_character_controller>(entity); controller != nullptr)
             {
                 if (controller->held_direction != direction::NONE)
-                    target.position += to_fixed_point(controller->held_direction) * LOOKAHEAD_LENGTH;
+                    target.position += to_normal_vector(controller->held_direction) * LOOKAHEAD_LENGTH;
             }
         });
 }

@@ -23,6 +23,9 @@ enum class direction : std::int8_t
 
 auto get_direction_from_held_keypad() -> direction;
 
-auto to_fixed_point(direction dir) -> bn::fixed_point;
+auto to_normal_vector(direction dir) -> bn::fixed_point;
+auto to_direction_8(const bn::fixed_point& vector) -> direction;
+auto to_direction_4(const bn::fixed_point& vector, direction hint) -> direction;
+auto to_non_diagonal_direction(direction raw, direction hint) -> direction;
 
 } // namespace mc::gm

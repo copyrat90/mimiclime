@@ -8,7 +8,7 @@ namespace mc::gm::ecs::sys
 namespace
 {
 
-void update_movement(gbatool::Character& character, const cpn::velocity& velocity, singleton_registry& singleton_reg,
+void update_movement(gbatool::Character& character, cpn::velocity& velocity, singleton_registry& singleton_reg,
                      const gba::entity singleton_entity)
 {
     // Collision check is actually done for slightly smaller collision rect
@@ -29,6 +29,8 @@ void update_movement(gbatool::Character& character, const cpn::velocity& velocit
     // X-axis first
     if (velocity.velocity.x() != 0)
     {
+        bool ever_collided_x = false;
+
         const int grid_dig_limit = (bn::abs(velocity.velocity.x()) / TERRAIN_GRID_SIZE).ceil_integer();
 
         // Move x-axis without considering collisions first
@@ -83,13 +85,21 @@ void update_movement(gbatool::Character& character, const cpn::velocity& velocit
             if (push_out == 0)
                 break;
             else
+            {
                 character.set_x(character.x() + push_out);
+                ever_collided_x = true;
+            }
         }
+
+        if (ever_collided_x)
+            velocity.velocity.set_x(0);
     }
 
     // Y-axis next
     if (velocity.velocity.y() != 0)
     {
+        bool ever_collided_y = false;
+
         const int grid_dig_limit = (bn::abs(velocity.velocity.y()) / TERRAIN_GRID_SIZE).ceil_integer();
 
         // Move y-axis without considering collisions first
@@ -144,8 +154,73 @@ void update_movement(gbatool::Character& character, const cpn::velocity& velocit
             if (push_out == 0)
                 break;
             else
+            {
                 character.set_y(character.y() + push_out);
+                ever_collided_y = true;
+            }
         }
+
+        if (ever_collided_y)
+            velocity.velocity.set_y(0);
+    }
+}
+
+void transition_between_idle_and_walk(cpn::character_proxy& chara_proxy, cpn::velocity& velocity)
+{
+    static constexpr bn::fixed WALK_EPSILON_SQUARED = 0.5f;
+
+    auto& chara = chara_proxy.character();
+    const auto anim_id = chara.current_animation_id();
+
+    auto dimensions_squared = [](const bn::fixed_point& vec) { return vec.x() * vec.x() + vec.y() * vec.y(); };
+
+    switch (chara_proxy.species())
+    {
+    case ldtk::gen::species_kind::slime:
+
+        switch (anim_id)
+        {
+        case gbatool::Chr_Slime::AnimationID::IDLE:
+        case gbatool::Chr_Slime::AnimationID::WALK:
+        case gbatool::Chr_Slime::AnimationID::WALK_SOUTH:
+        case gbatool::Chr_Slime::AnimationID::WALK_NORTH:
+
+            if (dimensions_squared(velocity.velocity) > WALK_EPSILON_SQUARED)
+            {
+                const auto dir = to_direction_4(velocity.velocity, chara_proxy.last_direction);
+
+                switch (dir)
+                {
+                case direction::UP:
+                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK_NORTH);
+                    break;
+                case direction::DOWN:
+                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK_SOUTH);
+                    break;
+                case direction::LEFT:
+                case direction::RIGHT:
+                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK);
+                    break;
+                default:
+                    BN_ERROR("Invalid direction: ", static_cast<int>(dir));
+                }
+
+                chara_proxy.last_direction = dir;
+            }
+            else
+            {
+                chara.load_animation(gbatool::Chr_Slime::AnimationID::IDLE);
+            }
+            break;
+
+        default:
+            break;
+        }
+
+        break;
+
+    default:
+        BN_ERROR("Invalid species: ", static_cast<int>(chara_proxy.species()));
     }
 }
 
@@ -163,8 +238,9 @@ void character_update(actor_registry& registry, singleton_registry& singleton_re
                 chara.set_facing_right(velocity->velocity.x() > 0);
 
             update_movement(chara, *velocity, singleton_reg, singleton_entity);
+            transition_between_idle_and_walk(chara_proxy, *velocity);
 
-            registry.remove_unchecked(*velocity);
+            velocity->velocity = bn::fixed_point(0, 0);
         }
 
         chara.update_animation();

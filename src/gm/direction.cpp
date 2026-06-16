@@ -1,6 +1,7 @@
 #include "gm/direction.h"
 
 #include <bn_keypad.h>
+#include <bn_math.h>
 
 #include <utility>
 
@@ -69,7 +70,7 @@ auto get_direction_from_held_keypad() -> direction
     std::unreachable();
 }
 
-auto to_fixed_point(direction dir) -> bn::fixed_point
+auto to_normal_vector(direction dir) -> bn::fixed_point
 {
     static constexpr bn::fixed DIAGONAL_MULTIPLIER = bn::fixed(0.7071067811865475244);
 
@@ -100,6 +101,169 @@ auto to_fixed_point(direction dir) -> bn::fixed_point
     }
 
     std::unreachable();
+}
+
+auto to_direction_8(const bn::fixed_point& vector) -> direction
+{
+    const bn::fixed x = vector.x();
+    const bn::fixed y = vector.y();
+
+    if (x == 0 && y == 0)
+        return direction::NONE;
+
+    static constexpr bn::fixed SQRT2 = 1.41421356;
+
+    if (x > 0)
+    {
+        if (y > 0)
+        {
+            const bn::fixed yx_d2 = bn::abs(y - x); // y = x, sqrt2 multiplied distance
+            if (y - x > 0)
+            {
+                const bn::fixed x0_d2 = SQRT2 * bn::abs(x); // x = 0, sqrt2 multiplied distance
+                return x0_d2 < yx_d2 ? direction::DOWN : direction::DOWN_RIGHT;
+            }
+            else
+            {
+                const bn::fixed y0_d2 = SQRT2 * bn::abs(y); // y = 0, sqrt2 multiplied distance
+                return y0_d2 < yx_d2 ? direction::RIGHT : direction::DOWN_RIGHT;
+            }
+        }
+        else
+        {
+            const bn::fixed ymx_d2 = bn::abs(y + x); // y = -x, sqrt2 multiplied distance
+            if (y + x < 0)
+            {
+                const bn::fixed x0_d2 = SQRT2 * bn::abs(x); // x = 0, sqrt2 multiplied distance
+                return x0_d2 < ymx_d2 ? direction::UP : direction::UP_RIGHT;
+            }
+            else
+            {
+                const bn::fixed y0_d2 = SQRT2 * bn::abs(y); // y = 0, sqrt2 multiplied distance
+                return y0_d2 < ymx_d2 ? direction::RIGHT : direction::UP_RIGHT;
+            }
+        }
+    }
+    else
+    {
+        if (y > 0)
+        {
+            const bn::fixed ymx_d2 = bn::abs(y + x); // y = -x, sqrt2 multiplied distance
+            if (y + x < 0)
+            {
+                const bn::fixed y0_d2 = SQRT2 * bn::abs(y); // y = 0, sqrt2 multiplied distance
+                return y0_d2 < ymx_d2 ? direction::LEFT : direction::DOWN_LEFT;
+            }
+            else
+            {
+                const bn::fixed x0_d2 = SQRT2 * bn::abs(x); // x = 0, sqrt2 multiplied distance
+                return x0_d2 < ymx_d2 ? direction::DOWN : direction::DOWN_LEFT;
+            }
+        }
+        else
+        {
+            const bn::fixed yx_d2 = bn::abs(y - x); // y = x, sqrt2 multiplied distance
+            if (y - x > 0)
+            {
+                const bn::fixed y0_d2 = SQRT2 * bn::abs(y); // y = 0, sqrt2 multiplied distance
+                return y0_d2 < yx_d2 ? direction::LEFT : direction::UP_LEFT;
+            }
+            else
+            {
+                const bn::fixed x0_d2 = SQRT2 * bn::abs(x); // x = 0, sqrt2 multiplied distance
+                return x0_d2 < yx_d2 ? direction::UP : direction::UP_LEFT;
+            }
+        }
+    }
+}
+
+auto to_direction_4(const bn::fixed_point& vector, const direction hint) -> direction
+{
+    const bn::fixed x = vector.x();
+    const bn::fixed y = vector.y();
+
+    if (y > x)
+    {
+        if (y > -x)
+            return direction::DOWN;
+        else if (y < -x)
+            return direction::LEFT;
+        else if (hint == direction::DOWN || hint == direction::LEFT)
+            return hint;
+        else
+            return direction::LEFT;
+    }
+    else if (y < x)
+    {
+        if (y > -x)
+            return direction::RIGHT;
+        else if (y < -x)
+            return direction::UP;
+        else if (hint == direction::RIGHT || hint == direction::UP)
+            return hint;
+        else
+            return direction::RIGHT;
+    }
+    else // y == x
+    {
+        if (y > -x)
+        {
+            if (hint == direction::RIGHT || hint == direction::DOWN)
+                return hint;
+            else
+                return direction::RIGHT;
+        }
+        else if (y < -x)
+        {
+            if (hint == direction::UP || hint == direction::LEFT)
+                return hint;
+            else
+                return direction::LEFT;
+        }
+        else // y == 0 && x == 0
+            return direction::NONE;
+    }
+}
+
+auto to_non_diagonal_direction(direction raw, const direction hint) -> direction
+{
+    direction result = raw;
+
+    switch (raw)
+    {
+    case direction::UP_RIGHT:
+        if (hint == direction::UP || hint == direction::RIGHT)
+            result = hint;
+        else
+            result = direction::RIGHT;
+        break;
+
+    case direction::UP_LEFT:
+        if (hint == direction::UP || hint == direction::LEFT)
+            result = hint;
+        else
+            result = direction::LEFT;
+        break;
+
+    case direction::DOWN_RIGHT:
+        if (hint == direction::DOWN || hint == direction::RIGHT)
+            result = hint;
+        else
+            result = direction::RIGHT;
+        break;
+
+    case direction::DOWN_LEFT:
+        if (hint == direction::DOWN || hint == direction::LEFT)
+            result = hint;
+        else
+            result = direction::LEFT;
+        break;
+
+    default:
+        break;
+    }
+
+    return result;
 }
 
 } // namespace mc::gm

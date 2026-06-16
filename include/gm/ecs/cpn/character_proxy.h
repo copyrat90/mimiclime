@@ -1,5 +1,7 @@
 #pragma once
 
+#include "gm/direction.h"
+
 #include "chr_slime.h"
 
 #include <algorithm>
@@ -14,10 +16,21 @@ namespace mc::gm::ecs::cpn
 struct character_proxy final
 {
 public:
+    direction last_direction = direction::NONE;
+
+private:
+    ldtk::gen::species_kind _species;
+
+    static constexpr auto MAX_CHR_SIZE = std::max({sizeof(gbatool::Chr_Slime)});
+    static constexpr auto MAX_CHR_ALIGN = std::max({alignof(gbatool::Chr_Slime)});
+
+    alignas(MAX_CHR_ALIGN) std::byte _character_buffer[MAX_CHR_SIZE];
+
+public:
     void change_species(ldtk::gen::species_kind);
 
 public:
-    auto species() const -> ldtk::gen::species_kind
+    auto species() const -> decltype(_species)
     {
         return _species;
     }
@@ -42,14 +55,6 @@ public:
 private:
     void construct_character(ldtk::gen::species_kind, const bn::fixed_point& top_left_position, const bn::camera_ptr&);
     void destroy_character();
-
-private:
-    static constexpr auto MAX_CHR_SIZE = std::max({sizeof(gbatool::Chr_Slime)});
-    static constexpr auto MAX_CHR_ALIGN = std::max({alignof(gbatool::Chr_Slime)});
-
-    alignas(MAX_CHR_ALIGN) std::byte _character_buffer[MAX_CHR_SIZE];
-
-    ldtk::gen::species_kind _species;
 };
 
 } // namespace mc::gm::ecs::cpn
