@@ -8,17 +8,18 @@
 namespace mc::ut
 {
 
-constexpr auto get_config_entity(ldtk::gen::entity_ident config_entity_ident) -> const ldtk::entity&
+constexpr auto get_config_entity(ldtk::gen::entity_ident config_entity_ident,
+                                 ldtk::gen::layer_ident entities_layer = ldtk::gen::layer_ident::entities)
+    -> const ldtk::entity&
 {
-    static constexpr auto CONFIG_ENTITIES = ldtk::gen::gen_project.get_level(ldtk::gen::level_ident::configs)
-                                                .get_layer(ldtk::gen::layer_ident::entities)
-                                                .entity_instances();
+    const auto config_entities =
+        ldtk::gen::gen_project.get_level(ldtk::gen::level_ident::configs).get_layer(entities_layer).entity_instances();
 
-    const auto iter = std::ranges::find_if(CONFIG_ENTITIES, [config_entity_ident](const ldtk::entity& entity) {
+    const auto iter = std::ranges::find_if(config_entities, [config_entity_ident](const ldtk::entity& entity) {
         return entity.identifier() == config_entity_ident;
     });
 
-    BN_ASSERT(iter != CONFIG_ENTITIES.cend(), "config entity not found");
+    BN_ASSERT(iter != config_entities.cend(), "config entity not found");
     return *iter;
 }
 
