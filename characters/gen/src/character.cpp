@@ -12,7 +12,7 @@ namespace gbatool
 
 Character::Character(const bn::span<const Animation>& animations, const bn::span<const Frame>& frames,
     const bn::span<const Sprite>& sprites, const bn::span<const CollisionsPerFrame>& collisions_per_animation,
-    bn::ivector<bn::sprite_ptr>& currentFrameSprites) :
+    bn::ivector<bn::sprite_ptr>& currentFrameSprites, int verticalAxis) :
     _currentAnimation(AnimationID::NONE)
     , _frameCounter(0)
     , _frameIndex(0)
@@ -28,6 +28,7 @@ Character::Character(const bn::span<const Animation>& animations, const bn::span
     , _sprites(sprites)
     , _collisions_per_animation(collisions_per_animation)
     , _currentFrameSprites(currentFrameSprites)
+    , _verticalAxis(verticalAxis)
     , _animation_running(false)
 {
 }
@@ -474,7 +475,9 @@ bn::optional<bn::sprite_ptr> Character::create_sprite(unsigned int spriteIndex)
 
 auto Character::Collisions::RelativeRect::get_absolute_rect(const Character& self) const -> bn::top_left_fixed_rect
 {
-    return bn::top_left_fixed_rect(_x + self.top_left_x(), _y + self.top_left_y(), _width, _height);
+    const bn::fixed x = (self.is_facing_right() ? (int)_x : 2 * self._verticalAxis - ((int)_x + _width)) + self.top_left_x();
+
+    return bn::top_left_fixed_rect(x, _y + self.top_left_y(), _width, _height);
 }
 
 auto Character::Collisions::get_rects_with_mask(Mask mask) const -> const bn::span<const RelativeRect>&

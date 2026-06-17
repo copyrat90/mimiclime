@@ -150,7 +150,7 @@ protected:
 
     Character(const bn::span<const Animation>& animations, const bn::span<const Frame>& frames,
         const bn::span<const Sprite>& sprites, const bn::span<const CollisionsPerFrame>& collisions_per_animation,
-        bn::ivector<bn::sprite_ptr>& currentFrameSprites);
+        bn::ivector<bn::sprite_ptr>& currentFrameSprites, int verticalAxis);
     Character(const Character&) = delete;
     Character(const Character&&) = delete;
     bn::fixed_point _position;
@@ -177,6 +177,7 @@ private:
     bn::span<const CollisionsPerFrame> _collisions_per_animation;
 
     bn::ivector<bn::sprite_ptr>& _currentFrameSprites;
+    const int _verticalAxis;
 
     int _current_sprite_start_index;
     bool _animation_running;
