@@ -1,5 +1,4 @@
 // This file is auto generated!
-// Time-stamp 2026-6-17 20:05:51
 // Exported by GBATool
 // Version 1.0.0.0
 // https://github.com/DarkKodKod/GBATool
@@ -60,7 +59,7 @@ public:
 
     struct Sprite
     {
-        constexpr Sprite(const bn::sprite_item* item, int x, int y, int xFlipped) : 
+        constexpr Sprite(const bn::sprite_item* item, int x, int y, int xFlipped) :
             sprite_item(item)
             , position(bn::fixed_point(x, y))
             , position_horizontal_flipped(bn::fixed_point(xFlipped, y))

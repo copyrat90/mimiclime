@@ -1,5 +1,4 @@
 // This file is auto generated!
-// Time-stamp 2026-6-17 20:05:51
 // Exported by GBATool
 // Version 1.0.0.0
 // https://github.com/DarkKodKod/GBATool
