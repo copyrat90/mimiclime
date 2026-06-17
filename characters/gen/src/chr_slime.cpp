@@ -8,7 +8,7 @@
 namespace gbatool
 {
 
-static constexpr Chr_Slime::Animation animations[4] = {{4, 6, 0}, {8, 1, 0}, {8, 1, 0}, {8, 1, 0}};
+static constexpr Chr_Slime::Animation animations[4] = {{4, 6, 0}, {8, 2, 0}, {8, 2, 0}, {8, 2, 0}};
 
 static constexpr Chr_Slime::Frame frames[28] = {{0, 0}, {1, 1}, {2, 2}, {3, 3}, {4, 4}, {5, 5}, {6, 6}, {7, 7}, {8, 8}, {9, 9}, {10, 10}, {11, 11}, {12, 12}, {13, 13}, {14, 14}, {15, 15}, {16, 16}, {17, 17}, {18, 18}, {19, 19}, {20, 20}, {21, 21}, {22, 22}, {23, 23}, {24, 24}, {25, 25}, {26, 26}, {27, 27}};
 
@@ -543,7 +543,7 @@ Chr_Slime::Chr_Slime() :
         bn::span<const Chr_Slime::Animation>(animations, 4), 
         bn::span<const Chr_Slime::Frame>(frames, 28), 
         bn::span<const Chr_Slime::Sprite>(sprites, 28),
-        collisions, _frameSprites
+        collisions, _frameSprites, 0
     )
 {
 }
