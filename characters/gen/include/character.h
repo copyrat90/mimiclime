@@ -59,7 +59,7 @@ public:
 
     struct Sprite
     {
-        constexpr Sprite(const bn::sprite_item* item, int x, int y, int xFlipped) : 
+        constexpr Sprite(const bn::sprite_item* item, int x, int y, int xFlipped) :
             sprite_item(item)
             , position(bn::fixed_point(x, y))
             , position_horizontal_flipped(bn::fixed_point(xFlipped, y))

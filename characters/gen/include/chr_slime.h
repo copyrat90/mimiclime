@@ -15,6 +15,7 @@
 #include "bank_bnk_slime_2.h"
 #include "bank_bnk_slime_0.h"
 #include "bank_bnk_slime_1.h"
+#include "bank_bnk_slime_3.h"
 
 #include "palette_pal_default.h"
 
@@ -35,6 +36,10 @@ public:
         , WALK = 1
         , WALK_SOUTH = 2
         , WALK_NORTH = 3
+        , TACKLE_NORTH = 4
+        , TACKLE_SOUTH = 5
+        , TACKLE_EAST = 6
+        , TACKLE_WEST = 7
     };
 
     Chr_Slime();
@@ -183,6 +188,90 @@ public: // Sprite items
 
     // walk_north_frame_8
     // sprite_item, bnk_slime_1_slime_walk_vertically_0, already declared in a previous frame
+
+    // tackle_north_frame_1
+    static constexpr bn::sprite_item bnk_slime_3_slime_tackle_north_0 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_3_slime_tackle_north_0Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // tackle_north_frame_2
+    static constexpr bn::sprite_item bnk_slime_3_slime_tackle_north_1 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_3_slime_tackle_north_1Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // tackle_north_frame_3
+    static constexpr bn::sprite_item bnk_slime_3_slime_tackle_north_2 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_3_slime_tackle_north_2Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // tackle_north_frame_4
+    static constexpr bn::sprite_item bnk_slime_3_slime_tackle_north_3 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_3_slime_tackle_north_3Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // tackle_south_frame_1
+    static constexpr bn::sprite_item bnk_slime_3_slime_tackle_south_0 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_3_slime_tackle_south_0Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // tackle_south_frame_2
+    static constexpr bn::sprite_item bnk_slime_3_slime_tackle_south_1 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_3_slime_tackle_south_1Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // tackle_south_frame_3
+    static constexpr bn::sprite_item bnk_slime_3_slime_tackle_south_2 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_3_slime_tackle_south_2Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // tackle_south_frame_4
+    static constexpr bn::sprite_item bnk_slime_3_slime_tackle_south_3 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_3_slime_tackle_south_3Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // tackle_east_frame_1
+    static constexpr bn::sprite_item bnk_slime_3_slime_tackle_east_0 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_3_slime_tackle_east_0Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // tackle_east_frame_2
+    static constexpr bn::sprite_item bnk_slime_3_slime_tackle_east_1 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_3_slime_tackle_east_1Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // tackle_east_frame_3
+    static constexpr bn::sprite_item bnk_slime_3_slime_tackle_east_2 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_3_slime_tackle_east_2Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // tackle_east_frame_4
+    static constexpr bn::sprite_item bnk_slime_3_slime_tackle_east_3 = bn::sprite_item(
+        bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
+        bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_slime_3_slime_tackle_east_3Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+
+    // tackle_west_frame_1
+    // sprite_item, bnk_slime_3_slime_tackle_east_0, already declared in a previous frame
+
+    // tackle_west_frame_2
+    // sprite_item, bnk_slime_3_slime_tackle_east_1, already declared in a previous frame
+
+    // tackle_west_frame_3
+    // sprite_item, bnk_slime_3_slime_tackle_east_2, already declared in a previous frame
+
+    // tackle_west_frame_4
+    // sprite_item, bnk_slime_3_slime_tackle_east_3, already declared in a previous frame
 
 };
 
