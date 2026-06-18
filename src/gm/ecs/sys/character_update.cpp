@@ -181,7 +181,7 @@ void transition_between_idle_and_walk(cpn::character_proxy& chara_proxy, cpn::ve
         switch (anim_id)
         {
         case gbatool::Chr_Slime::AnimationID::IDLE:
-        case gbatool::Chr_Slime::AnimationID::WALK:
+        case gbatool::Chr_Slime::AnimationID::WALK_EAST:
         case gbatool::Chr_Slime::AnimationID::WALK_SOUTH:
         case gbatool::Chr_Slime::AnimationID::WALK_NORTH:
 
@@ -199,7 +199,7 @@ void transition_between_idle_and_walk(cpn::character_proxy& chara_proxy, cpn::ve
                     break;
                 case direction::LEFT:
                 case direction::RIGHT:
-                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK);
+                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK_EAST);
                     break;
                 default:
                     BN_ERROR("Invalid direction: ", static_cast<int>(dir));
