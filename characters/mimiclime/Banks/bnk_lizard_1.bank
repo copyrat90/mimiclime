@@ -3,5 +3,5 @@ Version = "1.0.0"
 DoNotExport = false
 BitsPerPixel = 4
 IsBackground = false
-TransparentColor = 0
+TransparentColor = 65280
 Sprites = [{SpriteID = "bfd3271a-0da1-4455-a261-3a0f11adc175", TileSetID = "6aa6bd73-f6b6-4d1a-94b6-fce930c9685d"}, {SpriteID = "724ed859-fa1a-4354-a62d-42768eb8f1d7", TileSetID = "6aa6bd73-f6b6-4d1a-94b6-fce930c9685d"}, {SpriteID = "b20634f5-6440-481b-a6e8-54cc09b6c9e5", TileSetID = "6aa6bd73-f6b6-4d1a-94b6-fce930c9685d"}, {SpriteID = "b86b8eeb-b427-4555-bb7a-b3183efa2899", TileSetID = "6aa6bd73-f6b6-4d1a-94b6-fce930c9685d"}, {SpriteID = "829f10c9-9df7-47cd-a7e1-e9af230ef4eb", TileSetID = "6aa6bd73-f6b6-4d1a-94b6-fce930c9685d"}, {SpriteID = "5346b374-41fb-4f3b-a5eb-040f20700434", TileSetID = "6aa6bd73-f6b6-4d1a-94b6-fce930c9685d"}, {SpriteID = "c1b57137-e0a2-4f80-a206-92617dcefb0a", TileSetID = "6aa6bd73-f6b6-4d1a-94b6-fce930c9685d"}, {SpriteID = "e47e07d2-9d3a-46ac-b1ca-5b27fba91bbe", TileSetID = "6aa6bd73-f6b6-4d1a-94b6-fce930c9685d"}, {SpriteID = "8be85c70-e74a-46ab-94ac-a6f69990c196", TileSetID = "6aa6bd73-f6b6-4d1a-94b6-fce930c9685d"}]
