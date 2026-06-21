@@ -216,6 +216,31 @@
 			"overrideTilesetUid": null,
 			"gridTiles": [],
 			"entityInstances": []
+		},
+		{
+			"__identifier": "laboratory_tiles",
+			"__type": "Tiles",
+			"__cWid": 15,
+			"__cHei": 10,
+			"__gridSize": 16,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": 34,
+			"__tilesetRelPath": "laboratory_tileset.png",
+			"iid": "b4a7bcd0-48b0-11f1-9a3c-cd031b982773",
+			"levelId": 0,
+			"layerDefUid": 35,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 4691560,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": []
 		}
 	],
 	"__neighbours": [{ "levelIid": "2bf1b930-48b0-11f1-8010-95c3bb6e3700", "dir": "e" }]

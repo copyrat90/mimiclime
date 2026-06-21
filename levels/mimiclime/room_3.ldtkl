@@ -112,6 +112,22 @@
 					"fieldInstances": [],
 					"__worldX": 392,
 					"__worldY": 382
+				},
+				{
+					"__identifier": "entrance",
+					"__grid": [119,136],
+					"__pivot": [0.5,0.5],
+					"__tags": ["entrance"],
+					"__tile": { "tilesetUid": 4, "x": 0, "y": 112, "w": 16, "h": 16 },
+					"__smartColor": "#B57A29",
+					"iid": "e760e5a0-48b0-11f1-9a3c-334bbc035665",
+					"width": 12,
+					"height": 12,
+					"defUid": 18,
+					"px": [119,136],
+					"fieldInstances": [],
+					"__worldX": 391,
+					"__worldY": 488
 				}
 			]
 		},
@@ -162,6 +178,30 @@
 					}] }],
 					"__worldX": 368,
 					"__worldY": 352
+				},
+				{
+					"__identifier": "exit",
+					"__grid": [96,158],
+					"__pivot": [0,0],
+					"__tags": ["exit"],
+					"__tile": null,
+					"__smartColor": "#6ABDD3",
+					"iid": "486c7400-48b0-11f1-9a3c-872b0282abad",
+					"width": 47,
+					"height": 1,
+					"defUid": 19,
+					"px": [96,158],
+					"fieldInstances": [{ "__identifier": "destination", "__type": "EntityRef", "__value": {
+						"entityIid": "784683a0-48b0-11f1-9a3c-8b3d1954fe66",
+						"layerIid": "01477ae1-48b0-11f1-9a3c-cb5afa040998",
+						"levelIid": "014753d0-48b0-11f1-9a3c-5f949606383d",
+						"worldIid": "140c68a1-48b0-11f1-a411-f37bc73a2017"
+					}, "__tile": null, "defUid": 21, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["784683a0-48b0-11f1-9a3c-8b3d1954fe66"]
+					}] }],
+					"__worldX": 368,
+					"__worldY": 510
 				}
 			]
 		},
@@ -236,7 +276,32 @@
 			"overrideTilesetUid": null,
 			"gridTiles": [],
 			"entityInstances": []
+		},
+		{
+			"__identifier": "laboratory_tiles",
+			"__type": "Tiles",
+			"__cWid": 15,
+			"__cHei": 10,
+			"__gridSize": 16,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": 34,
+			"__tilesetRelPath": "laboratory_tileset.png",
+			"iid": "b4a7e3e2-48b0-11f1-9a3c-47ac6db50338",
+			"levelId": 24,
+			"layerDefUid": 35,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 6643844,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": []
 		}
 	],
-	"__neighbours": [{ "levelIid": "8226e4d0-48b0-11f1-83b8-d19e57531a62", "dir": "n" }]
+	"__neighbours": [ { "levelIid": "8226e4d0-48b0-11f1-83b8-d19e57531a62", "dir": "n" }, { "levelIid": "014753d0-48b0-11f1-9a3c-5f949606383d", "dir": "s" } ]
 }
