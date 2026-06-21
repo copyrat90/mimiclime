@@ -14,7 +14,7 @@
 
 #include "bank_bnk_lizard_0.h"
 
-#include ".h"
+#include "palette_pal_default.h"
 
 #include "character.h"
 
@@ -44,55 +44,55 @@ public: // Sprite items
     static constexpr bn::sprite_item bnk_lizard_0_lizard_idle_0 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_lizard_0_lizard_idle_0Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
-        bn::sprite_palette_item(bn::span<const bn::color>(Pal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
     // walk_frame_1
     static constexpr bn::sprite_item bnk_lizard_0_lizard_walk_0 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_lizard_0_lizard_walk_0Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
-        bn::sprite_palette_item(bn::span<const bn::color>(Pal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
     // walk_frame_2
     static constexpr bn::sprite_item bnk_lizard_0_lizard_walk_1 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_lizard_0_lizard_walk_1Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
-        bn::sprite_palette_item(bn::span<const bn::color>(Pal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
     // walk_frame_3
     static constexpr bn::sprite_item bnk_lizard_0_lizard_walk_2 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_lizard_0_lizard_walk_2Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
-        bn::sprite_palette_item(bn::span<const bn::color>(Pal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
     // walk_frame_4
     static constexpr bn::sprite_item bnk_lizard_0_lizard_walk_3 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_lizard_0_lizard_walk_3Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
-        bn::sprite_palette_item(bn::span<const bn::color>(Pal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
     // attack_frame_1
     static constexpr bn::sprite_item bnk_lizard_0_lizard_attack_0 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_lizard_0_lizard_attack_0Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
-        bn::sprite_palette_item(bn::span<const bn::color>(Pal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
     // attack_frame_2
     static constexpr bn::sprite_item bnk_lizard_0_lizard_attack_1 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_lizard_0_lizard_attack_1Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
-        bn::sprite_palette_item(bn::span<const bn::color>(Pal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
     // attack_frame_3
     static constexpr bn::sprite_item bnk_lizard_0_lizard_attack_2 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_lizard_0_lizard_attack_2Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
-        bn::sprite_palette_item(bn::span<const bn::color>(Pal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
     // attack_frame_4
     static constexpr bn::sprite_item bnk_lizard_0_lizard_attack_3 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::BIG),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_lizard_0_lizard_attack_3Tiles, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
-        bn::sprite_palette_item(bn::span<const bn::color>(Pal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
+        bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
     // attack_frame_5
     // sprite_item, bnk_lizard_0_lizard_attack_2, already declared in a previous frame
