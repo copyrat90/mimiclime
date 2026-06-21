@@ -3,7 +3,7 @@ Version = "1.0.0"
 DoNotExport = false
 VerticalAxis = 120
 SpriteBase = 80
-PaletteID = ""
+PaletteID = "8f52e425-9398-489b-a312-54a94cc57339"
 PaletteIndex = 0
 Priority = 0
 [RelativeOrigin]
