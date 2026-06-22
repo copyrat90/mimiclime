@@ -699,7 +699,7 @@
 			"limitScope": "PerLevel",
 			"limitBehavior": "PreventAdding",
 			"pivotX": 0.5,
-			"pivotY": 1,
+			"pivotY": 0.5,
 			"fieldDefs": [
 				{
 					"identifier": "species",
