@@ -9,8 +9,11 @@ void room_exit_collide(actor_registry& actor_reg, singleton_registry& singleton_
     if (singleton_reg.all_of<cpn::room_change_states>(singleton_entity))
         return;
 
-    actor_reg.view<cpn::character_proxy, cpn::player_character_controller>().each(
-        [&](cpn::character_proxy& chara_proxy, cpn::player_character_controller&) {
+    actor_reg.view<cpn::character_proxy, cpn::critter_states>().each(
+        [&](cpn::character_proxy& chara_proxy, cpn::critter_states& critter_states) {
+            if (!critter_states.is_player())
+                return;
+
             const auto* room = singleton_reg.try_get<cpn::room>(singleton_entity);
             BN_ASSERT(room);
 

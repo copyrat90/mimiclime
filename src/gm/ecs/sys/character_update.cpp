@@ -2,14 +2,18 @@
 
 #include <bn_math.h>
 
+#include <algorithm>
+
+#include "ldtk_gen_project.h"
+
 namespace mc::gm::ecs::sys
 {
 
 namespace
 {
 
-void update_movement(gbatool::Character& character, cpn::velocity& velocity, singleton_registry& singleton_reg,
-                     const gba::entity singleton_entity)
+void update_movement(const gba::entity entity, actor_registry& actor_reg, const cpn::velocity& velocity,
+                     singleton_registry& singleton_reg, const gba::entity singleton_entity)
 {
     // Collision check is actually done for slightly smaller collision rect
     // to avoid false positives for edge-edge meet
@@ -23,8 +27,15 @@ void update_movement(gbatool::Character& character, cpn::velocity& velocity, sin
 
     const auto* room = singleton_reg.try_get<cpn::room>(singleton_entity);
     BN_ASSERT(room);
+    auto* chara_proxy = actor_reg.try_get<cpn::character_proxy>(entity);
+    BN_ASSERT(chara_proxy);
+    auto& character = chara_proxy->character();
     const auto& character_relative_collisions =
         character.current_frame_collisions().get_rects_with_mask(gbatool::Character::Mask::CUSTOM_0);
+
+    auto* collision_events = actor_reg.try_get<cpn::collision_events>(entity);
+    if (collision_events)
+        collision_events->collided_wall = false;
 
     // X-axis first
     if (velocity.velocity.x() != 0)
@@ -92,7 +103,10 @@ void update_movement(gbatool::Character& character, cpn::velocity& velocity, sin
         }
 
         if (ever_collided_x)
-            velocity.velocity.set_x(0);
+        {
+            if (collision_events)
+                collision_events->collided_wall = true;
+        }
     }
 
     // Y-axis next
@@ -161,95 +175,42 @@ void update_movement(gbatool::Character& character, cpn::velocity& velocity, sin
         }
 
         if (ever_collided_y)
-            velocity.velocity.set_y(0);
-    }
-}
-
-void transition_between_idle_and_walk(cpn::character_proxy& chara_proxy, cpn::velocity& velocity)
-{
-    static constexpr bn::fixed WALK_EPSILON_SQUARED = 0.5f;
-
-    auto& chara = chara_proxy.character();
-    const auto anim_id = chara.current_animation_id();
-
-    auto dimensions_squared = [](const bn::fixed_point& vec) { return vec.x() * vec.x() + vec.y() * vec.y(); };
-
-    switch (chara_proxy.species())
-    {
-    case ldtk::gen::species_kind::slime:
-
-        switch (anim_id)
         {
-        case gbatool::Chr_Slime::AnimationID::IDLE_UP:
-        case gbatool::Chr_Slime::AnimationID::IDLE_RIGHT:
-        case gbatool::Chr_Slime::AnimationID::IDLE_DOWN:
-        case gbatool::Chr_Slime::AnimationID::IDLE_LEFT:
-        case gbatool::Chr_Slime::AnimationID::WALK_UP:
-        case gbatool::Chr_Slime::AnimationID::WALK_RIGHT:
-        case gbatool::Chr_Slime::AnimationID::WALK_DOWN:
-        case gbatool::Chr_Slime::AnimationID::WALK_LEFT:
-
-            if (dimensions_squared(velocity.velocity) > WALK_EPSILON_SQUARED)
-            {
-                const auto dir = to_direction_4(velocity.velocity, chara_proxy.last_direction);
-
-                switch (dir)
-                {
-                case direction::UP:
-                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK_UP);
-                    break;
-                case direction::DOWN:
-                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK_DOWN);
-                    break;
-                case direction::LEFT:
-                case direction::RIGHT:
-                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK_RIGHT);
-                    break;
-                default:
-                    BN_ERROR("Invalid direction: ", static_cast<int>(dir));
-                }
-
-                chara_proxy.last_direction = dir;
-            }
-            else
-            {
-                chara.load_animation(gbatool::Chr_Slime::AnimationID::IDLE_UP);
-            }
-            break;
-
-        default:
-            break;
+            if (collision_events)
+                collision_events->collided_wall = true;
         }
-
-        break;
-
-    default:
-        BN_ERROR("Invalid species: ", static_cast<int>(chara_proxy.species()));
     }
 }
 
 } // namespace
 
-void character_update(actor_registry& registry, singleton_registry& singleton_reg, const gba::entity singleton_entity)
+void character_update(actor_registry& actor_reg, singleton_registry& singleton_reg, const gba::entity singleton_entity)
 {
-    registry.view<cpn::character_proxy>().each([&](const gba::entity entity, cpn::character_proxy& chara_proxy) {
+    bn::vector<gbatool::Character*, MAX_ACTORS_COUNT> y_sort_required_characters;
+
+    actor_reg.view<cpn::character_proxy>().each([&](const gba::entity entity, cpn::character_proxy& chara_proxy) {
         auto& chara = chara_proxy.character();
 
-        if (auto* velocity = registry.try_get<cpn::velocity>(entity); velocity != nullptr)
-        {
-            static constexpr bn::fixed FLIP_EPSILON = 0.01f;
-            if (bn::abs(velocity->velocity.x()) > FLIP_EPSILON)
-                chara.set_facing_right(velocity->velocity.x() > 0);
-
-            update_movement(chara, *velocity, singleton_reg, singleton_entity);
-            transition_between_idle_and_walk(chara_proxy, *velocity);
-
-            velocity->velocity = bn::fixed_point(0, 0);
-        }
+        if (auto* velocity = actor_reg.try_get<cpn::velocity>(entity); velocity != nullptr)
+            update_movement(entity, actor_reg, *velocity, singleton_reg, singleton_entity);
 
         chara.update_animation();
-        chara.set_z_order(-chara.top_left_y().floor_integer());
+        y_sort_required_characters.push_back(&chara);
     });
+
+    // Y-sort characters
+    std::ranges::sort(y_sort_required_characters, [](const gbatool::Character* c1, const gbatool::Character* c2) {
+        const bn::fixed_point& p1 = c1->position();
+        const bn::fixed_point& p2 = c2->position();
+        if (p1.y() != p2.y()) [[likely]]
+            return p1.y() < p2.y();
+        else if (p1.x() != p2.x())
+            return p1.x() < p2.x();
+        else [[unlikely]]
+            return c1 < c2;
+    });
+    for (gbatool::Character* chara : y_sort_required_characters)
+        chara->put_above();
 }
 
 } // namespace mc::gm::ecs::sys

@@ -43,14 +43,14 @@ public:
     auto collide_with_exit(const bn::top_left_fixed_rect& collision) const -> bn::optional<cfg::room_entrance>;
 
 public:
-    auto level() const -> decltype(_level)
+    auto level() const -> decltype(*_level)
     {
-        return _level;
+        return *_level;
     }
 
-    auto terrain() const -> decltype(_terrain)
+    auto terrain() const -> decltype(*_terrain)
     {
-        return _terrain;
+        return *_terrain;
     }
 
     auto terrain_int_grid_size() const -> decltype(_terrain_int_grid_size)
