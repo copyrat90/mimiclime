@@ -2,13 +2,13 @@ GUID = "12a0351f-7892-490f-b8bb-c2ee12e1b46e"
 Version = "1.0.0"
 DoNotExport = false
 VerticalAxis = 120
-SpriteBase = 80
+SpriteBase = 73
 PaletteID = "8f52e425-9398-489b-a312-54a94cc57339"
 PaletteIndex = 0
 Priority = 0
 [RelativeOrigin]
 X = 120.0
-Y = 80.0
+Y = 73.0
 [Animations]
 [Animations.c4e50155-5877-47da-94c0-69027dc6d016]
 ID = "c4e50155-5877-47da-94c0-69027dc6d016"
