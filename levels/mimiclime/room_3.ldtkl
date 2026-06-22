@@ -54,8 +54,8 @@
 			"entityInstances": [
 				{
 					"__identifier": "mob",
-					"__grid": [185,89],
-					"__pivot": [0.5,1],
+					"__grid": [185,90],
+					"__pivot": [0.5,0.5],
 					"__tags": [],
 					"__tile": { "tilesetUid": 4, "x": 96, "y": 240, "w": 16, "h": 16 },
 					"__smartColor": "#E43B44",
