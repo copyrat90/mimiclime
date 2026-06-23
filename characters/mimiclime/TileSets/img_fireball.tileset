@@ -1,0 +1,7 @@
+GUID = "f3ff9f6e-8aa8-468b-99a2-e2e22d329ce2"
+Version = "1.0.0"
+DoNotExport = false
+ImagePath = "Images\\img_fireball.bmp"
+ImageWidth = 8
+ImageHeight = 32
+Sprites = [{ID = "32c652ac-1b3f-414d-9cf6-5a43a1a7014c", Shape = 0, Size = 0, PosX = 0, PosY = 0, TileSetID = "f3ff9f6e-8aa8-468b-99a2-e2e22d329ce2", Alias = "fireball_fly_0"}, {ID = "180e8fbd-0c81-497e-9802-b4a00aa4966f", Shape = 0, Size = 0, PosX = 0, PosY = 8, TileSetID = "f3ff9f6e-8aa8-468b-99a2-e2e22d329ce2", Alias = "fireball_fly_1"}, {ID = "ea1fa3ab-bf32-4471-bfce-2fbbf23c31f8", Shape = 0, Size = 0, PosX = 0, PosY = 16, TileSetID = "f3ff9f6e-8aa8-468b-99a2-e2e22d329ce2", Alias = "fireball_fly_2"}, {ID = "1d6d0641-2988-4d3c-85e9-1b0492920f18", Shape = 0, Size = 0, PosX = 0, PosY = 24, TileSetID = "f3ff9f6e-8aa8-468b-99a2-e2e22d329ce2", Alias = "fireball_fly_3"}]
