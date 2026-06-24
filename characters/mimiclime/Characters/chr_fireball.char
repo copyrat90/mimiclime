@@ -12,7 +12,7 @@ Y = 80.0
 [Animations]
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326]
 ID = "f8106357-0366-4e81-bf20-9d217cab1326"
-Name = "Animation_1"
+Name = "rotate"
 Speed = 0.06700000166893005
 Repeat = 1
 Looping = true
@@ -43,7 +43,7 @@ Width = 6
 Height = 6
 PosX = 117
 PosY = 77
-Mask = 0
+Mask = 2
 CustomMask = 0
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326.Frames.7880933e-067e-498e-848e-b6eabd242065.CollisionInfo.754e1623-ab12-4ba0-ba13-c467801eb6d1.Color]
 A = 110
@@ -97,7 +97,7 @@ Width = 6
 Height = 6
 PosX = 117
 PosY = 77
-Mask = 0
+Mask = 2
 CustomMask = 0
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326.Frames.929053c8-c80a-4bcd-8407-ea282c910490.CollisionInfo.910b657f-9c3b-4801-99e8-f1c0994b09d8.Color]
 A = 110
@@ -151,7 +151,7 @@ Width = 6
 Height = 6
 PosX = 117
 PosY = 77
-Mask = 0
+Mask = 2
 CustomMask = 0
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326.Frames.6c245205-173f-4b79-8b1a-48303c7b99de.CollisionInfo.c7e9773c-61bb-4bda-9ec2-cf6a96cb79f1.Color]
 A = 110
@@ -205,7 +205,7 @@ Width = 6
 Height = 6
 PosX = 117
 PosY = 77
-Mask = 0
+Mask = 2
 CustomMask = 0
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326.Frames.273af8d1-3b06-4338-8f18-0e3042918b29.CollisionInfo.4e69158f-982d-41b9-bee5-f7a7a6cf9d0a.Color]
 A = 110

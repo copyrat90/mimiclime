@@ -19,67 +19,79 @@ static constexpr Chr_Fireball::Sprite sprites[4] = {
     { &Chr_Fireball::bnk_fireball_0_fireball_fly_3, 0, 0, 0 }
 };
 
-static constexpr Character::Collisions::RelativeRect Animation_1_frame_0_mask_hitbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -3, 6, 6),
+static constexpr Character::Collisions::RelativeRect rotate_frame_0_mask_hitbox_collisions[] = {
     Character::Collisions::RelativeRect(-2, -2, 4, 4),
 };
 
-static constexpr bn::span<const Character::Collisions::RelativeRect> Animation_1_frame_0_collisions_spans[] = {
-    Animation_1_frame_0_mask_hitbox_collisions,
-    bn::span<const Character::Collisions::RelativeRect>{},
-    bn::span<const Character::Collisions::RelativeRect>{},
+static constexpr Character::Collisions::RelativeRect rotate_frame_0_mask_custom_0_collisions[] = {
+    Character::Collisions::RelativeRect(-3, -3, 6, 6),
 };
 
-static constexpr Character::Collisions Animation_1_frame_0_collisions(Animation_1_frame_0_collisions_spans);
+static constexpr bn::span<const Character::Collisions::RelativeRect> rotate_frame_0_collisions_spans[] = {
+    rotate_frame_0_mask_hitbox_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
+    rotate_frame_0_mask_custom_0_collisions,
+};
 
-static constexpr Character::Collisions::RelativeRect Animation_1_frame_1_mask_hitbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -3, 6, 6),
+static constexpr Character::Collisions rotate_frame_0_collisions(rotate_frame_0_collisions_spans);
+
+static constexpr Character::Collisions::RelativeRect rotate_frame_1_mask_hitbox_collisions[] = {
     Character::Collisions::RelativeRect(-2, -2, 4, 4),
 };
 
-static constexpr bn::span<const Character::Collisions::RelativeRect> Animation_1_frame_1_collisions_spans[] = {
-    Animation_1_frame_1_mask_hitbox_collisions,
-    bn::span<const Character::Collisions::RelativeRect>{},
-    bn::span<const Character::Collisions::RelativeRect>{},
+static constexpr Character::Collisions::RelativeRect rotate_frame_1_mask_custom_0_collisions[] = {
+    Character::Collisions::RelativeRect(-3, -3, 6, 6),
 };
 
-static constexpr Character::Collisions Animation_1_frame_1_collisions(Animation_1_frame_1_collisions_spans);
+static constexpr bn::span<const Character::Collisions::RelativeRect> rotate_frame_1_collisions_spans[] = {
+    rotate_frame_1_mask_hitbox_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
+    rotate_frame_1_mask_custom_0_collisions,
+};
 
-static constexpr Character::Collisions::RelativeRect Animation_1_frame_2_mask_hitbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -3, 6, 6),
+static constexpr Character::Collisions rotate_frame_1_collisions(rotate_frame_1_collisions_spans);
+
+static constexpr Character::Collisions::RelativeRect rotate_frame_2_mask_hitbox_collisions[] = {
     Character::Collisions::RelativeRect(-2, -2, 4, 4),
 };
 
-static constexpr bn::span<const Character::Collisions::RelativeRect> Animation_1_frame_2_collisions_spans[] = {
-    Animation_1_frame_2_mask_hitbox_collisions,
-    bn::span<const Character::Collisions::RelativeRect>{},
-    bn::span<const Character::Collisions::RelativeRect>{},
+static constexpr Character::Collisions::RelativeRect rotate_frame_2_mask_custom_0_collisions[] = {
+    Character::Collisions::RelativeRect(-3, -3, 6, 6),
 };
 
-static constexpr Character::Collisions Animation_1_frame_2_collisions(Animation_1_frame_2_collisions_spans);
+static constexpr bn::span<const Character::Collisions::RelativeRect> rotate_frame_2_collisions_spans[] = {
+    rotate_frame_2_mask_hitbox_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
+    rotate_frame_2_mask_custom_0_collisions,
+};
 
-static constexpr Character::Collisions::RelativeRect Animation_1_frame_3_mask_hitbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -3, 6, 6),
+static constexpr Character::Collisions rotate_frame_2_collisions(rotate_frame_2_collisions_spans);
+
+static constexpr Character::Collisions::RelativeRect rotate_frame_3_mask_hitbox_collisions[] = {
     Character::Collisions::RelativeRect(-2, -2, 4, 4),
 };
 
-static constexpr bn::span<const Character::Collisions::RelativeRect> Animation_1_frame_3_collisions_spans[] = {
-    Animation_1_frame_3_mask_hitbox_collisions,
-    bn::span<const Character::Collisions::RelativeRect>{},
-    bn::span<const Character::Collisions::RelativeRect>{},
+static constexpr Character::Collisions::RelativeRect rotate_frame_3_mask_custom_0_collisions[] = {
+    Character::Collisions::RelativeRect(-3, -3, 6, 6),
 };
 
-static constexpr Character::Collisions Animation_1_frame_3_collisions(Animation_1_frame_3_collisions_spans);
+static constexpr bn::span<const Character::Collisions::RelativeRect> rotate_frame_3_collisions_spans[] = {
+    rotate_frame_3_mask_hitbox_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
+    rotate_frame_3_mask_custom_0_collisions,
+};
 
-static constexpr const Character::Collisions Animation_1_collisions[] = {
-    Animation_1_frame_0_collisions,
-    Animation_1_frame_1_collisions,
-    Animation_1_frame_2_collisions,
-    Animation_1_frame_3_collisions,
+static constexpr Character::Collisions rotate_frame_3_collisions(rotate_frame_3_collisions_spans);
+
+static constexpr const Character::Collisions rotate_collisions[] = {
+    rotate_frame_0_collisions,
+    rotate_frame_1_collisions,
+    rotate_frame_2_collisions,
+    rotate_frame_3_collisions,
 };
 
 static constexpr const bn::span<const Character::Collisions> collisions[] = {
-    Animation_1_collisions,
+    rotate_collisions,
 };
 
 Chr_Fireball::Chr_Fireball() :
