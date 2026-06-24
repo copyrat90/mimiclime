@@ -1,0 +1,41 @@
+GUID = "ce0b3f53-0ac3-4d6f-b3d7-2fc4ead74529"
+Version = "1.0.0"
+DoNotExport = false
+BitsPerPixel = 4
+IsBackground = false
+TransparentColor = 65280
+[[Sprites]]
+SpriteID = "4ea5e1c3-93df-4d46-9d41-e77900ce54e0"
+TileSetID = "f33b2dd8-50e1-4bbd-b2ce-699c268960e0"
+
+[[Sprites]]
+SpriteID = "03236064-fcce-4880-b717-c3c99826772d"
+TileSetID = "f33b2dd8-50e1-4bbd-b2ce-699c268960e0"
+
+[[Sprites]]
+SpriteID = "68780d38-852c-4752-b35c-046c79b10987"
+TileSetID = "f33b2dd8-50e1-4bbd-b2ce-699c268960e0"
+
+[[Sprites]]
+SpriteID = "2c2ea6df-e1da-48f5-b3b8-86508578a2c2"
+TileSetID = "f33b2dd8-50e1-4bbd-b2ce-699c268960e0"
+
+[[Sprites]]
+SpriteID = "4885eba8-0ec9-486c-8502-1f41bf023165"
+TileSetID = "f33b2dd8-50e1-4bbd-b2ce-699c268960e0"
+
+[[Sprites]]
+SpriteID = "ece1c377-3835-41f6-a44e-64c4d0d5faf7"
+TileSetID = "f33b2dd8-50e1-4bbd-b2ce-699c268960e0"
+
+[[Sprites]]
+SpriteID = "df82c540-bc32-47b1-a1ca-23448f008b5b"
+TileSetID = "f33b2dd8-50e1-4bbd-b2ce-699c268960e0"
+
+[[Sprites]]
+SpriteID = "72ca93da-5c5d-44ab-88ed-28505769fb27"
+TileSetID = "f33b2dd8-50e1-4bbd-b2ce-699c268960e0"
+
+[[Sprites]]
+SpriteID = "68841e32-1941-463e-8d73-75091d93dd33"
+TileSetID = "f33b2dd8-50e1-4bbd-b2ce-699c268960e0"
