@@ -64,13 +64,13 @@ Mask = 0
 CustomMask = 0
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326.Frames.7880933e-067e-498e-848e-b6eabd242065.CollisionInfo.033cbca7-d845-44d7-a26a-c96286ed24d3.Color]
 A = 110
-R = 255
-G = 0
-B = 0
+R = 0
+G = 128
+B = 255
 ScA = 0.4313725531101227
-ScR = 1.0
-ScG = 0.0
-ScB = 0.0
+ScR = 0.0
+ScG = 0.2158605307340622
+ScB = 1.0
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326.Frames.929053c8-c80a-4bcd-8407-ea282c910490]
 ID = "929053c8-c80a-4bcd-8407-ea282c910490"
 BankID = "f0673342-892a-4475-8337-a2d905d2d4ca"
@@ -118,13 +118,13 @@ Mask = 0
 CustomMask = 0
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326.Frames.929053c8-c80a-4bcd-8407-ea282c910490.CollisionInfo.8ab6612e-f603-4f6e-ad8c-ea1b530d88f2.Color]
 A = 110
-R = 255
-G = 0
-B = 0
+R = 0
+G = 128
+B = 255
 ScA = 0.4313725531101227
-ScR = 1.0
-ScG = 0.0
-ScB = 0.0
+ScR = 0.0
+ScG = 0.2158605307340622
+ScB = 1.0
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326.Frames.6c245205-173f-4b79-8b1a-48303c7b99de]
 ID = "6c245205-173f-4b79-8b1a-48303c7b99de"
 BankID = "f0673342-892a-4475-8337-a2d905d2d4ca"
@@ -172,13 +172,13 @@ Mask = 0
 CustomMask = 0
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326.Frames.6c245205-173f-4b79-8b1a-48303c7b99de.CollisionInfo.94ff0081-8a01-461c-9438-311c38d11875.Color]
 A = 110
-R = 255
-G = 0
-B = 0
+R = 0
+G = 128
+B = 255
 ScA = 0.4313725531101227
-ScR = 1.0
-ScG = 0.0
-ScB = 0.0
+ScR = 0.0
+ScG = 0.2158605307340622
+ScB = 1.0
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326.Frames.273af8d1-3b06-4338-8f18-0e3042918b29]
 ID = "273af8d1-3b06-4338-8f18-0e3042918b29"
 BankID = "f0673342-892a-4475-8337-a2d905d2d4ca"
@@ -226,10 +226,10 @@ Mask = 0
 CustomMask = 0
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326.Frames.273af8d1-3b06-4338-8f18-0e3042918b29.CollisionInfo.13a081dd-4555-4ed5-a007-6949ce0ddae7.Color]
 A = 110
-R = 255
-G = 0
-B = 0
+R = 0
+G = 128
+B = 255
 ScA = 0.4313725531101227
-ScR = 1.0
-ScG = 0.0
-ScB = 0.0
+ScR = 0.0
+ScG = 0.2158605307340622
+ScB = 1.0

@@ -31,6 +31,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> rotate_fram
     rotate_frame_0_mask_hitbox_collisions,
     bn::span<const Character::Collisions::RelativeRect>{},
     rotate_frame_0_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions rotate_frame_0_collisions(rotate_frame_0_collisions_spans);
@@ -47,6 +48,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> rotate_fram
     rotate_frame_1_mask_hitbox_collisions,
     bn::span<const Character::Collisions::RelativeRect>{},
     rotate_frame_1_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions rotate_frame_1_collisions(rotate_frame_1_collisions_spans);
@@ -63,6 +65,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> rotate_fram
     rotate_frame_2_mask_hitbox_collisions,
     bn::span<const Character::Collisions::RelativeRect>{},
     rotate_frame_2_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions rotate_frame_2_collisions(rotate_frame_2_collisions_spans);
@@ -79,6 +82,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> rotate_fram
     rotate_frame_3_mask_hitbox_collisions,
     bn::span<const Character::Collisions::RelativeRect>{},
     rotate_frame_3_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions rotate_frame_3_collisions(rotate_frame_3_collisions_spans);
