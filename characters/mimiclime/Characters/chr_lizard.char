@@ -519,7 +519,7 @@ ScG = 0.2158605307340622
 ScB = 0.2158605307340622
 [Animations.f312d58c-16c3-4de9-9b56-e8e2b6f573a6.Frames.48cd05a0-1328-4db6-b382-298b11630e41.CollisionInfo.81d2f286-7410-44bb-a916-6a4ee4d55169]
 ID = "81d2f286-7410-44bb-a916-6a4ee4d55169"
-Width = 1
+Width = 6
 Height = 1
 PosX = 120
 PosY = 95
@@ -1205,7 +1205,7 @@ ScG = 0.2158605307340622
 ScB = 0.2158605307340622
 [Animations.182fa3cb-1c4f-44fd-a6d6-8a2f3cb620d1.Frames.f408f186-9cc5-4bdc-ab62-1a12a8aa1ee0.CollisionInfo.71d5de71-9867-48bb-9d51-2c792e808444]
 ID = "71d5de71-9867-48bb-9d51-2c792e808444"
-Width = 1
+Width = 4
 Height = 1
 PosX = 135
 PosY = 80
@@ -1891,7 +1891,7 @@ ScG = 0.2158605307340622
 ScB = 0.2158605307340622
 [Animations.2bb99c84-9f51-41be-902e-94e53fde514a.Frames.2b81397e-7cbd-4fe3-9be9-d10596cd8e69.CollisionInfo.c7ff4708-919f-436a-9fef-17ebaaa975bd]
 ID = "c7ff4708-919f-436a-9fef-17ebaaa975bd"
-Width = 1
+Width = 2
 Height = 1
 PosX = 120
 PosY = 65
