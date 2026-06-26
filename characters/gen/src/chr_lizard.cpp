@@ -63,6 +63,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> idle_south_
     bn::span<const Character::Collisions::RelativeRect>{},
     idle_south_frame_0_mask_hurtbox_collisions,
     idle_south_frame_0_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions idle_south_frame_0_collisions(idle_south_frame_0_collisions_spans);
@@ -83,6 +84,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> walk_south_
     bn::span<const Character::Collisions::RelativeRect>{},
     walk_south_frame_0_mask_hurtbox_collisions,
     walk_south_frame_0_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions walk_south_frame_0_collisions(walk_south_frame_0_collisions_spans);
@@ -99,6 +101,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> walk_south_
     bn::span<const Character::Collisions::RelativeRect>{},
     walk_south_frame_1_mask_hurtbox_collisions,
     walk_south_frame_1_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions walk_south_frame_1_collisions(walk_south_frame_1_collisions_spans);
@@ -115,6 +118,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> walk_south_
     bn::span<const Character::Collisions::RelativeRect>{},
     walk_south_frame_2_mask_hurtbox_collisions,
     walk_south_frame_2_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions walk_south_frame_2_collisions(walk_south_frame_2_collisions_spans);
@@ -131,6 +135,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> walk_south_
     bn::span<const Character::Collisions::RelativeRect>{},
     walk_south_frame_3_mask_hurtbox_collisions,
     walk_south_frame_3_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions walk_south_frame_3_collisions(walk_south_frame_3_collisions_spans);
@@ -154,12 +159,13 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_sout
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_south_frame_0_mask_hurtbox_collisions,
     attack_south_frame_0_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_south_frame_0_collisions(attack_south_frame_0_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_south_frame_1_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -11, 6, 25),
+    Character::Collisions::RelativeRect(-3, -11, 6, 24),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_south_frame_1_mask_custom_0_collisions[] = {
@@ -170,12 +176,13 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_sout
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_south_frame_1_mask_hurtbox_collisions,
     attack_south_frame_1_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_south_frame_1_collisions(attack_south_frame_1_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_south_frame_2_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -11, 6, 25),
+    Character::Collisions::RelativeRect(-3, -11, 6, 22),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_south_frame_2_mask_custom_0_collisions[] = {
@@ -186,28 +193,34 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_sout
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_south_frame_2_mask_hurtbox_collisions,
     attack_south_frame_2_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_south_frame_2_collisions(attack_south_frame_2_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_south_frame_3_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -11, 6, 25),
+    Character::Collisions::RelativeRect(-3, -11, 6, 21),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_south_frame_3_mask_custom_0_collisions[] = {
     Character::Collisions::RelativeRect(-4, -12, 8, 27),
 };
 
+static constexpr Character::Collisions::RelativeRect attack_south_frame_3_mask_custom_1_collisions[] = {
+    Character::Collisions::RelativeRect(0, 15, 1, 1),
+};
+
 static constexpr bn::span<const Character::Collisions::RelativeRect> attack_south_frame_3_collisions_spans[] = {
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_south_frame_3_mask_hurtbox_collisions,
     attack_south_frame_3_mask_custom_0_collisions,
+    attack_south_frame_3_mask_custom_1_collisions,
 };
 
 static constexpr Character::Collisions attack_south_frame_3_collisions(attack_south_frame_3_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_south_frame_4_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -11, 6, 25),
+    Character::Collisions::RelativeRect(-3, -11, 6, 22),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_south_frame_4_mask_custom_0_collisions[] = {
@@ -218,12 +231,13 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_sout
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_south_frame_4_mask_hurtbox_collisions,
     attack_south_frame_4_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_south_frame_4_collisions(attack_south_frame_4_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_south_frame_5_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -11, 6, 25),
+    Character::Collisions::RelativeRect(-3, -11, 6, 24),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_south_frame_5_mask_custom_0_collisions[] = {
@@ -234,6 +248,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_sout
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_south_frame_5_mask_hurtbox_collisions,
     attack_south_frame_5_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_south_frame_5_collisions(attack_south_frame_5_collisions_spans);
@@ -250,6 +265,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_sout
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_south_frame_6_mask_hurtbox_collisions,
     attack_south_frame_6_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_south_frame_6_collisions(attack_south_frame_6_collisions_spans);
@@ -276,6 +292,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> idle_horizo
     bn::span<const Character::Collisions::RelativeRect>{},
     idle_horizontally_frame_0_mask_hurtbox_collisions,
     idle_horizontally_frame_0_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions idle_horizontally_frame_0_collisions(idle_horizontally_frame_0_collisions_spans);
@@ -296,6 +313,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> walk_horizo
     bn::span<const Character::Collisions::RelativeRect>{},
     walk_horizontally_frame_0_mask_hurtbox_collisions,
     walk_horizontally_frame_0_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions walk_horizontally_frame_0_collisions(walk_horizontally_frame_0_collisions_spans);
@@ -312,6 +330,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> walk_horizo
     bn::span<const Character::Collisions::RelativeRect>{},
     walk_horizontally_frame_1_mask_hurtbox_collisions,
     walk_horizontally_frame_1_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions walk_horizontally_frame_1_collisions(walk_horizontally_frame_1_collisions_spans);
@@ -328,6 +347,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> walk_horizo
     bn::span<const Character::Collisions::RelativeRect>{},
     walk_horizontally_frame_2_mask_hurtbox_collisions,
     walk_horizontally_frame_2_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions walk_horizontally_frame_2_collisions(walk_horizontally_frame_2_collisions_spans);
@@ -344,6 +364,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> walk_horizo
     bn::span<const Character::Collisions::RelativeRect>{},
     walk_horizontally_frame_3_mask_hurtbox_collisions,
     walk_horizontally_frame_3_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions walk_horizontally_frame_3_collisions(walk_horizontally_frame_3_collisions_spans);
@@ -367,12 +388,13 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_hori
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_horizontally_frame_0_mask_hurtbox_collisions,
     attack_horizontally_frame_0_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_horizontally_frame_0_collisions(attack_horizontally_frame_0_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_horizontally_frame_1_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-11, -3, 25, 6),
+    Character::Collisions::RelativeRect(-11, -3, 24, 6),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_horizontally_frame_1_mask_custom_0_collisions[] = {
@@ -383,12 +405,13 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_hori
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_horizontally_frame_1_mask_hurtbox_collisions,
     attack_horizontally_frame_1_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_horizontally_frame_1_collisions(attack_horizontally_frame_1_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_horizontally_frame_2_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-11, -3, 25, 6),
+    Character::Collisions::RelativeRect(-11, -3, 22, 6),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_horizontally_frame_2_mask_custom_0_collisions[] = {
@@ -399,28 +422,34 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_hori
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_horizontally_frame_2_mask_hurtbox_collisions,
     attack_horizontally_frame_2_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_horizontally_frame_2_collisions(attack_horizontally_frame_2_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_horizontally_frame_3_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-11, -3, 25, 6),
+    Character::Collisions::RelativeRect(-11, -3, 21, 6),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_horizontally_frame_3_mask_custom_0_collisions[] = {
     Character::Collisions::RelativeRect(-12, -4, 27, 8),
 };
 
+static constexpr Character::Collisions::RelativeRect attack_horizontally_frame_3_mask_custom_1_collisions[] = {
+    Character::Collisions::RelativeRect(15, 0, 1, 1),
+};
+
 static constexpr bn::span<const Character::Collisions::RelativeRect> attack_horizontally_frame_3_collisions_spans[] = {
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_horizontally_frame_3_mask_hurtbox_collisions,
     attack_horizontally_frame_3_mask_custom_0_collisions,
+    attack_horizontally_frame_3_mask_custom_1_collisions,
 };
 
 static constexpr Character::Collisions attack_horizontally_frame_3_collisions(attack_horizontally_frame_3_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_horizontally_frame_4_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-11, -3, 25, 6),
+    Character::Collisions::RelativeRect(-11, -3, 22, 6),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_horizontally_frame_4_mask_custom_0_collisions[] = {
@@ -431,12 +460,13 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_hori
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_horizontally_frame_4_mask_hurtbox_collisions,
     attack_horizontally_frame_4_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_horizontally_frame_4_collisions(attack_horizontally_frame_4_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_horizontally_frame_5_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-11, -3, 25, 6),
+    Character::Collisions::RelativeRect(-11, -3, 24, 6),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_horizontally_frame_5_mask_custom_0_collisions[] = {
@@ -447,6 +477,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_hori
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_horizontally_frame_5_mask_hurtbox_collisions,
     attack_horizontally_frame_5_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_horizontally_frame_5_collisions(attack_horizontally_frame_5_collisions_spans);
@@ -463,6 +494,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_hori
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_horizontally_frame_6_mask_hurtbox_collisions,
     attack_horizontally_frame_6_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_horizontally_frame_6_collisions(attack_horizontally_frame_6_collisions_spans);
@@ -489,6 +521,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> idle_north_
     bn::span<const Character::Collisions::RelativeRect>{},
     idle_north_frame_0_mask_hurtbox_collisions,
     idle_north_frame_0_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions idle_north_frame_0_collisions(idle_north_frame_0_collisions_spans);
@@ -509,6 +542,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> walk_north_
     bn::span<const Character::Collisions::RelativeRect>{},
     walk_north_frame_0_mask_hurtbox_collisions,
     walk_north_frame_0_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions walk_north_frame_0_collisions(walk_north_frame_0_collisions_spans);
@@ -525,6 +559,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> walk_north_
     bn::span<const Character::Collisions::RelativeRect>{},
     walk_north_frame_1_mask_hurtbox_collisions,
     walk_north_frame_1_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions walk_north_frame_1_collisions(walk_north_frame_1_collisions_spans);
@@ -541,6 +576,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> walk_north_
     bn::span<const Character::Collisions::RelativeRect>{},
     walk_north_frame_2_mask_hurtbox_collisions,
     walk_north_frame_2_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions walk_north_frame_2_collisions(walk_north_frame_2_collisions_spans);
@@ -557,6 +593,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> walk_north_
     bn::span<const Character::Collisions::RelativeRect>{},
     walk_north_frame_3_mask_hurtbox_collisions,
     walk_north_frame_3_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions walk_north_frame_3_collisions(walk_north_frame_3_collisions_spans);
@@ -580,12 +617,13 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_nort
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_north_frame_0_mask_hurtbox_collisions,
     attack_north_frame_0_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_north_frame_0_collisions(attack_north_frame_0_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_north_frame_1_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -14, 6, 25),
+    Character::Collisions::RelativeRect(-3, -13, 6, 24),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_north_frame_1_mask_custom_0_collisions[] = {
@@ -596,12 +634,13 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_nort
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_north_frame_1_mask_hurtbox_collisions,
     attack_north_frame_1_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_north_frame_1_collisions(attack_north_frame_1_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_north_frame_2_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -14, 6, 25),
+    Character::Collisions::RelativeRect(-3, -11, 6, 22),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_north_frame_2_mask_custom_0_collisions[] = {
@@ -612,28 +651,34 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_nort
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_north_frame_2_mask_hurtbox_collisions,
     attack_north_frame_2_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_north_frame_2_collisions(attack_north_frame_2_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_north_frame_3_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -14, 6, 25),
+    Character::Collisions::RelativeRect(-3, -10, 6, 21),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_north_frame_3_mask_custom_0_collisions[] = {
     Character::Collisions::RelativeRect(-4, -15, 8, 27),
 };
 
+static constexpr Character::Collisions::RelativeRect attack_north_frame_3_mask_custom_1_collisions[] = {
+    Character::Collisions::RelativeRect(0, -15, 1, 1),
+};
+
 static constexpr bn::span<const Character::Collisions::RelativeRect> attack_north_frame_3_collisions_spans[] = {
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_north_frame_3_mask_hurtbox_collisions,
     attack_north_frame_3_mask_custom_0_collisions,
+    attack_north_frame_3_mask_custom_1_collisions,
 };
 
 static constexpr Character::Collisions attack_north_frame_3_collisions(attack_north_frame_3_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_north_frame_4_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -14, 6, 25),
+    Character::Collisions::RelativeRect(-3, -11, 6, 22),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_north_frame_4_mask_custom_0_collisions[] = {
@@ -644,12 +689,13 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_nort
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_north_frame_4_mask_hurtbox_collisions,
     attack_north_frame_4_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_north_frame_4_collisions(attack_north_frame_4_collisions_spans);
 
 static constexpr Character::Collisions::RelativeRect attack_north_frame_5_mask_hurtbox_collisions[] = {
-    Character::Collisions::RelativeRect(-3, -14, 6, 25),
+    Character::Collisions::RelativeRect(-3, -13, 6, 24),
 };
 
 static constexpr Character::Collisions::RelativeRect attack_north_frame_5_mask_custom_0_collisions[] = {
@@ -660,6 +706,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_nort
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_north_frame_5_mask_hurtbox_collisions,
     attack_north_frame_5_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_north_frame_5_collisions(attack_north_frame_5_collisions_spans);
@@ -676,6 +723,7 @@ static constexpr bn::span<const Character::Collisions::RelativeRect> attack_nort
     bn::span<const Character::Collisions::RelativeRect>{},
     attack_north_frame_6_mask_hurtbox_collisions,
     attack_north_frame_6_mask_custom_0_collisions,
+    bn::span<const Character::Collisions::RelativeRect>{},
 };
 
 static constexpr Character::Collisions attack_north_frame_6_collisions(attack_north_frame_6_collisions_spans);
