@@ -1,0 +1,7 @@
+GUID = "0ee310eb-01ff-4670-82a3-2aebcc043642"
+Version = "1.0.0"
+DoNotExport = false
+ImagePath = "Images\\img_wood_fence.bmp"
+ImageWidth = 16
+ImageHeight = 64
+Sprites = [{ID = "f8dcdcf9-37f1-4bb9-9f42-429d440020cc", Shape = 0, Size = 1, PosX = 0, PosY = 0, TileSetID = "0ee310eb-01ff-4670-82a3-2aebcc043642", Alias = "wood_fence_0"}, {ID = "d1186c4c-4a5e-4def-995f-ba198c445ae9", Shape = 0, Size = 1, PosX = 0, PosY = 16, TileSetID = "0ee310eb-01ff-4670-82a3-2aebcc043642", Alias = "wood_fence_1"}, {ID = "47883321-4fcc-4f29-b5a5-7461672d8a07", Shape = 0, Size = 1, PosX = 0, PosY = 32, TileSetID = "0ee310eb-01ff-4670-82a3-2aebcc043642", Alias = "wood_fence_2"}, {ID = "0d69934b-8f0d-471f-954f-5dad99953ae8", Shape = 0, Size = 1, PosX = 0, PosY = 48, TileSetID = "0ee310eb-01ff-4670-82a3-2aebcc043642", Alias = "wood_fence_3"}]

@@ -1,0 +1,7 @@
+GUID = "a7f88117-804c-4bee-b740-caded1191953"
+Version = "1.0.0"
+DoNotExport = false
+BitsPerPixel = 4
+IsBackground = false
+TransparentColor = 65280
+Sprites = [{SpriteID = "f8dcdcf9-37f1-4bb9-9f42-429d440020cc", TileSetID = "0ee310eb-01ff-4670-82a3-2aebcc043642"}, {SpriteID = "d1186c4c-4a5e-4def-995f-ba198c445ae9", TileSetID = "0ee310eb-01ff-4670-82a3-2aebcc043642"}, {SpriteID = "47883321-4fcc-4f29-b5a5-7461672d8a07", TileSetID = "0ee310eb-01ff-4670-82a3-2aebcc043642"}, {SpriteID = "0d69934b-8f0d-471f-954f-5dad99953ae8", TileSetID = "0ee310eb-01ff-4670-82a3-2aebcc043642"}]

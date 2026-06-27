@@ -11,7 +11,7 @@
 	"iid": "140c68a0-48b0-11f1-a411-f90e06ce3b1a",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 36,
+	"nextUid": 38,
 	"identifierStyle": "Lowercase",
 	"toc": [],
 	"worldLayout": "Free",
@@ -774,6 +774,41 @@
 					"tilesetUid": null
 				}
 			]
+		},
+		{
+			"identifier": "wood_fence",
+			"uid": 36,
+			"tags": [],
+			"exportToToc": false,
+			"allowOutOfBounds": false,
+			"doc": null,
+			"width": 16,
+			"height": 16,
+			"resizableX": false,
+			"resizableY": false,
+			"minWidth": null,
+			"maxWidth": null,
+			"minHeight": null,
+			"maxHeight": null,
+			"keepAspectRatio": false,
+			"tileOpacity": 1,
+			"fillOpacity": 0.08,
+			"lineOpacity": 0,
+			"hollow": false,
+			"color": "#EAD4AA",
+			"renderMode": "Tile",
+			"showName": true,
+			"tilesetId": 37,
+			"tileRenderMode": "FitInside",
+			"tileRect": { "tilesetUid": 37, "x": 0, "y": 0, "w": 16, "h": 16 },
+			"uiTileRect": null,
+			"nineSliceBorders": [],
+			"maxCount": 0,
+			"limitScope": "PerLevel",
+			"limitBehavior": "MoveLastOne",
+			"pivotX": 0,
+			"pivotY": 0,
+			"fieldDefs": []
 		}
 	], "tilesets": [
 		{
@@ -840,6 +875,28 @@
 			"cachedPixelData": {
 				"opaqueTiles": "1111111111111111111111111111111111111111111111111111111111111111",
 				"averageColors": "f777f666f555f444f444f555fbbbfaaaf555f555f444f111f111f444f888faaaf555f555f444f111f111f444f888f999f000f000f555f444f444f555f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000f000"
+			}
+		},
+		{
+			"__cWid": 8,
+			"__cHei": 8,
+			"identifier": "entities_tileset",
+			"uid": 37,
+			"relPath": "entities_tileset.png",
+			"embedAtlas": null,
+			"pxWid": 128,
+			"pxHei": 128,
+			"tileGridSize": 16,
+			"spacing": 0,
+			"padding": 0,
+			"tags": [],
+			"tagsSourceEnumUid": null,
+			"enumTags": [],
+			"customData": [],
+			"savedSelections": [],
+			"cachedPixelData": {
+				"opaqueTiles": "0000000000000000000000000000000000000000000000000000000000000000",
+				"averageColors": "bfff000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
 			}
 		}
 	], "enums": [
@@ -953,7 +1010,7 @@
 			"worldY": 512,
 			"worldDepth": 0,
 			"pxWid": 240,
-			"pxHei": 160,
+			"pxHei": 241,
 			"__bgColor": "#000000",
 			"bgColor": null,
 			"useAutoIdentifier": true,
