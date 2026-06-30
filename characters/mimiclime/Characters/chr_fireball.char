@@ -12,7 +12,7 @@ Y = 80.0
 [Animations]
 [Animations.f8106357-0366-4e81-bf20-9d217cab1326]
 ID = "f8106357-0366-4e81-bf20-9d217cab1326"
-Name = "rotate"
+Name = "idle"
 Speed = 0.06700000166893005
 Repeat = 1
 Looping = true

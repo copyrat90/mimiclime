@@ -19,6 +19,7 @@ where you play as a slime who becomes a monster it devours.
 [See this gist.](https://gist.github.com/copyrat90/eee49d92846ca3585a69d5bea001710d)
 
 * Change the `"cppStandard"` to `"c++26"`.
+* Add `"BN_DMG_AUDIO_SYNC"` to `"commonDefines"`.
 
 ### Setting up debugger
 
@@ -39,10 +40,10 @@ Just saving the LDtk project is enough, the build process automatically takes ca
 
 ### Editing characters
 
-To edit the characters, open [`characters/mimiclime/`](characters/mimiclime/) directory with [GBATool](https://github.com/DarkKodKod/GBATool).
+To edit the characters, open [`characters/mimiclime/`](characters/mimiclime/) directory with [GBAForge](https://github.com/DarkKodKod/GBAForge).
 
-Release Version 1.0.0 is rather old, so you need to build GBATool yourself.\
-**Comment out** [this line](https://github.com/DarkKodKod/GBATool/blob/ba80abc4cf35a66e76eb9383909fc56ffea331df/GBATool/Utils/Utils.cs#L306) before building,
+Release Version 1.0.0 is rather old, so you need to build GBAForge yourself.\
+**Comment out** [this line](https://github.com/DarkKodKod/GBAForge/blob/133e502e141390326b3609ac6d3f806be809de04/GBATool/Utils/Utils.cs#L306) before building,
 so that the generated source doesn't have a timestamp.
 
 After editing a character, you need to re-generate the source.\

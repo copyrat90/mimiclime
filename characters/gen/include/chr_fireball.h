@@ -1,7 +1,7 @@
 // This file is auto generated!
-// Exported by GBATool
+// Exported by GBAForge
 // Version 1.0.0.0
-// https://github.com/DarkKodKod/GBATool
+// https://github.com/DarkKodKod/GBAForge
 
 #ifndef GBATOOL_SPRITE_CHR_FIREBALL
 #define GBATOOL_SPRITE_CHR_FIREBALL
@@ -29,7 +29,7 @@ public:
     enum AnimationID
     {
         NONE = Character::AnimationID::NONE
-        , ROTATE = 0
+        , IDLE = 0
     };
 
     Chr_Fireball();
@@ -38,25 +38,25 @@ protected:
     bn::vector<bn::sprite_ptr, 1> _frameSprites;
 
 public: // Sprite items
-    // rotate_frame_1
+    // idle_frame_1
     static constexpr bn::sprite_item bnk_fireball_0_fireball_fly_0 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::SMALL),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_fireball_0_fireball_fly_0Tiles, 1), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
         bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
-    // rotate_frame_2
+    // idle_frame_2
     static constexpr bn::sprite_item bnk_fireball_0_fireball_fly_1 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::SMALL),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_fireball_0_fireball_fly_1Tiles, 1), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
         bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
-    // rotate_frame_3
+    // idle_frame_3
     static constexpr bn::sprite_item bnk_fireball_0_fireball_fly_2 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::SMALL),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_fireball_0_fireball_fly_2Tiles, 1), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
         bn::sprite_palette_item(bn::span<const bn::color>(palette_pal_defaultPal, 16), bn::bpp_mode::BPP_4, bn::compression_type::NONE));
 
-    // rotate_frame_4
+    // idle_frame_4
     static constexpr bn::sprite_item bnk_fireball_0_fireball_fly_3 = bn::sprite_item(
         bn::sprite_shape_size(bn::sprite_shape::SQUARE, bn::sprite_size::SMALL),
         bn::sprite_tiles_item(bn::span<const bn::tile>(bnk_fireball_0_fireball_fly_3Tiles, 1), bn::bpp_mode::BPP_4, bn::compression_type::NONE, 1),
