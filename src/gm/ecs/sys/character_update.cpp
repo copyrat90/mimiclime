@@ -180,10 +180,14 @@ void transition_between_idle_and_walk(cpn::character_proxy& chara_proxy, cpn::ve
 
         switch (anim_id)
         {
-        case gbatool::Chr_Slime::AnimationID::IDLE:
-        case gbatool::Chr_Slime::AnimationID::WALK_EAST:
-        case gbatool::Chr_Slime::AnimationID::WALK_SOUTH:
-        case gbatool::Chr_Slime::AnimationID::WALK_NORTH:
+        case gbatool::Chr_Slime::AnimationID::IDLE_UP:
+        case gbatool::Chr_Slime::AnimationID::IDLE_RIGHT:
+        case gbatool::Chr_Slime::AnimationID::IDLE_DOWN:
+        case gbatool::Chr_Slime::AnimationID::IDLE_LEFT:
+        case gbatool::Chr_Slime::AnimationID::WALK_UP:
+        case gbatool::Chr_Slime::AnimationID::WALK_RIGHT:
+        case gbatool::Chr_Slime::AnimationID::WALK_DOWN:
+        case gbatool::Chr_Slime::AnimationID::WALK_LEFT:
 
             if (dimensions_squared(velocity.velocity) > WALK_EPSILON_SQUARED)
             {
@@ -192,14 +196,14 @@ void transition_between_idle_and_walk(cpn::character_proxy& chara_proxy, cpn::ve
                 switch (dir)
                 {
                 case direction::UP:
-                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK_NORTH);
+                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK_UP);
                     break;
                 case direction::DOWN:
-                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK_SOUTH);
+                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK_DOWN);
                     break;
                 case direction::LEFT:
                 case direction::RIGHT:
-                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK_EAST);
+                    chara.load_animation(gbatool::Chr_Slime::AnimationID::WALK_RIGHT);
                     break;
                 default:
                     BN_ERROR("Invalid direction: ", static_cast<int>(dir));
@@ -209,7 +213,7 @@ void transition_between_idle_and_walk(cpn::character_proxy& chara_proxy, cpn::ve
             }
             else
             {
-                chara.load_animation(gbatool::Chr_Slime::AnimationID::IDLE);
+                chara.load_animation(gbatool::Chr_Slime::AnimationID::IDLE_UP);
             }
             break;
 

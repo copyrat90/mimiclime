@@ -28,7 +28,7 @@ game::game(scene_context& ctx) : scene(ctx), _singleton_entity(_singleton_regist
     const bn::fixed_point player_position = initial_entrance.position();
     auto& chara_proxy = _actor_registry.emplace<gm::ecs::cpn::character_proxy>(player, ldtk::gen::species_kind::slime,
                                                                                player_position, camera);
-    chara_proxy.character().load_animation(gbatool::Chr_Slime::AnimationID::IDLE);
+    chara_proxy.character().load_animation(gbatool::Chr_Slime::AnimationID::IDLE_UP);
     _actor_registry.emplace<gm::ecs::cpn::player_character_controller>(player);
     _actor_registry.emplace<gm::ecs::cpn::camera_target>(player, gm::ecs::cpn::camera_target::tracking_priority::LOW,
                                                          player_position);
