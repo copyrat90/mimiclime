@@ -11,7 +11,7 @@
 	"iid": "140c68a0-48b0-11f1-a411-f90e06ce3b1a",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 38,
+	"nextUid": 39,
 	"identifierStyle": "Lowercase",
 	"toc": [],
 	"worldLayout": "Free",
@@ -174,55 +174,9 @@
 			"useAsyncRender": false,
 			"intGridValues": [{ "value": 1, "identifier": "wall", "color": "#FFFFFF", "tile": null, "groupUid": 1 }],
 			"intGridValuesGroups": [{ "uid": 1, "identifier": "walls", "color": null }],
-			"autoRuleGroups": [
-				{
-					"uid": 16,
-					"name": "walls",
-					"color": null,
-					"icon": null,
-					"active": true,
-					"isOptional": false,
-					"rules": [
-						{
-							"uid": 17,
-							"active": true,
-							"size": 1,
-							"tileRectsIds": [[1]],
-							"alpha": 1,
-							"chance": 1,
-							"breakOnMatch": true,
-							"pattern": [1],
-							"flipX": false,
-							"flipY": false,
-							"xModulo": 1,
-							"yModulo": 1,
-							"xOffset": 0,
-							"yOffset": 0,
-							"tileXOffset": 0,
-							"tileYOffset": 0,
-							"tileRandomXMin": 0,
-							"tileRandomXMax": 0,
-							"tileRandomYMin": 0,
-							"tileRandomYMax": 0,
-							"checker": "None",
-							"tileMode": "Single",
-							"pivotX": 0,
-							"pivotY": 0,
-							"outOfBoundsValue": null,
-							"invalidated": false,
-							"perlinActive": false,
-							"perlinSeed": 2759426,
-							"perlinScale": 0.2,
-							"perlinOctaves": 2
-						}
-					],
-					"usesWizard": false,
-					"requiredBiomeValues": [],
-					"biomeRequirementMode": 0
-				}
-			],
+			"autoRuleGroups": [],
 			"autoSourceLayerDefUid": null,
-			"tilesetDefUid": 14,
+			"tilesetDefUid": null,
 			"tilePivotX": 0,
 			"tilePivotY": 0,
 			"biomeFieldUid": null
@@ -868,7 +822,7 @@
 			"spacing": 0,
 			"padding": 0,
 			"tags": [],
-			"tagsSourceEnumUid": null,
+			"tagsSourceEnumUid": 38,
 			"enumTags": [],
 			"customData": [],
 			"savedSelections": [],
@@ -907,7 +861,8 @@
 			{ "id": "licenses", "tileRect": null, "color": 14120515 },
 			{ "id": "back", "tileRect": null, "color": 15389866 }
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
-		{ "identifier": "species_kind", "uid": 22, "values": [ { "id": "slime", "tileRect": null, "color": 12470831 }, { "id": "fire_lizard", "tileRect": null, "color": 14120515 } ], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] }
+		{ "identifier": "species_kind", "uid": 22, "values": [ { "id": "slime", "tileRect": null, "color": 12470831 }, { "id": "fire_lizard", "tileRect": null, "color": 14120515 } ], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
+		{ "identifier": "tile_type", "uid": 38, "values": [], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] }
 	], "externalEnums": [], "levelFields": [] },
 	"levels": [
 		{
