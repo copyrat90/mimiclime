@@ -18,10 +18,11 @@ void camera_target_update(actor_registry& actor_reg)
             target.position = chara_proxy.character().top_left_position();
 
             // For player, apply "lookahead" to forward direction
-            if (auto* controller = actor_reg.try_get<cpn::player_character_controller>(entity); controller != nullptr)
+            if (auto* critter_states = actor_reg.try_get<cpn::critter_states>(entity);
+                critter_states != nullptr && critter_states->is_player())
             {
-                if (controller->held_direction != direction::NONE)
-                    target.position += to_normal_vector(controller->held_direction) * LOOKAHEAD_LENGTH;
+                if (critter_states->input_direction != direction::NONE)
+                    target.position += to_normal_vector(critter_states->input_direction) * LOOKAHEAD_LENGTH;
             }
         });
 }

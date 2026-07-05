@@ -6,6 +6,6 @@
 namespace mc::gm::ecs::sys
 {
 
-void player_character_control(actor_registry&, const singleton_registry&, const gba::entity singleton_entity);
+void critter_input(actor_registry&, const singleton_registry&, const gba::entity singleton_entity);
 
 }

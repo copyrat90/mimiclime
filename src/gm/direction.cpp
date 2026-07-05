@@ -103,7 +103,17 @@ auto to_normal_vector(direction dir) -> bn::fixed_point
     std::unreachable();
 }
 
-auto to_direction_8(const bn::fixed_point& vector) -> direction
+auto to_normal_vector(const bn::fixed_point& vector) -> bn::fixed_point
+{
+    const bn::fixed x = vector.x();
+    const bn::fixed y = vector.y();
+    const bn::fixed dist_sq = x * x + y * y;
+    const bn::fixed dist = bn::sqrt(dist_sq);
+
+    return vector / dist;
+}
+
+auto to_direction_9(const bn::fixed_point& vector) -> direction
 {
     const bn::fixed x = vector.x();
     const bn::fixed y = vector.y();
@@ -177,7 +187,7 @@ auto to_direction_8(const bn::fixed_point& vector) -> direction
     }
 }
 
-auto to_direction_4(const bn::fixed_point& vector, const direction hint) -> direction
+auto to_direction_5(const bn::fixed_point& vector, const direction hint) -> direction
 {
     const bn::fixed x = vector.x();
     const bn::fixed y = vector.y();
@@ -225,7 +235,7 @@ auto to_direction_4(const bn::fixed_point& vector, const direction hint) -> dire
     }
 }
 
-auto to_non_diagonal_direction(direction raw, const direction hint) -> direction
+auto to_direction_5(direction raw, const direction hint) -> direction
 {
     direction result = raw;
 
