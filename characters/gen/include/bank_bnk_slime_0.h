@@ -1,7 +1,7 @@
 // This file is auto generated!
-// Exported by GBATool
+// Exported by GBAForge
 // Version 1.0.0.0
-// https://github.com/DarkKodKod/GBATool
+// https://github.com/DarkKodKod/GBAForge
 
 #ifndef GBATOOL_BANK_BNK_SLIME_0
 #define GBATOOL_BANK_BNK_SLIME_0
