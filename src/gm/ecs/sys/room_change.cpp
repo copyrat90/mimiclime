@@ -1,10 +1,15 @@
 #include "gm/ecs/sys/room_change.h"
 
 #include "gm/ecs/cpn/room_change_states.h"
+#include "gm/ecs/ut/critter_factories.h"
 
 #include "ibn_transitions.h"
 
+#include "ldtk_level.h"
+
 #include <bn_display.h>
+
+#include "ldtk_gen_idents.h"
 
 namespace mc::gm::ecs::sys
 {
@@ -56,11 +61,11 @@ void room_change(singleton_registry& singleton_reg, const gba::entity singleton_
 
                 actor_reg.view<cpn::character_proxy>().each(
                     [&](const gba::entity entity, cpn::character_proxy& chara_proxy) {
-                        if (auto* controller = actor_reg.try_get<cpn::player_character_controller>(entity);
-                            controller != nullptr)
+                        if (auto* states = actor_reg.try_get<cpn::critter_states>(entity);
+                            states != nullptr && states->is_player())
                         {
-                            // Reset held direction
-                            controller->held_direction = direction::NONE;
+                            // Reset directions
+                            states->input_direction = direction::NONE;
 
                             // Move the player to the entrance position
                             chara_proxy.character().set_top_left_position(entrance_position);
@@ -74,6 +79,28 @@ void room_change(singleton_registry& singleton_reg, const gba::entity singleton_
                 auto* camera = singleton_reg.try_get<bn::camera_ptr>(singleton_entity);
                 BN_ASSERT(camera);
                 camera->set_position(entrance_position + CAMERA_CENTER_OFFSET);
+
+                // Load entities
+                const ldtk::layer& entities_layer = room->level().get_layer(ldtk::gen::layer_ident::entities);
+                for (const ldtk::entity& entity : entities_layer.entity_instances())
+                {
+                    switch (entity.identifier())
+                    {
+                        using entity_ident = ldtk::gen::entity_ident;
+
+                    case entity_ident::mob: {
+                        ldtk::gen::species_kind species =
+                            entity.get_field(ldtk::gen::entity_field_ident::ENTITY_mob_FIELD_species)
+                                .get<ldtk::gen::species_kind>();
+
+                        ut::create_mob_critter(species, entity.px(), actor_reg, singleton_reg, singleton_entity);
+                    }
+                    break;
+
+                    default:
+                        break;
+                    }
+                }
 
                 room_change_states->fade = fade_state::FADING_IN;
                 room_change_states->countdown = TRANSITION_DURATION;
