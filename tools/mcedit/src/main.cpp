@@ -11,6 +11,8 @@
 // Important to understand: SDL_Renderer is an _optional_ component of SDL3.
 // For a multi-platform app consider using e.g. SDL+DirectX on Windows and SDL+OpenGL on Linux/OSX.
 
+#include "model/resources.h"
+
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_sdlrenderer3.h>
@@ -119,6 +121,7 @@ int main(int, char**)
     } imgui_finalizer;
 
     // Our state
+    mcedit::model::resources resources;
 
     // Main loop
     bool done = false;
@@ -161,6 +164,9 @@ int main(int, char**)
         ImGui_ImplSDLRenderer3_NewFrame();
         ImGui_ImplSDL3_NewFrame();
         ImGui::NewFrame();
+
+        // Update our models
+        resources.update(*renderer);
 
         // Show our views
 

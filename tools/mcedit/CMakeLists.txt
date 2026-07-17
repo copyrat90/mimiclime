@@ -75,6 +75,6 @@ target_link_libraries(mcedit PRIVATE
 
 target_compile_options(mcedit PRIVATE
     $<$<CXX_COMPILER_ID:MSVC>:/W4 /Zc:preprocessor /source-charset:utf-8>
-    $<$<CXX_COMPILER_ID:GNU>:-Wall -Wextra -Wpedantic>
+    $<$<CXX_COMPILER_ID:GNU>:-freflection -Wall -Wextra -Wpedantic>
     $<$<CXX_COMPILER_ID:Clang>:-Wall -Wextra -Wpedantic>
 )
