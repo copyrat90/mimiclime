@@ -18,6 +18,10 @@ build*/
 # ldtk backups
 levels/mimiclime/backups/
 
+# tools
+imgui.ini
+CMakeUserPresets.json
+
 # misc (derived from butano)
 *.creator
 *.user

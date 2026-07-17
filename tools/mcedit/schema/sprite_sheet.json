@@ -1,0 +1,129 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "sprite sheet",
+    "description": "butano sprite sheet json for mcedit",
+    "type": "object",
+    "properties": {
+        "width": {
+            "description": "width of the each frame of the sprite sheet",
+            "type": "integer"
+        },
+        "height": {
+            "description": "height of the each frame of the sprite sheet",
+            "type": "integer"
+        },
+        "mcedit": {
+            "description": "all mcedit data resides here",
+            "type": "object",
+            "properties": {
+                "collisions": {
+                    "description": "sprite collisions data per frame",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "wallboxes": {
+                                "description": "all wallboxes within frame",
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "x": {
+                                            "description": "top-left x position from the center of the frame",
+                                            "type": "integer"
+                                        },
+                                        "y": {
+                                            "description": "top-left y position from the center of the frame",
+                                            "type": "integer"
+                                        },
+                                        "width": {
+                                            "type": "integer"
+                                        },
+                                        "height": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            },
+                            "hurtboxes": {
+                                "description": "all hurtboxes within frame",
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "x": {
+                                            "description": "top-left x position from the center of the frame",
+                                            "type": "integer"
+                                        },
+                                        "y": {
+                                            "description": "top-left y position from the center of the frame",
+                                            "type": "integer"
+                                        },
+                                        "width": {
+                                            "type": "integer"
+                                        },
+                                        "height": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            },
+                            "hitboxes": {
+                                "description": "all hitboxes within frame",
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "x": {
+                                            "description": "top-left x position from the center of the frame",
+                                            "type": "integer"
+                                        },
+                                        "y": {
+                                            "description": "top-left y position from the center of the frame",
+                                            "type": "integer"
+                                        },
+                                        "width": {
+                                            "type": "integer"
+                                        },
+                                        "height": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            },
+                            "projectiles": {
+                                "description": "all projectile generation infos within frame",
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "kind": {
+                                            "description": "what kind of projectile it is",
+                                            "type": "string"
+                                        },
+                                        "x": {
+                                            "description": "x position from the center of the frame",
+                                            "type": "integer"
+                                        },
+                                        "y": {
+                                            "description": "y position from the center of the frame",
+                                            "type": "integer"
+                                        },
+                                        "direction": {
+                                            "description": "which direction the projectile should fly to",
+                                            "type": "string"
+                                        },
+                                        "speed": {
+                                            "description": "how many pixels the projectile should fly within a frame duration",
+                                            "type": "number"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
