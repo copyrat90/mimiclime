@@ -62,6 +62,7 @@ target_include_directories(imgui PUBLIC
     ${imgui_SOURCE_DIR}/backends
 )
 target_link_libraries(imgui PRIVATE SDL3::SDL3-static)
+target_compile_definitions(imgui PUBLIC IMGUI_DEFINE_MATH_OPERATORS)
 
 add_executable(mcedit)
 add_subdirectory(src)

@@ -160,12 +160,12 @@ sprite_sheet::sprite_sheet(const std::filesystem::path& img_path, SDL_Renderer& 
                     for (json_t& proj : colls["projectiles"])
                     {
                         const std::string proj_kind_str = proj["kind"].get<std::string>();
-                        const auto projectile_kind = util::string_to_enum<decltype(projectile::kind)>(proj_kind_str);
+                        const auto projectile_kind = util::sv_to_enum<decltype(projectile::kind)>(proj_kind_str);
                         if (!projectile_kind.has_value())
                             throw std::runtime_error(std::format("Invalid projectile kind string: {}", proj_kind_str));
 
                         const std::string dir_str = proj["direction"].get<std::string>();
-                        const auto direction = util::string_to_enum<decltype(projectile::direction)>(dir_str);
+                        const auto direction = util::sv_to_enum<decltype(projectile::direction)>(dir_str);
                         if (!direction.has_value())
                             throw std::runtime_error(std::format("Invalid direction string: {}", dir_str));
 

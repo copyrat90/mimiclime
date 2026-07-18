@@ -15,6 +15,7 @@
 #include "view/main_menu_bar.h"
 #include "view/popup_modals.h"
 #include "view/select_sprite_window.h"
+#include "view/sprite_collision_editor_window.h"
 
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>
@@ -23,6 +24,7 @@
 #include <SDL3/SDL.h>
 
 #include <iostream>
+#include <random>
 
 #ifdef __EMSCRIPTEN__
 #include "../libs/emscripten/emscripten_mainloop_stub.h"
@@ -124,11 +126,13 @@ int main(int, char**)
     } imgui_finalizer;
 
     // Our state
+    std::mt19937 rng(std::random_device{}());
     mcedit::model::resources resources;
     mcedit::view::popup_modals popup_modals;
     mcedit::view::main_menu_bar main_menu_bar;
     mcedit::view::select_sprite_window select_sprite_collision_window("Select sprite collision", ImVec2(50, 50),
                                                                       ImVec2(250, 400));
+    mcedit::view::sprite_collision_editor_window sprite_collision_editor_window(ImVec2(350, 100), ImVec2(800, 600));
 
     // Main loop
     bool done = false;
@@ -179,6 +183,9 @@ int main(int, char**)
         popup_modals.update(resources);
         main_menu_bar.update(select_sprite_collision_window, resources, *window);
         select_sprite_collision_window.update(resources);
+        sprite_collision_editor_window.update(resources, select_sprite_collision_window, rng);
+
+        rng.discard(1);
 
         // Rendering
         ImGui::Render();
