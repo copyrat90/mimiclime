@@ -12,6 +12,9 @@
 // For a multi-platform app consider using e.g. SDL+DirectX on Windows and SDL+OpenGL on Linux/OSX.
 
 #include "model/resources.h"
+#include "view/main_menu_bar.h"
+#include "view/popup_modals.h"
+#include "view/select_sprite_window.h"
 
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>
@@ -122,6 +125,10 @@ int main(int, char**)
 
     // Our state
     mcedit::model::resources resources;
+    mcedit::view::popup_modals popup_modals;
+    mcedit::view::main_menu_bar main_menu_bar;
+    mcedit::view::select_sprite_window select_sprite_collision_window("Select sprite collision", ImVec2(50, 50),
+                                                                      ImVec2(250, 400));
 
     // Main loop
     bool done = false;
@@ -169,6 +176,9 @@ int main(int, char**)
         resources.update(*renderer);
 
         // Show our views
+        popup_modals.update(resources);
+        main_menu_bar.update(select_sprite_collision_window, resources, *window);
+        select_sprite_collision_window.update(resources);
 
         // Rendering
         ImGui::Render();
