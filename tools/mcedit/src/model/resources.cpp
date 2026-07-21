@@ -1,5 +1,7 @@
 #include "model/resources.h"
 
+#include "ctrl/resources_edits.h"
+
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -32,7 +34,7 @@ resources::resources()
     ImGui::AddSettingsHandler(&settings_handler);
 }
 
-void resources::update(SDL_Renderer& renderer)
+void resources::update(ctrl::resources_edits& resources_edits, SDL_Renderer& renderer)
 {
     bool expected = true;
     if (_select_result_published.compare_exchange_weak(expected, false, std::memory_order::acq_rel,
@@ -80,6 +82,8 @@ void resources::update(SDL_Renderer& renderer)
 
                     result.swap(this->sprite_sheets);
                     this->loaded_project_directory = project_dir;
+
+                    resources_edits.clear();
 
                     if (this->loaded_project_directory != prev_loaded_project_dir)
                         ImGui::MarkIniSettingsDirty();

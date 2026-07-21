@@ -39,6 +39,22 @@ FetchContent_Declare(imgui
 )
 FetchContent_MakeAvailable(imgui)
 
+FetchContent_Declare(ImGuiNotify
+    GIT_REPOSITORY https://github.com/TyomaVader/ImGuiNotify.git
+    GIT_TAG d00e45f8d6b1e094bc9288d20eb3d2840f6a7d73
+    GIT_SHALLOW TRUE
+    EXCLUDE_FROM_ALL SYSTEM
+)
+FetchContent_MakeAvailable(ImGuiNotify)
+
+FetchContent_Declare(IconFontCppHeaders
+    GIT_REPOSITORY https://github.com/juliettef/IconFontCppHeaders.git
+    GIT_TAG 210b5a399a64270674560d633638952d1e8d804d
+    GIT_SHALLOW TRUE
+    EXCLUDE_FROM_ALL SYSTEM
+)
+FetchContent_MakeAvailable(IconFontCppHeaders)
+
 FetchContent_Declare(json
     GIT_REPOSITORY https://github.com/nlohmann/json.git
     GIT_TAG v3.12.0
@@ -64,11 +80,21 @@ target_include_directories(imgui PUBLIC
 target_link_libraries(imgui PRIVATE SDL3::SDL3-static)
 target_compile_definitions(imgui PUBLIC IMGUI_DEFINE_MATH_OPERATORS)
 
+add_library(ImGuiNotify INTERFACE EXCLUDE_FROM_ALL)
+target_include_directories(ImGuiNotify INTERFACE
+    ${iconfontcppheaders_SOURCE_DIR}
+    ${imguinotify_SOURCE_DIR}/win32Example/backends
+    ${imguinotify_SOURCE_DIR}/win32Example/fonts
+)
+target_link_libraries(ImGuiNotify INTERFACE imgui)
+target_compile_definitions(ImGuiNotify INTERFACE NOTIFY_RENDER_OUTSIDE_MAIN_WINDOW=false)
+
 add_executable(mcedit)
 add_subdirectory(src)
 target_include_directories(mcedit PRIVATE src)
 target_link_libraries(mcedit PRIVATE
     imgui
+    ImGuiNotify
     SDL3::SDL3-static
     SDL3_image::SDL3_image-static
     nlohmann_json::nlohmann_json

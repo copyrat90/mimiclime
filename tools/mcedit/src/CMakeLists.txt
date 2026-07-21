@@ -7,4 +7,11 @@ target_sources(mcedit PRIVATE
     view/main_menu_bar.cpp
     view/select_sprite_window.cpp
     view/sprite_collision_editor_window.cpp
+    ctrl/resources_edits.cpp
+    ctrl/collision_box_add.cpp
+    ctrl/collision_box_remove.cpp
+    ctrl/collision_box_edit.cpp
+    ctrl/projectile_add.cpp
+    ctrl/projectile_remove.cpp
+    ctrl/projectile_edit.cpp
 )

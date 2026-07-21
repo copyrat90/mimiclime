@@ -11,6 +11,7 @@
 // Important to understand: SDL_Renderer is an _optional_ component of SDL3.
 // For a multi-platform app consider using e.g. SDL+DirectX on Windows and SDL+OpenGL on Linux/OSX.
 
+#include "ctrl/resources_edits.h"
 #include "model/resources.h"
 #include "view/main_menu_bar.h"
 #include "view/popup_modals.h"
@@ -20,6 +21,10 @@
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_sdlrenderer3.h>
+
+#include <IconsFontAwesome6.h>
+#include <ImGuiNotify.hpp>
+#include <fa-solid-900.h>
 
 #include <SDL3/SDL.h>
 
@@ -125,14 +130,25 @@ int main(int, char**)
         }
     } imgui_finalizer;
 
+    io.Fonts->AddFontDefault();
+
+    static constexpr ImWchar iconsRanges[] = {ICON_MIN_FA, ICON_MAX_16_FA, 0};
+    ImFontConfig iconsConfig;
+    iconsConfig.MergeMode = true;
+    iconsConfig.PixelSnapH = true;
+    io.Fonts->AddFontFromMemoryCompressedTTF(fa_solid_900_compressed_data, fa_solid_900_compressed_size, 0,
+                                             &iconsConfig, iconsRanges);
+
     // Our state
     std::mt19937 rng(std::random_device{}());
     mcedit::model::resources resources;
+    mcedit::ctrl::resources_edits resources_edits(resources);
     mcedit::view::popup_modals popup_modals;
     mcedit::view::main_menu_bar main_menu_bar;
     mcedit::view::select_sprite_window select_sprite_collision_window("Select sprite collision", ImVec2(50, 50),
                                                                       ImVec2(250, 400));
-    mcedit::view::sprite_collision_editor_window sprite_collision_editor_window(ImVec2(350, 100), ImVec2(800, 600));
+    mcedit::view::sprite_collision_editor_window sprite_collision_editor_window(ImVec2(350, 100), ImVec2(800, 600),
+                                                                                resources_edits);
 
     // Main loop
     bool done = false;
@@ -177,15 +193,32 @@ int main(int, char**)
         ImGui::NewFrame();
 
         // Update our models
-        resources.update(*renderer);
+        resources.update(resources_edits, *renderer);
+        resources_edits.update();
 
         // Show our views
         popup_modals.update(resources);
         main_menu_bar.update(select_sprite_collision_window, resources, *window);
         select_sprite_collision_window.update(resources);
-        sprite_collision_editor_window.update(resources, select_sprite_collision_window, rng);
+        sprite_collision_editor_window.update(resources, resources_edits, select_sprite_collision_window, rng);
 
         rng.discard(1);
+
+        // Notifications style setup
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.f);   // Disable round borders
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.f); // Disable borders
+
+        // Notifications color setup
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.10f, 0.10f, 0.10f, 1.00f)); // Background color
+
+        // Main rendering function
+        ImGui::RenderNotifications();
+
+        // ——————————————————————————————— WARNING ———————————————————————————————
+        //  Argument MUST match the amount of ImGui::PushStyleVar() calls
+        ImGui::PopStyleVar(2);
+        // Argument MUST match the amount of ImGui::PushStyleColor() calls
+        ImGui::PopStyleColor(1);
 
         // Rendering
         ImGui::Render();

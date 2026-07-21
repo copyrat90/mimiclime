@@ -14,6 +14,11 @@ struct ImGuiSettingsHandler;
 struct ImGuiTextBuffer;
 }
 
+namespace mcedit::ctrl
+{
+class resources_edits;
+}
+
 namespace mcedit::model
 {
 
@@ -35,7 +40,7 @@ private:
 public:
     resources();
 
-    void update(SDL_Renderer&);
+    void update(ctrl::resources_edits&, SDL_Renderer&);
 
     bool loaded() const
     {

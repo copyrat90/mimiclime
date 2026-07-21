@@ -1,5 +1,11 @@
 #include "view/sprite_collision_editor_window.h"
 
+#include "ctrl/collision_box_add.h"
+#include "ctrl/collision_box_edit.h"
+#include "ctrl/collision_box_remove.h"
+#include "ctrl/projectile_add.h"
+#include "ctrl/projectile_edit.h"
+#include "ctrl/projectile_remove.h"
 #include "model/resources.h"
 #include "util/enum_utils.h"
 #include "view/select_sprite_window.h"
@@ -8,6 +14,7 @@
 #include <array>
 #include <cstddef>
 #include <limits>
+#include <memory>
 #include <numbers>
 #include <utility>
 #include <vector>
@@ -39,12 +46,27 @@ constexpr float PROJECTILE_AREA = std::numbers::pi_v<float> * PROJECTILE_RADIUS 
 
 } // namespace
 
-sprite_collision_editor_window::sprite_collision_editor_window(const ImVec2& window_pos, const ImVec2& window_size)
-    : _window_pos(window_pos), _window_size(window_size)
+sprite_collision_editor_window::sprite_collision_editor_window(const ImVec2& window_pos, const ImVec2& window_size,
+                                                               ctrl::resources_edits& resources_edits)
+    : _window_pos(window_pos), _window_size(window_size),
+      _observer([this](ctrl::resources_edits::event_kind edit_event) {
+          switch (edit_event)
+          {
+          case ctrl::resources_edits::event_kind::UNDO:
+          case ctrl::resources_edits::event_kind::REDO:
+          case ctrl::resources_edits::event_kind::CLEAR:
+              mark_selected_element_dirty();
+              break;
+
+          default:
+              break;
+          }
+      })
 {
+    resources_edits.attach_observer(_observer);
 }
 
-void sprite_collision_editor_window::update(const model::resources& resources,
+void sprite_collision_editor_window::update(const model::resources& resources, ctrl::resources_edits& resources_edits,
                                             const select_sprite_window& select_sprite_collision_window,
                                             std::mt19937& rng)
 {
@@ -56,6 +78,7 @@ void sprite_collision_editor_window::update(const model::resources& resources,
         return;
 
     const model::sprite_sheet& sprite_sheet = spr_iter->second;
+    const model::sprite_frame& sprite_frame = sprite_sheet.frames[_frame_index];
 
     if (sprite_sheet.image_path != _prev_image_path || _frame_index < 0 ||
         _frame_index >= static_cast<decltype(_frame_index)>(sprite_sheet.frames.size()))
@@ -68,8 +91,6 @@ void sprite_collision_editor_window::update(const model::resources& resources,
 
     if (_selected_element.has_value())
     {
-        const model::sprite_frame& sprite_frame = sprite_sheet.frames[_frame_index];
-
         if (_selected_element->kind == element_kind::PROJECTILE)
         {
             if (_selected_element->index >= sprite_frame.projectiles.size())
@@ -116,11 +137,11 @@ void sprite_collision_editor_window::update(const model::resources& resources,
 
             update_frame(static_cast<decltype(_frame_index)>(sprite_sheet.frames.size()));
             update_zoom();
-            update_add_buttons(rng);
+            update_add_buttons(resources_edits, sprite_sheet, rng);
 
             ImGui::TableNextColumn();
 
-            update_properties();
+            update_properties(resources_edits, sprite_sheet);
         }
     }
     ImGui::End();
@@ -216,6 +237,7 @@ void sprite_collision_editor_window::update_canvas(const model::sprite_sheet& sp
                 .kind = element_kind::PROJECTILE,
                 .index = static_cast<decltype(selected_element_t::index)>(proj_idx),
                 .proj = proj,
+                .prev_proj = proj,
             });
             smallest_area = PROJECTILE_AREA;
         }
@@ -240,6 +262,7 @@ void sprite_collision_editor_window::update_canvas(const model::sprite_sheet& sp
                         .kind = box_kind,
                         .index = static_cast<decltype(selected_element_t::index)>(box_idx),
                         .box = box,
+                        .prev_box = box,
                     });
                     smallest_area = box_area;
                 }
@@ -442,7 +465,8 @@ void sprite_collision_editor_window::update_zoom()
     ImGui::DragFloat("Zoom##Sprite collision editor", &_zoom_100, 2, ZOOM_MIN, ZOOM_MAX, "%.0f%%");
 }
 
-void sprite_collision_editor_window::update_add_buttons(std::mt19937& rng)
+void sprite_collision_editor_window::update_add_buttons(ctrl::resources_edits& resources_edits,
+                                                        const model::sprite_sheet& sprite_sheet, std::mt19937& rng)
 {
     struct pop_style_color_t
     {
@@ -456,7 +480,7 @@ void sprite_collision_editor_window::update_add_buttons(std::mt19937& rng)
     {
         pop_style_color_t pop_style_color;
         if (ImGui::Button("Add wallbox"))
-            add_element_with_random_properties(element_kind::WALLBOX, rng);
+            add_element_with_random_properties(element_kind::WALLBOX, resources_edits, sprite_sheet, rng);
     }
 
     ImGui::SameLine();
@@ -464,7 +488,7 @@ void sprite_collision_editor_window::update_add_buttons(std::mt19937& rng)
     {
         pop_style_color_t pop_style_color;
         if (ImGui::Button("Add hurtbox"))
-            add_element_with_random_properties(element_kind::HURTBOX, rng);
+            add_element_with_random_properties(element_kind::HURTBOX, resources_edits, sprite_sheet, rng);
     }
 
     ImGui::SameLine();
@@ -472,18 +496,19 @@ void sprite_collision_editor_window::update_add_buttons(std::mt19937& rng)
     {
         pop_style_color_t pop_style_color;
         if (ImGui::Button("Add hitbox"))
-            add_element_with_random_properties(element_kind::HITBOX, rng);
+            add_element_with_random_properties(element_kind::HITBOX, resources_edits, sprite_sheet, rng);
     }
 
     ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)PROJECTILE_COLOR);
     {
         pop_style_color_t pop_style_color;
         if (ImGui::Button("Add projectile"))
-            add_element_with_random_properties(element_kind::PROJECTILE, rng);
+            add_element_with_random_properties(element_kind::PROJECTILE, resources_edits, sprite_sheet, rng);
     }
 }
 
-void sprite_collision_editor_window::update_properties()
+void sprite_collision_editor_window::update_properties(ctrl::resources_edits& resources_edits,
+                                                       const model::sprite_sheet& sprite_sheet)
 {
     if (!_selected_element.has_value())
         update_none_properties();
@@ -493,11 +518,11 @@ void sprite_collision_editor_window::update_properties()
         case element_kind::WALLBOX:
         case element_kind::HURTBOX:
         case element_kind::HITBOX:
-            update_box_properties();
+            update_box_properties(resources_edits, sprite_sheet);
             break;
 
         case element_kind::PROJECTILE:
-            update_projectile_properties();
+            update_projectile_properties(resources_edits, sprite_sheet);
             break;
 
         default:
@@ -510,47 +535,87 @@ void sprite_collision_editor_window::update_none_properties()
     ImGui::Text("Click the element to edit...");
 }
 
-void sprite_collision_editor_window::update_box_properties()
+void sprite_collision_editor_window::update_box_properties(ctrl::resources_edits& resources_edits,
+                                                           const model::sprite_sheet& sprite_sheet)
 {
     auto& box = _selected_element->box;
     const auto& box_color = COLL_BOX_COLORS[std::to_underlying(_selected_element->kind)];
 
+    auto submit_box_edit = [&] {
+        auto edit = std::make_unique<ctrl::collision_box_edit>(
+            sprite_sheet.image_path, _frame_index,
+            static_cast<model::collision_box::kind_t>(std::to_underlying(_selected_element->kind)),
+            _selected_element->index, _selected_element->prev_box, box);
+
+        resources_edits.add(std::move(edit));
+    };
+
     ImGui::TextColored(box_color, "%s #%u", util::enum_to_c_str(_selected_element->kind), _selected_element->index);
 
     int position_temp[2] = {box.x, box.y};
-    if (ImGui::DragInt2("Position##Sprite collision editor", position_temp, RECT_EDIT_SPEED,
-                        std::numeric_limits<decltype(model::collision_box::x)>::min(),
-                        std::numeric_limits<decltype(model::collision_box::x)>::max(), nullptr,
-                        ImGuiSliderFlags_ClampOnInput))
+    const bool position_dragged = ImGui::DragInt2("Position##Sprite collision editor", position_temp, RECT_EDIT_SPEED,
+                                                  std::numeric_limits<decltype(model::collision_box::x)>::min(),
+                                                  std::numeric_limits<decltype(model::collision_box::x)>::max(),
+                                                  nullptr, ImGuiSliderFlags_ClampOnInput);
+    if (ImGui::IsItemActivated())
+    {
+        _selected_element->prev_box = box;
+    }
+    if (position_dragged)
     {
         box.x = static_cast<decltype(model::collision_box::x)>(position_temp[0]);
         box.y = static_cast<decltype(model::collision_box::y)>(position_temp[1]);
     }
-    // TODO: Issue the edit command
+    if (ImGui::IsItemDeactivatedAfterEdit())
+    {
+        if (box.x != _selected_element->prev_box.x || box.y != _selected_element->prev_box.y)
+            submit_box_edit();
+    }
 
     int dimensions_temp[2] = {box.width, box.height};
-    if (ImGui::DragInt2("Dimensions##Sprite collision editor", dimensions_temp, RECT_EDIT_SPEED, 1,
-                        std::numeric_limits<decltype(model::collision_box::width)>::max(), nullptr,
-                        ImGuiSliderFlags_ClampOnInput))
+    const bool dimensions_dragged = ImGui::DragInt2(
+        "Dimensions##Sprite collision editor", dimensions_temp, RECT_EDIT_SPEED, 1,
+        std::numeric_limits<decltype(model::collision_box::width)>::max(), nullptr, ImGuiSliderFlags_ClampOnInput);
+    if (ImGui::IsItemActivated())
+    {
+        _selected_element->prev_box = box;
+    }
+    if (dimensions_dragged)
     {
         box.width = static_cast<decltype(model::collision_box::width)>(dimensions_temp[0]);
         box.height = static_cast<decltype(model::collision_box::height)>(dimensions_temp[1]);
     }
-    // TODO: Issue the edit command
+    if (ImGui::IsItemDeactivatedAfterEdit())
+    {
+        if (box.width != _selected_element->prev_box.width || box.height != _selected_element->prev_box.height)
+            submit_box_edit();
+    }
 
     ImGui::Separator();
 
     if (ImGui::Button("Remove collision box"))
     {
-        // TODO: Issue the edit command
+        auto remove_box = std::make_unique<ctrl::collision_box_remove>(
+            sprite_sheet.image_path, _frame_index,
+            static_cast<model::collision_box::kind_t>(std::to_underlying(_selected_element->kind)),
+            _selected_element->index);
+        resources_edits.add(std::move(remove_box));
 
         reset_selected_element();
     }
 }
 
-void sprite_collision_editor_window::update_projectile_properties()
+void sprite_collision_editor_window::update_projectile_properties(ctrl::resources_edits& resources_edits,
+                                                                  const model::sprite_sheet& sprite_sheet)
 {
     auto& proj = _selected_element->proj;
+
+    auto submit_projectile_edit = [&] {
+        auto edit = std::make_unique<ctrl::projectile_edit>(
+            sprite_sheet.image_path, _frame_index, _selected_element->index, _selected_element->prev_proj, proj);
+
+        resources_edits.add(std::move(edit));
+    };
 
     ImGui::TextColored(PROJECTILE_COLOR, "%s #%u", util::enum_to_c_str(element_kind::PROJECTILE),
                        _selected_element->index);
@@ -565,11 +630,11 @@ void sprite_collision_editor_window::update_projectile_properties()
 
             if (ImGui::Selectable(std::define_static_string(std::meta::identifier_of(proj_kind_info)), selected))
             {
-                if (proj.kind != proj_kind)
+                if (!selected)
                 {
-                    // TODO: Issue the edit command
-
+                    _selected_element->prev_proj = proj;
                     proj.kind = proj_kind;
+                    submit_projectile_edit();
                 }
             }
 
@@ -581,36 +646,136 @@ void sprite_collision_editor_window::update_projectile_properties()
     }
 
     int position_temp[2] = {proj.x, proj.y};
-    if (ImGui::DragInt2("Position##Sprite collision editor", position_temp, RECT_EDIT_SPEED,
-                        std::numeric_limits<decltype(model::projectile::x)>::min(),
-                        std::numeric_limits<decltype(model::projectile::x)>::max(), nullptr,
-                        ImGuiSliderFlags_ClampOnInput))
+    const bool position_dragged = ImGui::DragInt2("Position##Sprite collision editor", position_temp, RECT_EDIT_SPEED,
+                                                  std::numeric_limits<decltype(model::projectile::x)>::min(),
+                                                  std::numeric_limits<decltype(model::projectile::x)>::max(), nullptr,
+                                                  ImGuiSliderFlags_ClampOnInput);
+    if (ImGui::IsItemActivated())
+    {
+        _selected_element->prev_proj = proj;
+    }
+    if (position_dragged)
     {
         proj.x = static_cast<decltype(model::projectile::x)>(position_temp[0]);
         proj.y = static_cast<decltype(model::projectile::y)>(position_temp[1]);
     }
-    // TODO: Issue the edit command
+    if (ImGui::IsItemDeactivatedAfterEdit())
+    {
+        if (proj.x != _selected_element->prev_proj.x || proj.y != _selected_element->prev_proj.y)
+            submit_projectile_edit();
+    }
 
     int direction_temp = static_cast<int>(proj.direction);
     const char* direction_c_str = util::enum_to_c_str(proj.direction);
-    if (ImGui::SliderInt(
-            "Direction##Sprite collision editor", &direction_temp, static_cast<int>(model::direction_t::NONE),
-            util::size_of_enum<model::direction_t>() - 1 + static_cast<int>(model::direction_t::NONE), direction_c_str))
+    const bool direction_slid = ImGui::SliderInt(
+        "Direction##Sprite collision editor", &direction_temp, static_cast<int>(model::direction_t::NONE),
+        util::size_of_enum<model::direction_t>() - 1 + static_cast<int>(model::direction_t::NONE), direction_c_str);
+    if (ImGui::IsItemActivated())
+    {
+        _selected_element->prev_proj = proj;
+    }
+    if (direction_slid)
     {
         proj.direction = static_cast<decltype(model::projectile::direction)>(direction_temp);
     }
-    // TODO: Issue the edit command
+    if (ImGui::IsItemDeactivatedAfterEdit())
+    {
+        if (proj.direction != _selected_element->prev_proj.direction)
+            submit_projectile_edit();
+    }
 
     ImGui::DragFloat("Speed##Sprite collision editor", &proj.speed, 0.005f, 0, 1000, "%.3f px/frame",
                      ImGuiSliderFlags_AlwaysClamp);
-    // TODO: Issue the edit command
+    if (ImGui::IsItemActivated())
+    {
+        _selected_element->prev_proj = proj;
+    }
+    if (ImGui::IsItemDeactivatedAfterEdit())
+    {
+        if (proj.speed != _selected_element->prev_proj.speed)
+            submit_projectile_edit();
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::Button("Remove projectile"))
+    {
+        auto remove_proj =
+            std::make_unique<ctrl::projectile_remove>(sprite_sheet.image_path, _frame_index, _selected_element->index);
+        resources_edits.add(std::move(remove_proj));
+
+        reset_selected_element();
+    }
 }
 
-void sprite_collision_editor_window::add_element_with_random_properties(element_kind kind, std::mt19937& rng)
+void sprite_collision_editor_window::add_element_with_random_properties(element_kind kind,
+                                                                        ctrl::resources_edits& resources_edits,
+                                                                        const model::sprite_sheet& sprite_sheet,
+                                                                        std::mt19937& rng)
 {
-    // TODO: Issue the edit command
-    ((void)kind);
-    ((void)rng);
+    static constexpr decltype(model::collision_box::x) POS_MAX = 16;
+    static constexpr decltype(model::collision_box::x) POS_MIN = -POS_MAX;
+    static constexpr decltype(model::collision_box::width) BOX_DIMENSION = 8;
+
+    const model::sprite_frame& sprite_frame = sprite_sheet.frames[_frame_index];
+
+    switch (kind)
+    {
+    case element_kind::WALLBOX:
+    case element_kind::HURTBOX:
+    case element_kind::HITBOX: {
+        std::uniform_int_distribution<decltype(model::collision_box::x)> pos_dist(POS_MIN, POS_MAX - BOX_DIMENSION);
+
+        model::collision_box box{
+            .x = pos_dist(rng),
+            .y = pos_dist(rng),
+            .width = BOX_DIMENSION,
+            .height = BOX_DIMENSION,
+        };
+
+        auto box_add = std::make_unique<ctrl::collision_box_add>(
+            sprite_sheet.image_path, _frame_index, static_cast<model::collision_box::kind_t>(std::to_underlying(kind)),
+            box);
+        resources_edits.add(std::move(box_add));
+
+        const auto& boxes = (kind == element_kind::WALLBOX)   ? sprite_frame.wallboxes
+                            : (kind == element_kind::HURTBOX) ? sprite_frame.hurtboxes
+                                                              : sprite_frame.hitboxes;
+        _selected_element = selected_element_t{
+            .kind = kind,
+            .index = static_cast<decltype(selected_element_t::index)>(boxes.size() - 1),
+            .box = box,
+            .prev_box = box,
+        };
+    }
+    break;
+
+    case element_kind::PROJECTILE: {
+        std::uniform_int_distribution<decltype(model::collision_box::x)> pos_dist(POS_MIN, POS_MAX);
+
+        model::projectile proj{
+            .kind = model::projectile::kind_t::FIREBALL,
+            .x = pos_dist(rng),
+            .y = pos_dist(rng),
+            .direction = model::direction_t::UP,
+            .speed = 4.0f,
+        };
+
+        auto proj_add = std::make_unique<ctrl::projectile_add>(sprite_sheet.image_path, _frame_index, proj);
+        resources_edits.add(std::move(proj_add));
+
+        _selected_element = selected_element_t{
+            .kind = kind,
+            .index = static_cast<decltype(selected_element_t::index)>(sprite_frame.projectiles.size() - 1),
+            .proj = proj,
+            .prev_proj = proj,
+        };
+    }
+    break;
+
+    default:
+        IM_ASSERT(false && "Invalid kind");
+    }
 }
 
 } // namespace mcedit::view
