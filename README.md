@@ -38,13 +38,11 @@ To edit the levels, open [`levels/mimiclime.ldtk`](levels/mimiclime.ldtk) with [
 
 Just saving the LDtk project is enough, the build process automatically takes care of the importing.
 
-### Editing characters
+### Editing sprite metadatas
 
-To edit the characters, open [`characters/mimiclime/`](characters/mimiclime/) directory with [GBAForge](https://github.com/DarkKodKod/GBAForge).
+To edit the sprite metadatas, build the [`tools/mcedit/`](tools/mcedit/) with CMake and a C++ compiler that supports C++26 reflection.\
+(As of writing, [GCC 16](https://gcc.gnu.org/gcc-16/changes.html#cxx) supports [C++26 reflection](https://cppreference.com/cpp/compiler_support/26).)
 
-Release Version 1.0.0 is rather old, so you need to build GBAForge yourself.\
-**Comment out** [this line](https://github.com/DarkKodKod/GBAForge/blob/133e502e141390326b3609ac6d3f806be809de04/GBATool/Utils/Utils.cs#L306) before building,
-so that the generated source doesn't have a timestamp.
+Open the mimiclime root directory with `File > Open mimiclime directory`, and start editing things with `Window > ...`
 
-After editing a character, you need to re-generate the source.\
-Pressing **F5** or `Project > Build Project...` will do the trick.
+Just saving the changes is enough, the build process automatically takes care of the importing.
