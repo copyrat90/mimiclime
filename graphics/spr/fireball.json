@@ -1,4 +1,80 @@
 {
     "type": "sprite",
-	"height": 8
+    "height": 8,
+    "mcedit": {
+        "collisions": [
+            {
+                "wallboxes": [
+                    {
+                        "x": -3,
+                        "y": -3,
+                        "width": 6,
+                        "height": 6
+                    }
+                ],
+                "hitboxes": [
+                    {
+                        "x": -2,
+                        "y": -2,
+                        "width": 4,
+                        "height": 4
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -3,
+                        "y": -3,
+                        "width": 6,
+                        "height": 6
+                    }
+                ],
+                "hitboxes": [
+                    {
+                        "x": -2,
+                        "y": -2,
+                        "width": 4,
+                        "height": 4
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -3,
+                        "y": -3,
+                        "width": 6,
+                        "height": 6
+                    }
+                ],
+                "hitboxes": [
+                    {
+                        "x": -2,
+                        "y": -2,
+                        "width": 4,
+                        "height": 4
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -3,
+                        "y": -3,
+                        "width": 6,
+                        "height": 6
+                    }
+                ],
+                "hitboxes": [
+                    {
+                        "x": -2,
+                        "y": -2,
+                        "width": 4,
+                        "height": 4
+                    }
+                ]
+            }
+        ]
+    }
 }
