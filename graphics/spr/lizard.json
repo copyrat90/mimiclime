@@ -1,4 +1,350 @@
 {
     "type": "sprite",
-	"height": 32
+    "height": 32,
+    "mcedit": {
+        "collisions": [
+            {
+                "wallboxes": [
+                    {
+                        "x": -4,
+                        "y": -12,
+                        "width": 8,
+                        "height": 27
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -3,
+                        "y": -11,
+                        "width": 6,
+                        "height": 25
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -4,
+                        "y": -12,
+                        "width": 8,
+                        "height": 27
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -3,
+                        "y": -11,
+                        "width": 6,
+                        "height": 25
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -4,
+                        "y": -12,
+                        "width": 8,
+                        "height": 27
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -3,
+                        "y": -11,
+                        "width": 6,
+                        "height": 25
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -4,
+                        "y": -12,
+                        "width": 8,
+                        "height": 27
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -3,
+                        "y": -11,
+                        "width": 6,
+                        "height": 25
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -4,
+                        "y": -12,
+                        "width": 8,
+                        "height": 27
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -3,
+                        "y": -11,
+                        "width": 6,
+                        "height": 25
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -4,
+                        "y": -12,
+                        "width": 8,
+                        "height": 27
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -3,
+                        "y": -11,
+                        "width": 6,
+                        "height": 24
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -4,
+                        "y": -12,
+                        "width": 8,
+                        "height": 27
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -3,
+                        "y": -11,
+                        "width": 6,
+                        "height": 24
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -4,
+                        "y": -12,
+                        "width": 8,
+                        "height": 27
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -3,
+                        "y": -11,
+                        "width": 6,
+                        "height": 22
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -4,
+                        "y": -12,
+                        "width": 8,
+                        "height": 27
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -3,
+                        "y": -11,
+                        "width": 6,
+                        "height": 21
+                    }
+                ],
+                "projectiles": [
+                    {
+                        "kind": "FIREBALL",
+                        "x": 0,
+                        "y": 15,
+                        "direction": "DOWN",
+                        "speed": 4.0
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -12,
+                        "y": -4,
+                        "width": 27,
+                        "height": 8
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -11,
+                        "y": -3,
+                        "width": 25,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -12,
+                        "y": -4,
+                        "width": 27,
+                        "height": 8
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -11,
+                        "y": -3,
+                        "width": 25,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -12,
+                        "y": -4,
+                        "width": 27,
+                        "height": 8
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -11,
+                        "y": -3,
+                        "width": 25,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -12,
+                        "y": -4,
+                        "width": 27,
+                        "height": 8
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -11,
+                        "y": -3,
+                        "width": 25,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -12,
+                        "y": -4,
+                        "width": 27,
+                        "height": 8
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -11,
+                        "y": -3,
+                        "width": 25,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -12,
+                        "y": -4,
+                        "width": 27,
+                        "height": 8
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -11,
+                        "y": -3,
+                        "width": 24,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -12,
+                        "y": -4,
+                        "width": 27,
+                        "height": 8
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -11,
+                        "y": -3,
+                        "width": 23,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -12,
+                        "y": -4,
+                        "width": 27,
+                        "height": 8
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -11,
+                        "y": -3,
+                        "width": 22,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -12,
+                        "y": -4,
+                        "width": 27,
+                        "height": 8
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -11,
+                        "y": -3,
+                        "width": 21,
+                        "height": 6
+                    }
+                ],
+                "projectiles": [
+                    {
+                        "kind": "FIREBALL",
+                        "x": 15,
+                        "y": 0,
+                        "direction": "RIGHT",
+                        "speed": 4.0
+                    }
+                ]
+            }
+        ]
+    }
 }
