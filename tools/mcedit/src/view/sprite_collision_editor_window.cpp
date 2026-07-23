@@ -535,6 +535,8 @@ void sprite_collision_editor_window::update_copy_frame(decltype(_frame_index) fr
                 std::make_unique<ctrl::sprite_frame_copy>(sprite_sheet.image_path, _copy_frame_index, _frame_index);
 
             resources_edits.add(std::move(copy));
+
+            mark_selected_element_dirty();
         }
     }
 }
@@ -547,6 +549,8 @@ void sprite_collision_editor_window::update_clear_frame(ctrl::resources_edits& r
         auto clear = std::make_unique<ctrl::sprite_frame_clear>(sprite_sheet.image_path, _frame_index);
 
         resources_edits.add(std::move(clear));
+
+        mark_selected_element_dirty();
     }
 }
 
