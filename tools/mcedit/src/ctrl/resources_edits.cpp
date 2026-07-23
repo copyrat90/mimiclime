@@ -1,5 +1,7 @@
 #include "ctrl/resources_edits.h"
 
+#include "model/resources.h"
+
 #include <ImGuiNotify.hpp>
 
 #include <cstddef>
@@ -33,6 +35,19 @@ void resources_edits::update()
     if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_Y, ImGuiInputFlags_RouteGlobal) ||
         ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiMod_Shift | ImGuiKey_Z, ImGuiInputFlags_RouteGlobal))
         redo();
+
+    if (ImGui::Shortcut(ImGuiMod_Ctrl | ImGuiKey_S, ImGuiInputFlags_RouteGlobal))
+        save();
+}
+
+bool resources_edits::has_undo() const
+{
+    return !_undos.empty();
+}
+
+bool resources_edits::has_redo() const
+{
+    return !_redos.empty();
 }
 
 void resources_edits::add(resource_edit_ptr&& edit)
@@ -131,6 +146,24 @@ void resources_edits::clear()
     _redos.clear();
 
     _subject.notify(event_kind::CLEAR);
+}
+
+void resources_edits::save()
+{
+    try
+    {
+        _resources.save_changes();
+
+        ImGuiToast toast(ImGuiToastType::Success, "Saved changes.");
+        toast.setTitle("Saved");
+        remove_overflown_notification();
+        ImGui::InsertNotification(toast);
+    }
+    catch (const std::exception& ex)
+    {
+        remove_overflown_notification();
+        ImGui::InsertNotification({ImGuiToastType::Error, ex.what()});
+    }
 }
 
 void resources_edits::attach_observer(decltype(_subject)::observer_t& observer)

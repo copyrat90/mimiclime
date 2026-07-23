@@ -174,10 +174,15 @@ int main(int, char**)
         while (SDL_PollEvent(&event))
         {
             ImGui_ImplSDL3_ProcessEvent(&event);
-            if (event.type == SDL_EVENT_QUIT)
-                done = true;
-            if (event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED && event.window.windowID == SDL_GetWindowID(window))
-                done = true;
+            if (event.type == SDL_EVENT_QUIT ||
+                (event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED && event.window.windowID == SDL_GetWindowID(window)))
+            {
+                if (resources.has_changes())
+                    popup_modals.notify_unsaved_changes(
+                        mcedit::view::popup_modals::unsaved_changes_op_kind::EXIT_PROGRAM);
+                else
+                    done = true;
+            }
         }
 
         // [If using SDL_MAIN_USE_CALLBACKS: all code below would likely be your SDL_AppIterate() function]
@@ -197,8 +202,8 @@ int main(int, char**)
         resources_edits.update();
 
         // Show our views
-        popup_modals.update(resources);
-        main_menu_bar.update(select_sprite_collision_window, resources, *window);
+        popup_modals.update(resources, *window, done);
+        main_menu_bar.update(select_sprite_collision_window, popup_modals, resources, resources_edits, *window);
         select_sprite_collision_window.update(resources);
         sprite_collision_editor_window.update(resources, resources_edits, select_sprite_collision_window, rng);
 

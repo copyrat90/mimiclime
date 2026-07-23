@@ -47,6 +47,10 @@ public:
         return !this->loaded_project_directory.empty();
     }
 
+    bool has_changes() const;
+
+    void save_changes();
+
     void select_project_directory(SDL_Window&);
 
 private:

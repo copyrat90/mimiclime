@@ -1,6 +1,8 @@
 #include "main_menu_bar.h"
 
+#include "ctrl/resources_edits.h"
 #include "model/resources.h"
+#include "view/popup_modals.h"
 #include "view/select_sprite_window.h"
 
 #include <imgui.h>
@@ -8,14 +10,34 @@
 namespace mcedit::view
 {
 
-void main_menu_bar::update(select_sprite_window& select_sprite_collision_window, model::resources& resources, SDL_Window& window)
+void main_menu_bar::update(select_sprite_window& select_sprite_collision_window, popup_modals& popups,
+                           model::resources& resources, ctrl::resources_edits& resources_edits, SDL_Window& window)
 {
     if (ImGui::BeginMainMenuBar())
     {
         if (ImGui::BeginMenu("File##Main menu bar"))
         {
             if (ImGui::MenuItem("Open mimiclime directory##Main menu bar", nullptr, resources.loaded()))
-                resources.select_project_directory(window);
+            {
+                if (resources.has_changes())
+                    popups.notify_unsaved_changes(popup_modals::unsaved_changes_op_kind::OPEN_DIRECTORY);
+                else
+                    resources.select_project_directory(window);
+            }
+
+            ImGui::Separator();
+
+            bool no_changes = !resources.has_changes();
+            if (ImGui::MenuItem("Save changes##Main menu bar", "Ctrl+S", no_changes, resources.loaded()))
+                resources_edits.save();
+
+            ImGui::Separator();
+
+            if (ImGui::MenuItem("Undo##Main menu bar", "Ctrl+Z", nullptr, resources_edits.has_undo()))
+                resources_edits.undo();
+
+            if (ImGui::MenuItem("Redo##Main menu bar", "Ctrl+Y/Ctrl+Shift+Z", nullptr, resources_edits.has_redo()))
+                resources_edits.redo();
 
             ImGui::EndMenu();
         }

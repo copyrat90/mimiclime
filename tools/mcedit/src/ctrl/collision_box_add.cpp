@@ -60,7 +60,10 @@ auto collision_box_add::boxes_ref(model::resources& resources) -> decltype((mode
     if (iter == resources.sprite_sheets.end())
         throw std::logic_error(std::format("Sprite '{}' not found!", _image_path.stem()));
 
-    model::sprite_frame& sprite_frame = iter->second.frames[_frame_index];
+    model::sprite_sheet& sprite_sheet = iter->second;
+    sprite_sheet.has_changes = true;
+
+    model::sprite_frame& sprite_frame = sprite_sheet.frames[_frame_index];
     return (_box_kind == model::collision_box::kind_t::WALLBOX)   ? sprite_frame.wallboxes
            : (_box_kind == model::collision_box::kind_t::HURTBOX) ? sprite_frame.hurtboxes
                                                                   : sprite_frame.hitboxes;

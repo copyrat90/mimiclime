@@ -1,6 +1,5 @@
 #include "model/sprite_sheet.h"
 
-#include "model/json_t.h"
 #include "util/enum_utils.h"
 
 #include <SDL3/SDL_render.h>
@@ -8,6 +7,7 @@
 
 #include <format>
 #include <fstream>
+#include <iomanip>
 #include <stdexcept>
 #include <string>
 
@@ -15,7 +15,7 @@ namespace mcedit::model
 {
 
 sprite_sheet::sprite_sheet(const std::filesystem::path& img_path, SDL_Renderer& renderer)
-    : image_path(img_path), texture([&] -> SDL_Texture& {
+    : has_changes(false), image_path(img_path), texture([&] -> SDL_Texture& {
           SDL_Surface* surface = IMG_Load(img_path.string().c_str());
           if (!surface)
               throw std::runtime_error(SDL_GetError());
@@ -68,30 +68,34 @@ sprite_sheet::sprite_sheet(const std::filesystem::path& img_path, SDL_Renderer& 
     std::filesystem::path json_path(img_path);
     json_path.replace_extension(".json");
 
-    json_t json;
     {
         std::ifstream json_file(json_path);
         const auto prev_except = json_file.exceptions();
         json_file.exceptions(std::ios_base::failbit);
         json_file.exceptions(prev_except);
 
-        json_file >> json;
+        json_file >> this->json;
     }
 
-    if (json.contains("height"))
+    if (this->json["type"] != "sprite")
     {
-        if (!json["height"].is_number_unsigned() || json["height"] == 0)
+        throw std::runtime_error("Not a sprite type");
+    }
+
+    if (this->json.contains("height"))
+    {
+        if (!this->json["height"].is_number_unsigned() || this->json["height"] == 0)
             throw std::runtime_error("Invalid height");
-        this->frame_height = json["height"];
+        this->frame_height = this->json["height"];
     }
     else
         this->frame_height = this->texture_height;
 
-    if (json.contains("width"))
+    if (this->json.contains("width"))
     {
-        if (!json["width"].is_number_unsigned() || json["width"] == 0)
+        if (!this->json["width"].is_number_unsigned() || this->json["width"] == 0)
             throw std::runtime_error("Invalid width");
-        this->frame_width = json["width"];
+        this->frame_width = this->json["width"];
     }
     else
         this->frame_width = this->texture_width;
@@ -99,9 +103,9 @@ sprite_sheet::sprite_sheet(const std::filesystem::path& img_path, SDL_Renderer& 
     const unsigned total_frames = this->texture_width * this->texture_height / this->frame_width / this->frame_height;
     this->frames.resize(total_frames);
 
-    if (json.contains("mcedit"))
+    if (this->json.contains("mcedit"))
     {
-        json_t& root = json["mcedit"];
+        json_t& root = this->json["mcedit"];
 
         if (root.contains("collisions"))
         {
@@ -188,6 +192,59 @@ sprite_sheet::sprite_sheet(const std::filesystem::path& img_path, SDL_Renderer& 
 sprite_sheet::~sprite_sheet()
 {
     SDL_DestroyTexture(&texture);
+}
+
+void sprite_sheet::save_changes()
+{
+    if (!this->has_changes)
+        return;
+
+    json_t& root = this->json["mcedit"];
+    json_t& colls = root["collisions"];
+
+    colls.clear();
+
+    for (const sprite_frame& frame : this->frames)
+    {
+        json_t& col = colls.emplace_back();
+
+        static constexpr auto add_boxes = [](decltype((frame.wallboxes)) boxes, std::string_view boxes_identifier,
+                                             json_t& col) {
+            for (const auto& box : boxes)
+            {
+                json_t& bx = col[boxes_identifier].emplace_back();
+                bx["x"] = box.x;
+                bx["y"] = box.y;
+                bx["width"] = box.width;
+                bx["height"] = box.height;
+            }
+        };
+
+        add_boxes(frame.wallboxes, "wallboxes", col);
+        add_boxes(frame.hurtboxes, "hurtboxes", col);
+        add_boxes(frame.hitboxes, "hitboxes", col);
+
+        for (const auto& proj : frame.projectiles)
+        {
+            json_t& pj = col["projectiles"].emplace_back();
+            pj["kind"] = util::enum_to_sv(proj.kind);
+            pj["x"] = proj.x;
+            pj["y"] = proj.y;
+            pj["direction"] = util::enum_to_sv(proj.direction);
+            pj["speed"] = proj.speed;
+        }
+    }
+
+    std::filesystem::path json_path(this->image_path);
+    json_path.replace_extension(".json");
+    {
+        std::ofstream json_file(json_path);
+        json_file.exceptions(std::ios_base::failbit);
+
+        json_file << std::setw(4) << this->json << "\n";
+    }
+
+    this->has_changes = false;
 }
 
 } // namespace mcedit::model

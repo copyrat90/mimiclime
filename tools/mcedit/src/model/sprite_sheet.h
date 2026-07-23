@@ -2,6 +2,8 @@
 
 #include "model/sprite_frame.h"
 
+#include "model/json_t.h"
+
 #include <cstdint>
 #include <filesystem>
 #include <vector>
@@ -17,7 +19,11 @@ namespace mcedit::model
 
 struct sprite_sheet final
 {
+    bool has_changes;
+
     std::filesystem::path image_path;
+    json_t json;
+
     SDL_Texture& texture;
     unsigned texture_width;
     unsigned texture_height;
@@ -31,6 +37,8 @@ struct sprite_sheet final
 
     sprite_sheet(const sprite_sheet&) = delete;
     sprite_sheet& operator=(const sprite_sheet&) = delete;
+
+    void save_changes();
 };
 
 } // namespace mcedit::model

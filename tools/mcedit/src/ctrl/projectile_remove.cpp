@@ -53,14 +53,16 @@ auto projectile_remove::redo_message() const -> std::string
     return oss.str();
 }
 
-auto projectile_remove::projectiles_ref(model::resources& resources)
-    -> decltype((model::sprite_frame::projectiles))
+auto projectile_remove::projectiles_ref(model::resources& resources) -> decltype((model::sprite_frame::projectiles))
 {
     auto iter = resources.sprite_sheets.find(_image_path);
     if (iter == resources.sprite_sheets.end())
         throw std::logic_error(std::format("Sprite '{}' not found!", _image_path.stem()));
 
-    model::sprite_frame& sprite_frame = iter->second.frames[_frame_index];
+    model::sprite_sheet& sprite_sheet = iter->second;
+    sprite_sheet.has_changes = true;
+
+    model::sprite_frame& sprite_frame = sprite_sheet.frames[_frame_index];
     return sprite_frame.projectiles;
 }
 

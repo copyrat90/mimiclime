@@ -80,7 +80,10 @@ auto projectile_edit::projectile_ref(model::resources& resources) const -> model
     if (iter == resources.sprite_sheets.end())
         throw std::logic_error(std::format("Sprite '{}' not found!", _image_path.stem()));
 
-    model::sprite_frame& sprite_frame = iter->second.frames[_frame_index];
+    model::sprite_sheet& sprite_sheet = iter->second;
+    sprite_sheet.has_changes = true;
+
+    model::sprite_frame& sprite_frame = sprite_sheet.frames[_frame_index];
     return sprite_frame.projectiles[_projectile_index];
 }
 

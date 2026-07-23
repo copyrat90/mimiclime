@@ -7,6 +7,8 @@
 
 #include <SDL3/SDL_dialog.h>
 
+#include <algorithm>
+#include <exception>
 #include <format>
 #include <sstream>
 #include <utility>
@@ -99,6 +101,37 @@ void resources::update(ctrl::resources_edits& resources_edits, SDL_Renderer& ren
             }
         }
     }
+}
+
+bool resources::has_changes() const
+{
+    const auto iter =
+        std::ranges::find_if(this->sprite_sheets, [](const decltype(this->sprite_sheets)::value_type& kv) -> bool {
+            const sprite_sheet& sheet = kv.second;
+            return sheet.has_changes;
+        });
+
+    return iter != this->sprite_sheets.cend();
+}
+
+void resources::save_changes()
+{
+    std::exception_ptr ex = nullptr;
+
+    for (auto&& [_, sprite_sheet] : this->sprite_sheets)
+    {
+        try
+        {
+            sprite_sheet.save_changes();
+        }
+        catch (...)
+        {
+            ex = std::current_exception();
+        }
+    }
+
+    if (ex)
+        std::rethrow_exception(ex);
 }
 
 void resources::select_project_directory(SDL_Window& window)

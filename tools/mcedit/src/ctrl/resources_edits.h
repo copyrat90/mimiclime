@@ -33,12 +33,17 @@ public:
 
     void update();
 
+    bool has_undo() const;
+    bool has_redo() const;
+
     void add(resource_edit_ptr&&);
 
     void undo();
     void redo();
 
     void clear();
+
+    void save();
 
     void attach_observer(decltype(_subject)::observer_t& observer);
     void detach_observer(decltype(_subject)::observer_t& observer);
