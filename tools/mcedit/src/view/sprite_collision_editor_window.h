@@ -38,6 +38,8 @@ private:
     int _frame_index = 0;
     float _zoom_100 = 800;
 
+    int _copy_frame_index = 0;
+
     enum class element_kind : std::uint8_t
     {
         WALLBOX = std::to_underlying(model::collision_box::kind_t::WALLBOX),
@@ -83,6 +85,8 @@ private:
     void update_frame(decltype(_frame_index) frames);
     void update_zoom();
     void update_add_buttons(ctrl::resources_edits&, const model::sprite_sheet&, std::mt19937& rng);
+    void update_copy_frame(decltype(_frame_index) frames, ctrl::resources_edits&, const model::sprite_sheet&);
+    void update_clear_frame(ctrl::resources_edits&, const model::sprite_sheet&);
 
     void update_properties(ctrl::resources_edits&, const model::sprite_sheet&);
     void update_none_properties();

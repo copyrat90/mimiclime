@@ -14,4 +14,6 @@ target_sources(mcedit PRIVATE
     ctrl/projectile_add.cpp
     ctrl/projectile_remove.cpp
     ctrl/projectile_edit.cpp
+    ctrl/sprite_frame_copy.cpp
+    ctrl/sprite_frame_clear.cpp
 )

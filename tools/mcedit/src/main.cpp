@@ -145,10 +145,10 @@ int main(int, char**)
     mcedit::ctrl::resources_edits resources_edits(resources);
     mcedit::view::popup_modals popup_modals;
     mcedit::view::main_menu_bar main_menu_bar;
-    mcedit::view::select_sprite_window select_sprite_collision_window("Select sprite collision", ImVec2(50, 50),
-                                                                      ImVec2(250, 400));
-    mcedit::view::sprite_collision_editor_window sprite_collision_editor_window(ImVec2(350, 100), ImVec2(800, 600),
-                                                                                resources_edits);
+    mcedit::view::select_sprite_window select_sprite_collision_window(
+        "Select sprite collision", ImVec2(50, 50) * main_scale, ImVec2(250, 400) * main_scale);
+    mcedit::view::sprite_collision_editor_window sprite_collision_editor_window(
+        ImVec2(350, 100) * main_scale, ImVec2(800, 650) * main_scale, resources_edits);
 
     // Main loop
     bool done = false;

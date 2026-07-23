@@ -6,6 +6,8 @@
 #include "ctrl/projectile_add.h"
 #include "ctrl/projectile_edit.h"
 #include "ctrl/projectile_remove.h"
+#include "ctrl/sprite_frame_clear.h"
+#include "ctrl/sprite_frame_copy.h"
 #include "model/resources.h"
 #include "util/enum_utils.h"
 #include "view/select_sprite_window.h"
@@ -78,16 +80,18 @@ void sprite_collision_editor_window::update(const model::resources& resources, c
         return;
 
     const model::sprite_sheet& sprite_sheet = spr_iter->second;
-    const model::sprite_frame& sprite_frame = sprite_sheet.frames[_frame_index];
 
     if (sprite_sheet.image_path != _prev_image_path || _frame_index < 0 ||
         _frame_index >= static_cast<decltype(_frame_index)>(sprite_sheet.frames.size()))
     {
         _frame_index = 0;
+        _copy_frame_index = 0;
         reset_selected_element();
 
         _prev_image_path = sprite_sheet.image_path;
     }
+
+    const model::sprite_frame& sprite_frame = sprite_sheet.frames[_frame_index];
 
     if (_selected_element.has_value())
     {
@@ -130,14 +134,21 @@ void sprite_collision_editor_window::update(const model::resources& resources, c
                 }
             } end_table;
 
+            ImGui::TableSetupColumn(nullptr, ImGuiTableColumnFlags_WidthStretch, 2.0f);
+            ImGui::TableSetupColumn(nullptr, ImGuiTableColumnFlags_WidthStretch, 1.0f);
+
             ImGui::TableNextRow();
             ImGui::TableNextColumn();
 
             update_canvas(sprite_sheet, rng);
 
-            update_frame(static_cast<decltype(_frame_index)>(sprite_sheet.frames.size()));
+            const auto frames = static_cast<decltype(_frame_index)>(sprite_sheet.frames.size());
+            update_frame(frames);
             update_zoom();
             update_add_buttons(resources_edits, sprite_sheet, rng);
+            ImGui::Separator();
+            update_copy_frame(frames, resources_edits, sprite_sheet);
+            update_clear_frame(resources_edits, sprite_sheet);
 
             ImGui::TableNextColumn();
 
@@ -499,11 +510,43 @@ void sprite_collision_editor_window::update_add_buttons(ctrl::resources_edits& r
             add_element_with_random_properties(element_kind::HITBOX, resources_edits, sprite_sheet, rng);
     }
 
+    ImGui::SameLine();
     ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)PROJECTILE_COLOR);
     {
         pop_style_color_t pop_style_color;
         if (ImGui::Button("Add projectile"))
             add_element_with_random_properties(element_kind::PROJECTILE, resources_edits, sprite_sheet, rng);
+    }
+}
+
+void sprite_collision_editor_window::update_copy_frame(decltype(_frame_index) frames,
+                                                       ctrl::resources_edits& resources_edits,
+                                                       const model::sprite_sheet& sprite_sheet)
+{
+    ImGui::SliderInt("Copy from frame##Sprite collision editor", &_copy_frame_index, 0, frames - 1, "%d",
+                     ImGuiSliderFlags_AlwaysClamp);
+
+    ImGui::SameLine();
+    if (ImGui::Button("Copy##Sprite collision editor"))
+    {
+        if (_frame_index != _copy_frame_index)
+        {
+            auto copy =
+                std::make_unique<ctrl::sprite_frame_copy>(sprite_sheet.image_path, _copy_frame_index, _frame_index);
+
+            resources_edits.add(std::move(copy));
+        }
+    }
+}
+
+void sprite_collision_editor_window::update_clear_frame(ctrl::resources_edits& resources_edits,
+                                                        const model::sprite_sheet& sprite_sheet)
+{
+    if (ImGui::Button("Clear all##Sprite collision editor"))
+    {
+        auto clear = std::make_unique<ctrl::sprite_frame_clear>(sprite_sheet.image_path, _frame_index);
+
+        resources_edits.add(std::move(clear));
     }
 }
 
