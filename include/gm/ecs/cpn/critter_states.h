@@ -13,6 +13,11 @@
 
 #include "ldtk_gen_enums.h"
 
+namespace mc::gm::cfg
+{
+class sprite_datas;
+}
+
 namespace mc::gm::ecs::cpn
 {
 
@@ -26,7 +31,9 @@ private:
 
 public:
     critter_action executing_action;
-    direction facing_direction; // only 4 directions (Also `NONE` on init)
+    critter_animation_kind executing_animation;
+    std::uint16_t remaining_wait_updates;
+    direction facing_direction; // only 4 directions
 
     critter_action input_action;
     direction input_direction;
@@ -51,6 +58,8 @@ public:
     }
 
     void change_species(ldtk::gen::species_kind);
+
+    auto sprite_datas() const -> const cfg::sprite_datas&;
 
     auto hp() const -> decltype(_hp)
     {

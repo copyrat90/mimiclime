@@ -1,7 +1,0 @@
-GUID = "0e15ad78-3c05-44ce-b984-4b0d8362ad87"
-Version = "1.0.0"
-DoNotExport = false
-BitsPerPixel = 4
-IsBackground = false
-TransparentColor = 0
-Sprites = [{SpriteID = "f6f2a42a-e2e9-4177-b8e3-037eed2f739f", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}, {SpriteID = "0a685f52-85e6-4172-be31-9559f7499074", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}, {SpriteID = "ddd9e5ac-4464-4aca-b223-da67d03ad638", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}, {SpriteID = "fbf492b5-2067-4fc9-9df8-a23af67762c7", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}, {SpriteID = "a22e71e7-641b-4a7f-a18c-c9667c5ad264", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}, {SpriteID = "c65d3812-5c75-449f-9f0a-af19bce8665d", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}, {SpriteID = "a5776683-f312-4357-b14f-ac91757647bf", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}, {SpriteID = "41014564-cc42-4292-9d43-e4a38645a05b", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}, {SpriteID = "37d89eeb-df9b-49ce-81fb-873602af058f", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}, {SpriteID = "9ccb8711-18d3-4db8-943f-e93f64dae309", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}, {SpriteID = "23c19b49-3d29-4a41-b762-1cbd30424a3e", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}, {SpriteID = "3cd13fde-0c54-4f4b-938d-452c817ec4dc", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}, {SpriteID = "19513c82-bc51-4af6-8a70-49d56118cdc1", TileSetID = "38584e36-b340-4ee4-af95-0628a3a4786f"}]

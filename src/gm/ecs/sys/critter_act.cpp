@@ -1,8 +1,11 @@
 #include "gm/ecs/sys/critter_act.h"
 
+#include "gm/cfg/critter_animation_infos.h"
 #include "gm/cfg/species_infos.h"
+#include "gm/cfg/sprite_datas.h"
 #include "gm/ecs/sys/impl/critter_act_lizard.h"
 #include "gm/ecs/sys/impl/critter_act_slime.h"
+#include "ut/enum_utils.h"
 
 #include <type_traits>
 
@@ -105,18 +108,22 @@ void critter_act(actor_registry& actor_reg)
             BN_ERROR("Invalid species: ", static_cast<int>(states.species()));
         }
 
-        // Force facing down for invalid direction
-        if (states.facing_direction == direction::NONE)
-            states.facing_direction = direction::DOWN;
-
-        // Go back to no action if animation is done playing
-        auto* chara_proxy = actor_reg.try_get<cpn::character_proxy>(critter);
-        BN_ASSERT(chara_proxy);
-        BN_ASSERT(chara_proxy->meta() == cpn::character_proxy::meta_kind::critter);
-        auto& chara = chara_proxy->character();
-
-        if (!chara.is_animation_playing())
-            states.executing_action = critter_action::NONE;
+        auto* spr_anim = actor_reg.try_get<sprite_animate_action_t>(critter);
+        BN_ASSERT(spr_anim);
+        if (spr_anim->done())
+        {
+            // Wait for additional wait updates after animation is done
+            if (states.remaining_wait_updates == 0)
+            {
+                states.remaining_wait_updates =
+                    static_cast<decltype(states.remaining_wait_updates)>(spr_anim->wait_updates());
+            }
+            // Go back to no action + idle animation if animation is fully done
+            else if (--states.remaining_wait_updates == 0)
+            {
+                states.executing_action = critter_action::NONE;
+            }
+        }
 
         // Change character animation if needed
         static constexpr bn::fixed_point ZERO_VEC(0, 0);
@@ -143,36 +150,22 @@ void critter_act(actor_registry& actor_reg)
                 BN_ERROR("Invalid executing action: ", static_cast<int>(states.executing_action));
             };
 
-            critter_animation_id anim_id = get_critter_animation_id(anim_kind, states.facing_direction);
+            auto* spr = actor_reg.try_get<bn::sprite_ptr>(critter);
+            BN_ASSERT(spr);
 
-            chara.set_facing_right(true);
-            chara.load_animation((int)anim_id);
+            const auto& spr_datas =
+                cfg::sprite_datas::get(mc::ut::enum_to_enum<cfg::gen::sprite_kind>(states.species()));
+            const auto& spr_item = spr_datas.sprite_item();
 
-            if (chara.current_animation_total_frames() <= 0)
-            {
-                // Fallback to flipped RIGHT animation for empty left animation
-                if (states.facing_direction == direction::LEFT)
-                {
-                    anim_id = static_cast<decltype(anim_id)>(
-                        static_cast<std::underlying_type_t<decltype(anim_id)>>(anim_id) - 2);
+            const auto& anim_infos = cfg::critter_animation_infos::get(states.species());
+            const auto& anim_info = anim_infos.get_info(anim_kind, states.facing_direction);
+            auto action_factory = anim_info.forever
+                                      ? static_cast<sprite_animate_action_factory_t>(sprite_animate_action_t::forever)
+                                      : static_cast<sprite_animate_action_factory_t>(sprite_animate_action_t::once);
 
-                    chara.set_facing_right(false);
-                    chara.load_animation((int)anim_id);
-                }
-
-                if (chara.current_animation_total_frames() <= 0)
-                {
-                    // Fallback to UP animation
-                    if (states.facing_direction != direction::UP)
-                    {
-                        anim_id = static_cast<decltype(anim_id)>(
-                            static_cast<std::underlying_type_t<decltype(anim_id)>>(anim_id) / 4 * 4);
-
-                        chara.set_facing_right(true);
-                        chara.load_animation((int)anim_id);
-                    }
-                }
-            }
+            spr->set_horizontal_flip(anim_info.horizontal_flip);
+            spr->set_vertical_flip(anim_info.vertical_flip);
+            *spr_anim = action_factory(*spr, anim_info.wait_updates, spr_item.tiles_item(), anim_info.graphics_indexes);
         }
     });
 }

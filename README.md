@@ -38,9 +38,9 @@ To edit the levels, open [`levels/mimiclime.ldtk`](levels/mimiclime.ldtk) with [
 
 Just saving the LDtk project is enough, the build process automatically takes care of the importing.
 
-### Editing sprite metadatas
+### Editing sprite datas
 
-To edit the sprite metadatas, build the [`tools/mcedit/`](tools/mcedit/) with CMake and a C++ compiler that supports C++26 reflection.\
+To edit the sprite datas, build the [`tools/mcedit/`](tools/mcedit/) with CMake and a C++ compiler that supports C++26 reflection.\
 (As of writing, [GCC 16](https://gcc.gnu.org/gcc-16/changes.html#cxx) supports [C++26 reflection](https://cppreference.com/cpp/compiler_support/26).)
 
 Open the mimiclime root directory with `File > Open mimiclime directory`, and start editing things with `Window > ...`

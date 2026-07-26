@@ -8,6 +8,7 @@
 #include "ldtk_level.h"
 
 #include <bn_display.h>
+#include <bn_sprite_shape_size.h>
 
 #include "ldtk_gen_idents.h"
 
@@ -59,21 +60,25 @@ void room_change(singleton_registry& singleton_reg, const gba::entity singleton_
 
                 const bn::fixed_point entrance_position = room_change_states->entrance.position();
 
-                actor_reg.view<cpn::character_proxy>().each(
-                    [&](const gba::entity entity, cpn::character_proxy& chara_proxy) {
-                        if (auto* states = actor_reg.try_get<cpn::critter_states>(entity);
-                            states != nullptr && states->is_player())
-                        {
-                            // Reset directions
-                            states->input_direction = direction::NONE;
+                actor_reg.view<cpn::critter_states>().each([&](const gba::entity entity, cpn::critter_states& states) {
+                    if (states.is_player())
+                    {
+                        // Reset directions
+                        states.input_direction = direction::NONE;
 
-                            // Move the player to the entrance position
-                            chara_proxy.character().set_top_left_position(entrance_position);
-                        }
-                        // Remove character entity if it's not the player
-                        else
-                            actor_reg.destroy(entity);
-                    });
+                        // Move the player to the entrance position
+                        auto* spr = actor_reg.try_get<bn::sprite_ptr>(entity);
+                        BN_ASSERT(spr);
+
+                        const bn::fixed_point moved_pos =
+                            entrance_position -
+                            bn::fixed_point(spr->shape_size().width() / 2, spr->shape_size().height() / 2);
+                        spr->set_top_left_position(moved_pos);
+                    }
+                    // Remove character entity if it's not the player
+                    else
+                        actor_reg.destroy(entity);
+                });
 
                 // Reset camera to entrance position
                 auto* camera = singleton_reg.try_get<bn::camera_ptr>(singleton_entity);
