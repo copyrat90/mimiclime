@@ -166,7 +166,7 @@
                 ],
                 "projectiles": [
                     {
-                        "kind": "FIREBALL",
+                        "kind": "fireball",
                         "x": 0,
                         "y": 15,
                         "direction": "DOWN",
@@ -337,7 +337,7 @@
                 ],
                 "projectiles": [
                     {
-                        "kind": "FIREBALL",
+                        "kind": "fireball",
                         "x": 15,
                         "y": 0,
                         "direction": "RIGHT",

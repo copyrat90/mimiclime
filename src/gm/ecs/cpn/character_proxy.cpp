@@ -97,7 +97,7 @@ void character_proxy::construct_character(projectile_kind projectile, const bn::
 {
     switch (projectile)
     {
-    case projectile_kind::FIREBALL:
+    case projectile_kind::fireball:
         construct_character_at<gbatool::Chr_Fireball>(&_character_buffer);
         break;
 
