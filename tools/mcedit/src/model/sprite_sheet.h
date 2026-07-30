@@ -6,6 +6,8 @@
 
 #include <cstdint>
 #include <filesystem>
+#include <string_view>
+#include <unordered_set>
 #include <vector>
 
 extern "C"
@@ -32,7 +34,8 @@ struct sprite_sheet final
 
     std::vector<sprite_frame> frames;
 
-    sprite_sheet(const std::filesystem::path& img_path, SDL_Renderer&);
+    sprite_sheet(const std::filesystem::path& img_path, SDL_Renderer&,
+                 const std::unordered_set<std::string_view>& projectile_kind_set);
     ~sprite_sheet();
 
     sprite_sheet(const sprite_sheet&) = delete;

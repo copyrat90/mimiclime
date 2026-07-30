@@ -69,6 +69,8 @@ private:
 
     std::optional<selected_element_t> _selected_element;
 
+    ImGuiTextFilter _projectile_kind_filter;
+
 public:
     sprite_collision_editor_window(const ImVec2& window_pos, const ImVec2& window_size, ctrl::resources_edits&);
 
@@ -84,17 +86,18 @@ private:
 
     void update_frame(decltype(_frame_index) frames);
     void update_zoom();
-    void update_add_buttons(ctrl::resources_edits&, const model::sprite_sheet&, std::mt19937& rng);
+    void update_add_buttons(const model::resources&, ctrl::resources_edits&, const model::sprite_sheet&,
+                            std::mt19937& rng);
     void update_copy_frame(decltype(_frame_index) frames, ctrl::resources_edits&, const model::sprite_sheet&);
     void update_clear_frame(ctrl::resources_edits&, const model::sprite_sheet&);
 
-    void update_properties(ctrl::resources_edits&, const model::sprite_sheet&);
+    void update_properties(const model::resources&, ctrl::resources_edits&, const model::sprite_sheet&);
     void update_none_properties();
     void update_box_properties(ctrl::resources_edits&, const model::sprite_sheet&);
-    void update_projectile_properties(ctrl::resources_edits&, const model::sprite_sheet&);
+    void update_projectile_properties(const model::resources&, ctrl::resources_edits&, const model::sprite_sheet&);
 
-    void add_element_with_random_properties(element_kind, ctrl::resources_edits&, const model::sprite_sheet&,
-                                            std::mt19937& rng);
+    void add_element_with_random_properties(element_kind, const model::resources&, ctrl::resources_edits&,
+                                            const model::sprite_sheet&, std::mt19937& rng);
 };
 
 } // namespace mcedit::view
