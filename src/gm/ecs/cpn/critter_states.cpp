@@ -57,7 +57,7 @@ void critter_states::construct_substates(ldtk::gen::species_kind species_)
     case species_kind::slime:
         construct_substates_at<impl::critter_substates_slime>(&substates_buffer);
         break;
-    case species_kind::fire_lizard:
+    case species_kind::lizard:
         construct_substates_at<impl::critter_substates_lizard>(&substates_buffer);
         break;
 
@@ -80,7 +80,7 @@ void critter_states::destroy_substates()
     case species_kind::slime:
         std::destroy_at(&substates<impl::critter_substates_slime>());
         break;
-    case species_kind::fire_lizard:
+    case species_kind::lizard:
         std::destroy_at(&substates<impl::critter_substates_lizard>());
         break;
 

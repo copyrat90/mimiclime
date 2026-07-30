@@ -88,9 +88,9 @@
 					"defUid": 27,
 					"px": [48,16],
 					"fieldInstances": [
-						{ "__identifier": "species", "__type": "LocalEnum.species_kind", "__value": "fire_lizard", "__tile": null, "defUid": 28, "realEditorValues": [{
+						{ "__identifier": "species", "__type": "LocalEnum.species_kind", "__value": "lizard", "__tile": null, "defUid": 28, "realEditorValues": [{
 							"id": "V_String",
-							"params": ["fire_lizard"]
+							"params": ["lizard"]
 						}] },
 						{ "__identifier": "hp", "__type": "Int", "__value": 5, "__tile": null, "defUid": 30, "realEditorValues": [{ "id": "V_Int", "params": [5] }] },
 						{ "__identifier": "speed", "__type": "Float", "__value": 1, "__tile": null, "defUid": 29, "realEditorValues": [] }

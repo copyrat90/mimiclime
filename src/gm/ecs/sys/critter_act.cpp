@@ -97,7 +97,7 @@ void critter_act(actor_registry& actor_reg)
         case species_kind::slime:
             impl::critter_act_slime(critter, actor_reg);
             break;
-        case species_kind::fire_lizard:
+        case species_kind::lizard:
             impl::critter_act_lizard(critter, actor_reg);
             break;
 

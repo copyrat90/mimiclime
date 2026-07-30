@@ -77,7 +77,7 @@ void character_proxy::construct_character(const ldtk::gen::species_kind species,
     case species_kind::slime:
         construct_character_at<gbatool::Chr_Slime>(&_character_buffer);
         break;
-    case species_kind::fire_lizard:
+    case species_kind::lizard:
         construct_character_at<gbatool::Chr_Lizard>(&_character_buffer);
         break;
 

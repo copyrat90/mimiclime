@@ -13,7 +13,7 @@ void critter_input_mob(const gba::entity critter, actor_registry& actor_reg)
     {
         using species_kind = ldtk::gen::species_kind;
 
-    case species_kind::fire_lizard:
+    case species_kind::lizard:
         critter_input_mob_lizard(critter, actor_reg);
         break;
 
