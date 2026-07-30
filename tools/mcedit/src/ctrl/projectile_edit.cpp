@@ -34,8 +34,7 @@ auto projectile_edit::undo_message() const -> std::string
     message_header(oss);
 
     if (_old_projectile.kind != _new_projectile.kind)
-        oss << "Kind: " << util::enum_to_sv(_new_projectile.kind) << " -> " << util::enum_to_sv(_old_projectile.kind)
-            << "\n";
+        oss << "Kind: " << _new_projectile.kind << " -> " << _old_projectile.kind << "\n";
 
     if (_old_projectile.x != _new_projectile.x || _old_projectile.y != _new_projectile.y)
         oss << "Pos: (" << +_new_projectile.x << ", " << +_new_projectile.y << ") -> (" << +_old_projectile.x << ", "
@@ -57,8 +56,7 @@ auto projectile_edit::redo_message() const -> std::string
     message_header(oss);
 
     if (_old_projectile.kind != _new_projectile.kind)
-        oss << "Kind: " << util::enum_to_sv(_old_projectile.kind) << " -> " << util::enum_to_sv(_new_projectile.kind)
-            << "\n";
+        oss << "Kind: " << _old_projectile.kind << " -> " << _new_projectile.kind << "\n";
 
     if (_old_projectile.x != _new_projectile.x || _old_projectile.y != _new_projectile.y)
         oss << "Pos: (" << +_old_projectile.x << ", " << +_old_projectile.y << ") -> (" << +_new_projectile.x << ", "

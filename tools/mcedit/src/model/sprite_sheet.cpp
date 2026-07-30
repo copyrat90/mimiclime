@@ -14,7 +14,8 @@
 namespace mcedit::model
 {
 
-sprite_sheet::sprite_sheet(const std::filesystem::path& img_path, SDL_Renderer& renderer)
+sprite_sheet::sprite_sheet(const std::filesystem::path& img_path, SDL_Renderer& renderer,
+                           const std::unordered_set<std::string_view>& projectile_kind_set)
     : has_changes(false), image_path(img_path), texture([&] -> SDL_Texture& {
           SDL_Surface* surface = IMG_Load(img_path.string().c_str());
           if (!surface)
@@ -163,10 +164,11 @@ sprite_sheet::sprite_sheet(const std::filesystem::path& img_path, SDL_Renderer& 
                     frame.projectiles.reserve(colls["projectiles"].size());
                     for (json_t& proj : colls["projectiles"])
                     {
-                        const std::string proj_kind_str = proj["kind"].get<std::string>();
-                        const auto projectile_kind = util::sv_to_enum<decltype(projectile::kind)>(proj_kind_str);
-                        if (!projectile_kind.has_value())
-                            throw std::runtime_error(std::format("Invalid projectile kind string: {}", proj_kind_str));
+                        const std::string proj_kind_raw = proj["kind"].get<std::string>();
+                        auto iter = projectile_kind_set.find(proj_kind_raw);
+                        if (iter == projectile_kind_set.cend())
+                            throw std::runtime_error(std::format("Invalid projectile kind string: {}", proj_kind_raw));
+                        const std::string_view proj_kind = *iter;
 
                         const std::string dir_str = proj["direction"].get<std::string>();
                         const auto direction = util::sv_to_enum<decltype(projectile::direction)>(dir_str);
@@ -174,7 +176,7 @@ sprite_sheet::sprite_sheet(const std::filesystem::path& img_path, SDL_Renderer& 
                             throw std::runtime_error(std::format("Invalid direction string: {}", dir_str));
 
                         frame.projectiles.push_back(projectile{
-                            .kind = *projectile_kind,
+                            .kind = proj_kind,
                             .x = proj["x"].get<std::int8_t>(),
                             .y = proj["y"].get<std::int8_t>(),
                             .direction = *direction,
@@ -227,7 +229,7 @@ void sprite_sheet::save_changes()
         for (const auto& proj : frame.projectiles)
         {
             json_t& pj = col["projectiles"].emplace_back();
-            pj["kind"] = util::enum_to_sv(proj.kind);
+            pj["kind"] = proj.kind;
             pj["x"] = proj.x;
             pj["y"] = proj.y;
             pj["direction"] = util::enum_to_sv(proj.direction);

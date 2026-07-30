@@ -5,6 +5,10 @@
 #include <atomic>
 #include <filesystem>
 #include <unordered_map>
+#include <vector>
+#include <unordered_set>
+#include <string>
+#include <string_view>
 
 extern "C"
 {
@@ -28,6 +32,9 @@ public:
     std::filesystem::path loaded_project_directory;
 
     std::unordered_map<std::filesystem::path, sprite_sheet> sprite_sheets;
+
+    std::vector<std::string> projectile_kind;
+    std::unordered_set<std::string_view> projectile_kind_set;
 
     std::string error_message;
 

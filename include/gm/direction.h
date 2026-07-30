@@ -9,16 +9,7 @@ namespace mc::gm
 
 enum class direction : std::int8_t
 {
-    NONE = -1,
-
-    UP = 0,
-    UP_RIGHT,
-    RIGHT,
-    DOWN_RIGHT,
-    DOWN,
-    DOWN_LEFT,
-    LEFT,
-    UP_LEFT,
+#include "direction.txt"
 };
 
 auto get_direction_from_held_keypad() -> direction;

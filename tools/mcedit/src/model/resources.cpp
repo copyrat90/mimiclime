@@ -10,7 +10,9 @@
 #include <algorithm>
 #include <exception>
 #include <format>
+#include <fstream>
 #include <sstream>
+#include <string_view>
 #include <utility>
 
 namespace mcedit::model
@@ -54,46 +56,79 @@ void resources::update(ctrl::resources_edits& resources_edits, SDL_Renderer& ren
 
             try
             {
-                decltype(this->sprite_sheets) result;
+                decltype(this->sprite_sheets) new_sprite_sheets;
+                decltype(this->projectile_kind) new_projectile_kind;
+                decltype(this->projectile_kind_set) new_projectile_kind_set;
 
                 const std::filesystem::path sprites_directory = project_dir / "graphics/spr";
+                const std::filesystem::path projectile_kind_path = project_dir / "defs/projectile_kind.txt";
 
-                if (std::filesystem::exists(sprites_directory))
+                if (!std::filesystem::exists(sprites_directory))
                 {
-                    for (const auto& entry : std::filesystem::directory_iterator(sprites_directory))
+                    throw std::runtime_error(
+                        std::format("Invalid mimiclime sprites directory\n\t{}", sprites_directory));
+                }
+
+                {
+                    std::ifstream projectile_kind_file(projectile_kind_path);
+                    const auto prev_except = projectile_kind_file.exceptions();
+                    projectile_kind_file.exceptions(std::ios_base::failbit);
+                    projectile_kind_file.exceptions(prev_except);
+
+                    for (std::string raw; std::getline(projectile_kind_file, raw);)
                     {
-                        try
-                        {
-                            if (!entry.is_regular_file() || entry.path().extension() != ".bmp")
-                                continue;
+                        std::string_view sv = raw;
 
-                            auto json_path = entry.path();
-                            json_path.replace_extension(".json");
-                            if (!std::filesystem::exists(json_path))
-                                continue;
+                        sv = sv.substr(0, sv.find(','));
+                        sv = sv.substr(0, sv.find('='));
 
-                            result.try_emplace(entry.path(), entry.path(), renderer);
-                        }
-                        catch (const std::exception& e)
-                        {
-                            this->error_message += std::format("{}\n\t{}\n", entry.path(), e.what());
-                        }
+                        // Trim whitespaces
+                        auto pos = sv.find_last_not_of(" \t\n\r\v\f");
+                        if (pos != std::string_view::npos)
+                            sv.remove_suffix(sv.size() - pos - 1);
+
+                        pos = sv.find_first_not_of(" \t\n\r\v\f");
+                        if (pos != std::string_view::npos)
+                            sv.remove_prefix(pos);
+
+                        if (!sv.empty())
+                            new_projectile_kind.emplace_back(sv);
                     }
 
-                    const auto prev_loaded_project_dir = std::move(this->loaded_project_directory);
-
-                    result.swap(this->sprite_sheets);
-                    this->loaded_project_directory = project_dir;
-
-                    resources_edits.clear();
-
-                    if (this->loaded_project_directory != prev_loaded_project_dir)
-                        ImGui::MarkIniSettingsDirty();
+                    new_projectile_kind_set.insert_range(new_projectile_kind);
                 }
-                else
+
+                for (const auto& entry : std::filesystem::directory_iterator(sprites_directory))
                 {
-                    this->error_message = std::format("Invalid mimiclime sprites directory\n\t{}", sprites_directory);
+                    try
+                    {
+                        if (!entry.is_regular_file() || entry.path().extension() != ".bmp")
+                            continue;
+
+                        auto json_path = entry.path();
+                        json_path.replace_extension(".json");
+                        if (!std::filesystem::exists(json_path))
+                            continue;
+
+                        new_sprite_sheets.try_emplace(entry.path(), entry.path(), renderer, new_projectile_kind_set);
+                    }
+                    catch (const std::exception& e)
+                    {
+                        this->error_message += std::format("{}\n\t{}\n", entry.path(), e.what());
+                    }
                 }
+
+                const auto prev_loaded_project_dir = std::move(this->loaded_project_directory);
+
+                new_sprite_sheets.swap(this->sprite_sheets);
+                new_projectile_kind.swap(this->projectile_kind);
+                new_projectile_kind_set.swap(this->projectile_kind_set);
+                this->loaded_project_directory = project_dir;
+
+                resources_edits.clear();
+
+                if (this->loaded_project_directory != prev_loaded_project_dir)
+                    ImGui::MarkIniSettingsDirty();
             }
             catch (const std::exception& ex)
             {

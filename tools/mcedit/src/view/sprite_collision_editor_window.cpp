@@ -145,14 +145,14 @@ void sprite_collision_editor_window::update(const model::resources& resources, c
             const auto frames = static_cast<decltype(_frame_index)>(sprite_sheet.frames.size());
             update_frame(frames);
             update_zoom();
-            update_add_buttons(resources_edits, sprite_sheet, rng);
+            update_add_buttons(resources, resources_edits, sprite_sheet, rng);
             ImGui::Separator();
             update_copy_frame(frames, resources_edits, sprite_sheet);
             update_clear_frame(resources_edits, sprite_sheet);
 
             ImGui::TableNextColumn();
 
-            update_properties(resources_edits, sprite_sheet);
+            update_properties(resources, resources_edits, sprite_sheet);
         }
     }
     ImGui::End();
@@ -476,7 +476,8 @@ void sprite_collision_editor_window::update_zoom()
     ImGui::DragFloat("Zoom##Sprite collision editor", &_zoom_100, 2, ZOOM_MIN, ZOOM_MAX, "%.0f%%");
 }
 
-void sprite_collision_editor_window::update_add_buttons(ctrl::resources_edits& resources_edits,
+void sprite_collision_editor_window::update_add_buttons(const model::resources& resources,
+                                                        ctrl::resources_edits& resources_edits,
                                                         const model::sprite_sheet& sprite_sheet, std::mt19937& rng)
 {
     struct pop_style_color_t
@@ -491,7 +492,7 @@ void sprite_collision_editor_window::update_add_buttons(ctrl::resources_edits& r
     {
         pop_style_color_t pop_style_color;
         if (ImGui::Button("Add wallbox"))
-            add_element_with_random_properties(element_kind::WALLBOX, resources_edits, sprite_sheet, rng);
+            add_element_with_random_properties(element_kind::WALLBOX, resources, resources_edits, sprite_sheet, rng);
     }
 
     ImGui::SameLine();
@@ -499,7 +500,7 @@ void sprite_collision_editor_window::update_add_buttons(ctrl::resources_edits& r
     {
         pop_style_color_t pop_style_color;
         if (ImGui::Button("Add hurtbox"))
-            add_element_with_random_properties(element_kind::HURTBOX, resources_edits, sprite_sheet, rng);
+            add_element_with_random_properties(element_kind::HURTBOX, resources, resources_edits, sprite_sheet, rng);
     }
 
     ImGui::SameLine();
@@ -507,7 +508,7 @@ void sprite_collision_editor_window::update_add_buttons(ctrl::resources_edits& r
     {
         pop_style_color_t pop_style_color;
         if (ImGui::Button("Add hitbox"))
-            add_element_with_random_properties(element_kind::HITBOX, resources_edits, sprite_sheet, rng);
+            add_element_with_random_properties(element_kind::HITBOX, resources, resources_edits, sprite_sheet, rng);
     }
 
     ImGui::SameLine();
@@ -515,7 +516,7 @@ void sprite_collision_editor_window::update_add_buttons(ctrl::resources_edits& r
     {
         pop_style_color_t pop_style_color;
         if (ImGui::Button("Add projectile"))
-            add_element_with_random_properties(element_kind::PROJECTILE, resources_edits, sprite_sheet, rng);
+            add_element_with_random_properties(element_kind::PROJECTILE, resources, resources_edits, sprite_sheet, rng);
     }
 }
 
@@ -554,7 +555,8 @@ void sprite_collision_editor_window::update_clear_frame(ctrl::resources_edits& r
     }
 }
 
-void sprite_collision_editor_window::update_properties(ctrl::resources_edits& resources_edits,
+void sprite_collision_editor_window::update_properties(const model::resources& resources,
+                                                       ctrl::resources_edits& resources_edits,
                                                        const model::sprite_sheet& sprite_sheet)
 {
     if (!_selected_element.has_value())
@@ -569,7 +571,7 @@ void sprite_collision_editor_window::update_properties(ctrl::resources_edits& re
             break;
 
         case element_kind::PROJECTILE:
-            update_projectile_properties(resources_edits, sprite_sheet);
+            update_projectile_properties(resources, resources_edits, sprite_sheet);
             break;
 
         default:
@@ -652,7 +654,8 @@ void sprite_collision_editor_window::update_box_properties(ctrl::resources_edits
     }
 }
 
-void sprite_collision_editor_window::update_projectile_properties(ctrl::resources_edits& resources_edits,
+void sprite_collision_editor_window::update_projectile_properties(const model::resources& resources,
+                                                                  ctrl::resources_edits& resources_edits,
                                                                   const model::sprite_sheet& sprite_sheet)
 {
     auto& proj = _selected_element->proj;
@@ -667,21 +670,30 @@ void sprite_collision_editor_window::update_projectile_properties(ctrl::resource
     ImGui::TextColored(PROJECTILE_COLOR, "%s #%u", util::enum_to_c_str(element_kind::PROJECTILE),
                        _selected_element->index);
 
-    if (ImGui::BeginCombo("Kind##Sprite collision editor", util::enum_to_c_str(proj.kind)))
+    if (ImGui::BeginCombo("Kind##Sprite collision editor", std::string(proj.kind).c_str()))
     {
-        template for (constexpr std::meta::info proj_kind_info :
-                      std::define_static_array(std::meta::enumerators_of(^^model::projectile::kind_t)))
+        if (ImGui::IsWindowAppearing())
         {
-            const model::projectile::kind_t proj_kind = [:proj_kind_info:];
+            ImGui::SetKeyboardFocusHere();
+            _projectile_kind_filter.Clear();
+        }
+        ImGui::SetNextItemShortcut(ImGuiMod_Ctrl | ImGuiKey_F);
+        _projectile_kind_filter.Draw("##Filter", -FLT_MIN);
+
+        for (const auto& proj_kind : resources.projectile_kind)
+        {
             const bool selected = (proj.kind == proj_kind);
 
-            if (ImGui::Selectable(std::define_static_string(std::meta::identifier_of(proj_kind_info)), selected))
+            if (_projectile_kind_filter.PassFilter(proj_kind.c_str()))
             {
-                if (!selected)
+                if (ImGui::Selectable(proj_kind.c_str(), selected))
                 {
-                    _selected_element->prev_proj = proj;
-                    proj.kind = proj_kind;
-                    submit_projectile_edit();
+                    if (!selected)
+                    {
+                        _selected_element->prev_proj = proj;
+                        proj.kind = proj_kind;
+                        submit_projectile_edit();
+                    }
                 }
             }
 
@@ -756,6 +768,7 @@ void sprite_collision_editor_window::update_projectile_properties(ctrl::resource
 }
 
 void sprite_collision_editor_window::add_element_with_random_properties(element_kind kind,
+                                                                        const model::resources& resources,
                                                                         ctrl::resources_edits& resources_edits,
                                                                         const model::sprite_sheet& sprite_sheet,
                                                                         std::mt19937& rng)
@@ -801,7 +814,7 @@ void sprite_collision_editor_window::add_element_with_random_properties(element_
         std::uniform_int_distribution<decltype(model::collision_box::x)> pos_dist(POS_MIN, POS_MAX);
 
         model::projectile proj{
-            .kind = model::projectile::kind_t::FIREBALL,
+            .kind = resources.projectile_kind.empty() ? std::string_view() : resources.projectile_kind[0],
             .x = pos_dist(rng),
             .y = pos_dist(rng),
             .direction = model::direction_t::UP,

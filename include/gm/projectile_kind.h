@@ -9,7 +9,7 @@ namespace mc::gm
 
 enum class projectile_kind : std::uint8_t
 {
-    FIREBALL,
+#include "projectile_kind.txt"
 
     INVALID = std::numeric_limits<std::underlying_type_t<projectile_kind>>::max(),
 };

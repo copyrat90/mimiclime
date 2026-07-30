@@ -46,3 +46,10 @@ To edit the sprite metadatas, build the [`tools/mcedit/`](tools/mcedit/) with CM
 Open the mimiclime root directory with `File > Open mimiclime directory`, and start editing things with `Window > ...`
 
 Just saving the changes is enough, the build process automatically takes care of the importing.
+
+#### Adding combo entries
+
+If you want to add an entry for combos, add the entry in `defs/*.txt`.\
+(e.g. Adding an entry in `defs/projectile_kind.txt` will expand the list of available projectiles).
+
+Note that these are included in C++ sources on the GBA side, so don't do anything weird with it!

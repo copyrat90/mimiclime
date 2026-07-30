@@ -91,7 +91,10 @@ target_compile_definitions(ImGuiNotify INTERFACE NOTIFY_RENDER_OUTSIDE_MAIN_WIND
 
 add_executable(mcedit)
 add_subdirectory(src)
-target_include_directories(mcedit PRIVATE src)
+target_include_directories(mcedit PRIVATE
+    ../../defs
+    src
+)
 target_link_libraries(mcedit PRIVATE
     imgui
     ImGuiNotify
