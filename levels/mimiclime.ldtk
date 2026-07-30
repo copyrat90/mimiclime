@@ -793,7 +793,7 @@
 			{ "id": "licenses", "tileRect": null, "color": 14120515 },
 			{ "id": "back", "tileRect": null, "color": 15389866 }
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
-		{ "identifier": "species_kind", "uid": 22, "values": [ { "id": "slime", "tileRect": null, "color": 12470831 }, { "id": "fire_lizard", "tileRect": null, "color": 14120515 } ], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] }
+		{ "identifier": "species_kind", "uid": 22, "values": [ { "id": "slime", "tileRect": null, "color": 12470831 }, { "id": "lizard", "tileRect": null, "color": 14120515 } ], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] }
 	], "externalEnums": [], "levelFields": [] },
 	"levels": [
 		{

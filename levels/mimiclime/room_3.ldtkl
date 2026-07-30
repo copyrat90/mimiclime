@@ -64,9 +64,9 @@
 					"height": 16,
 					"defUid": 20,
 					"px": [185,90],
-					"fieldInstances": [{ "__identifier": "species", "__type": "LocalEnum.species_kind", "__value": "fire_lizard", "__tile": null, "defUid": 25, "realEditorValues": [{
+					"fieldInstances": [{ "__identifier": "species", "__type": "LocalEnum.species_kind", "__value": "lizard", "__tile": null, "defUid": 25, "realEditorValues": [{
 						"id": "V_String",
-						"params": ["fire_lizard"]
+						"params": ["lizard"]
 					}] }],
 					"__worldX": 457,
 					"__worldY": 442

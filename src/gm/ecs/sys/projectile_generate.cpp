@@ -32,8 +32,8 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
             {
                 using species_kind = ldtk::gen::species_kind;
 
-            case species_kind::fire_lizard:
-                proj_kind = projectile_kind::FIREBALL;
+            case species_kind::lizard:
+                proj_kind = projectile_kind::fireball;
                 break;
 
             default:
