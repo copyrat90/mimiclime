@@ -27,32 +27,38 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
     actor_reg.view<cpn::critter_states>().each([&](const gba::entity shooter, cpn::critter_states& states) {
         const auto* camera = singleton_reg.try_get<bn::camera_ptr>(singleton_entity);
         BN_ASSERT(camera);
-        const auto* sprite = actor_reg.try_get<bn::sprite_ptr>(shooter);
-        BN_ASSERT(sprite);
-        const auto* spr_anim = actor_reg.try_get<cpn::sprite_animation>(shooter);
-        BN_ASSERT(spr_anim);
+        const auto* shooter_sprite = actor_reg.try_get<bn::sprite_ptr>(shooter);
+        BN_ASSERT(shooter_sprite);
+        const auto* shooter_spr_anim = actor_reg.try_get<cpn::sprite_animation>(shooter);
+        BN_ASSERT(shooter_spr_anim);
 
         // Projectile is only generated on the first update of the animation frame.
-        BN_ASSERT(spr_anim->info);
-        if (spr_anim->current_wait_updates != spr_anim->info->wait_updates)
+        BN_ASSERT(shooter_spr_anim->info);
+        if (shooter_spr_anim->current_wait_updates != shooter_spr_anim->info->wait_updates)
             return;
 
         // Generate projectiles
-        const auto& projectiles = states.sprite_datas().frame(spr_anim->current_graphics_index()).projectiles;
+        const auto& projectiles = states.sprite_datas().frame(shooter_spr_anim->current_graphics_index()).projectiles;
         for (const auto& proj_data : projectiles)
         {
+            const auto spr_kind = ut::enum_to_enum<cfg::gen::sprite_kind>(proj_data.kind);
+            const auto& spr_item = cfg::sprite_datas::get(spr_kind).sprite_item();
+            const auto& anim_info = cfg::linear_sprite_animation_infos::get(spr_kind);
+
             // Calculate the position of the projectile.
-            const bn::fixed_point proj_pos_diff(sprite->horizontal_flip() ? -proj_data.x : proj_data.x,
-                                                sprite->vertical_flip() ? -proj_data.y : proj_data.y);
+            bn::fixed_point proj_pos_diff(shooter_sprite->horizontal_flip() ? -proj_data.x : proj_data.x,
+                                          shooter_sprite->vertical_flip() ? -proj_data.y : proj_data.y);
+            proj_pos_diff -= bn::fixed_point(spr_item.shape_size().width() / 2, spr_item.shape_size().height() / 2);
             const bn::fixed_point proj_position =
-                sprite->top_left_position() +
-                bn::fixed_point(sprite->shape_size().width() / 2, sprite->shape_size().height() / 2) + proj_pos_diff;
+                shooter_sprite->top_left_position() +
+                bn::fixed_point(shooter_sprite->shape_size().width() / 2, shooter_sprite->shape_size().height() / 2) +
+                proj_pos_diff;
 
             // Calculate the velocity of the projectile.
             bn::fixed_point proj_velocity = to_normal_vector(proj_data.direction) * proj_data.speed;
-            if (sprite->horizontal_flip())
+            if (shooter_sprite->horizontal_flip())
                 proj_velocity.set_x(-proj_velocity.x());
-            if (sprite->vertical_flip())
+            if (shooter_sprite->vertical_flip())
                 proj_velocity.set_y(-proj_velocity.y());
 
             // Create the projectile.
@@ -62,9 +68,6 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
             actor_reg.emplace<cpn::velocity>(projectile, proj_velocity);
 
             // Sprite and animation components.
-            const auto spr_kind = ut::enum_to_enum<cfg::gen::sprite_kind>(proj_data.kind);
-            const auto& spr_item = cfg::sprite_datas::get(spr_kind).sprite_item();
-            const auto& anim_info = cfg::linear_sprite_animation_infos::get(spr_kind);
             bn::sprite_builder spr_builder(spr_item);
             spr_builder.set_top_left_position(proj_position)
                 .set_camera(*camera)
