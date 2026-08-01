@@ -49,8 +49,8 @@ void critter_states::change_hp(int diff)
 
 critter_states::critter_states(bool is_player_, ldtk::gen::species_kind species_)
     : _is_player(is_player_), executing_action(critter_action::NONE), executing_animation(critter_animation_kind::IDLE),
-      remaining_wait_updates(0), facing_direction(direction::DOWN), input_action(critter_action::NONE),
-      input_direction(direction::NONE), attack_countdown(0), devour_countdown(0)
+      facing_direction(direction::DOWN), input_action(critter_action::NONE), input_direction(direction::NONE),
+      attack_countdown(0), devour_countdown(0)
 {
     construct_substates(species_);
 }

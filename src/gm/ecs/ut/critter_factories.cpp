@@ -1,7 +1,6 @@
 #include "gm/ecs/ut/critter_factories.h"
 
 #include "gm/cfg/critter_animation_infos.h"
-#include "gm/cfg/game_configs.h"
 #include "gm/cfg/species_infos.h"
 #include "gm/cfg/sprite_datas.h"
 #include "ut/enum_utils.h"
@@ -38,12 +37,7 @@ auto create_critter_base(ldtk::gen::species_kind species, const bn::fixed_point&
     auto& spr = actor_reg.emplace<bn::sprite_ptr>(critter, spr_builder
 
                                                                .release_build());
-
-    auto action_factory = anim_info.forever
-                              ? static_cast<sprite_animate_action_factory_t>(sprite_animate_action_t::forever)
-                              : static_cast<sprite_animate_action_factory_t>(sprite_animate_action_t::once);
-    actor_reg.emplace<sprite_animate_action_t>(
-        critter, action_factory(spr, anim_info.wait_updates, spr_item.tiles_item(), anim_info.graphics_indexes));
+    actor_reg.emplace<cpn::sprite_animation>(critter, spr, spr_item.tiles_item(), anim_info);
 
     actor_reg.emplace<cpn::velocity>(critter);
     actor_reg.emplace<cpn::collision_events>(critter);

@@ -3,7 +3,6 @@
 #include "scn/scene_context.h"
 #include "ut/configs.h"
 
-#include "gm/ecs/sys/animate_action_update.h"
 #include "gm/ecs/sys/auto_destroy.h"
 #include "gm/ecs/sys/camera_target_update.h"
 #include "gm/ecs/sys/camera_update.h"
@@ -13,6 +12,7 @@
 #include "gm/ecs/sys/projectile_generate.h"
 #include "gm/ecs/sys/room_change.h"
 #include "gm/ecs/sys/room_exit_collide.h"
+#include "gm/ecs/sys/sprite_animation_update.h"
 #include "gm/ecs/sys/sprites_y_sort.h"
 #include "gm/ecs/sys/velocity_movement.h"
 #include "gm/ecs/ut/critter_factories.h"
@@ -43,7 +43,7 @@ bool game::update()
     gm::ecs::sys::critter_input(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::critter_act(_actor_registry);
     gm::ecs::sys::projectile_generate(_actor_registry, _singleton_registry, _singleton_entity);
-    gm::ecs::sys::animate_action_update(_actor_registry);
+    gm::ecs::sys::sprite_animation_update(_actor_registry);
     gm::ecs::sys::velocity_movement(_actor_registry);
     gm::ecs::sys::auto_destroy(_actor_registry);
     gm::ecs::sys::camera_target_update(_actor_registry);

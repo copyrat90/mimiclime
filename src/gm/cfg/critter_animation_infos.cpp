@@ -18,8 +18,8 @@ constexpr std::uint16_t SLIME_ATTACK_UP_GFX_IDXES[] = {28, 29, 30, 31};
 constexpr std::uint16_t SLIME_ATTACK_DOWN_GFX_IDXES[] = {24, 25, 26, 27};
 constexpr std::uint16_t SLIME_ATTACK_SIDE_GFX_IDXES[] = {19, 20, 21, 22, 23};
 
-constexpr std::uint16_t LIZARD_IDLE_VERT_GFX_IDXES[] = {0, 0};
-constexpr std::uint16_t LIZARD_IDLE_SIDE_GFX_IDXES[] = {9, 9};
+constexpr std::uint16_t LIZARD_IDLE_VERT_GFX_IDXES[] = {0};
+constexpr std::uint16_t LIZARD_IDLE_SIDE_GFX_IDXES[] = {9};
 constexpr std::uint16_t LIZARD_WALK_VERT_GFX_IDXES[] = {1, 2, 3, 4};
 constexpr std::uint16_t LIZARD_WALK_SIDE_GFX_IDXES[] = {10, 11, 12, 13};
 constexpr std::uint16_t LIZARD_ATTACK_VERT_GFX_IDXES[] = {5, 6, 7, 8, 7};
@@ -29,7 +29,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
     // slime
     critter_animation_infos(critter_animation_infos_builder()
                                 .set_info(critter_animation_kind::IDLE, direction::DOWN,
-                                          sprite_animate_action_info{
+                                          sprite_animation_info{
                                               .forever = true,
                                               .horizontal_flip = false,
                                               .vertical_flip = false,
@@ -37,7 +37,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                                               .graphics_indexes = SLIME_IDLE_GFX_IDXES,
                                           })
                                 .set_info(critter_animation_kind::WALK, direction::UP,
-                                          sprite_animate_action_info{
+                                          sprite_animation_info{
                                               .forever = true,
                                               .horizontal_flip = false,
                                               .vertical_flip = false,
@@ -45,7 +45,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                                               .graphics_indexes = SLIME_WALK_UP_GFX_IDXES,
                                           })
                                 .set_info(critter_animation_kind::WALK, direction::DOWN,
-                                          sprite_animate_action_info{
+                                          sprite_animation_info{
                                               .forever = true,
                                               .horizontal_flip = false,
                                               .vertical_flip = false,
@@ -53,7 +53,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                                               .graphics_indexes = SLIME_WALK_DOWN_GFX_IDXES,
                                           })
                                 .set_info(critter_animation_kind::WALK, direction::LEFT,
-                                          sprite_animate_action_info{
+                                          sprite_animation_info{
                                               .forever = true,
                                               .horizontal_flip = false,
                                               .vertical_flip = false,
@@ -61,7 +61,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                                               .graphics_indexes = SLIME_WALK_SIDE_GFX_IDXES,
                                           })
                                 .set_info(critter_animation_kind::WALK, direction::RIGHT,
-                                          sprite_animate_action_info{
+                                          sprite_animation_info{
                                               .forever = true,
                                               .horizontal_flip = true,
                                               .vertical_flip = false,
@@ -69,7 +69,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                                               .graphics_indexes = SLIME_WALK_SIDE_GFX_IDXES,
                                           })
                                 .set_info(critter_animation_kind::ATTACK, direction::UP,
-                                          sprite_animate_action_info{
+                                          sprite_animation_info{
                                               .forever = false,
                                               .horizontal_flip = false,
                                               .vertical_flip = false,
@@ -77,7 +77,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                                               .graphics_indexes = SLIME_ATTACK_UP_GFX_IDXES,
                                           })
                                 .set_info(critter_animation_kind::ATTACK, direction::DOWN,
-                                          sprite_animate_action_info{
+                                          sprite_animation_info{
                                               .forever = false,
                                               .horizontal_flip = false,
                                               .vertical_flip = false,
@@ -85,7 +85,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                                               .graphics_indexes = SLIME_ATTACK_DOWN_GFX_IDXES,
                                           })
                                 .set_info(critter_animation_kind::ATTACK, direction::LEFT,
-                                          sprite_animate_action_info{
+                                          sprite_animation_info{
                                               .forever = false,
                                               .horizontal_flip = true,
                                               .vertical_flip = false,
@@ -93,7 +93,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                                               .graphics_indexes = SLIME_ATTACK_SIDE_GFX_IDXES,
                                           })
                                 .set_info(critter_animation_kind::ATTACK, direction::RIGHT,
-                                          sprite_animate_action_info{
+                                          sprite_animation_info{
                                               .forever = false,
                                               .horizontal_flip = false,
                                               .vertical_flip = false,
@@ -103,44 +103,40 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
     // lizard
     critter_animation_infos(
         critter_animation_infos_builder()
-            .set_info(
-                critter_animation_kind::IDLE, direction::UP,
-                sprite_animate_action_info{
-                    .forever = true,
-                    .horizontal_flip = false,
-                    .vertical_flip = true,
-                    .wait_updates = std::numeric_limits<decltype(sprite_animate_action_info::wait_updates)>::max(),
-                    .graphics_indexes = LIZARD_IDLE_VERT_GFX_IDXES,
-                })
-            .set_info(
-                critter_animation_kind::IDLE, direction::DOWN,
-                sprite_animate_action_info{
-                    .forever = true,
-                    .horizontal_flip = false,
-                    .vertical_flip = false,
-                    .wait_updates = std::numeric_limits<decltype(sprite_animate_action_info::wait_updates)>::max(),
-                    .graphics_indexes = LIZARD_IDLE_VERT_GFX_IDXES,
-                })
-            .set_info(
-                critter_animation_kind::IDLE, direction::LEFT,
-                sprite_animate_action_info{
-                    .forever = true,
-                    .horizontal_flip = true,
-                    .vertical_flip = false,
-                    .wait_updates = std::numeric_limits<decltype(sprite_animate_action_info::wait_updates)>::max(),
-                    .graphics_indexes = LIZARD_IDLE_SIDE_GFX_IDXES,
-                })
-            .set_info(
-                critter_animation_kind::IDLE, direction::RIGHT,
-                sprite_animate_action_info{
-                    .forever = true,
-                    .horizontal_flip = false,
-                    .vertical_flip = false,
-                    .wait_updates = std::numeric_limits<decltype(sprite_animate_action_info::wait_updates)>::max(),
-                    .graphics_indexes = LIZARD_IDLE_SIDE_GFX_IDXES,
-                })
+            .set_info(critter_animation_kind::IDLE, direction::UP,
+                      sprite_animation_info{
+                          .forever = true,
+                          .horizontal_flip = false,
+                          .vertical_flip = true,
+                          .wait_updates = std::numeric_limits<decltype(sprite_animation_info::wait_updates)>::max(),
+                          .graphics_indexes = LIZARD_IDLE_VERT_GFX_IDXES,
+                      })
+            .set_info(critter_animation_kind::IDLE, direction::DOWN,
+                      sprite_animation_info{
+                          .forever = true,
+                          .horizontal_flip = false,
+                          .vertical_flip = false,
+                          .wait_updates = std::numeric_limits<decltype(sprite_animation_info::wait_updates)>::max(),
+                          .graphics_indexes = LIZARD_IDLE_VERT_GFX_IDXES,
+                      })
+            .set_info(critter_animation_kind::IDLE, direction::LEFT,
+                      sprite_animation_info{
+                          .forever = true,
+                          .horizontal_flip = true,
+                          .vertical_flip = false,
+                          .wait_updates = std::numeric_limits<decltype(sprite_animation_info::wait_updates)>::max(),
+                          .graphics_indexes = LIZARD_IDLE_SIDE_GFX_IDXES,
+                      })
+            .set_info(critter_animation_kind::IDLE, direction::RIGHT,
+                      sprite_animation_info{
+                          .forever = true,
+                          .horizontal_flip = false,
+                          .vertical_flip = false,
+                          .wait_updates = std::numeric_limits<decltype(sprite_animation_info::wait_updates)>::max(),
+                          .graphics_indexes = LIZARD_IDLE_SIDE_GFX_IDXES,
+                      })
             .set_info(critter_animation_kind::WALK, direction::UP,
-                      sprite_animate_action_info{
+                      sprite_animation_info{
                           .forever = true,
                           .horizontal_flip = false,
                           .vertical_flip = true,
@@ -148,7 +144,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                           .graphics_indexes = LIZARD_WALK_VERT_GFX_IDXES,
                       })
             .set_info(critter_animation_kind::WALK, direction::DOWN,
-                      sprite_animate_action_info{
+                      sprite_animation_info{
                           .forever = true,
                           .horizontal_flip = false,
                           .vertical_flip = false,
@@ -156,7 +152,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                           .graphics_indexes = LIZARD_WALK_VERT_GFX_IDXES,
                       })
             .set_info(critter_animation_kind::WALK, direction::LEFT,
-                      sprite_animate_action_info{
+                      sprite_animation_info{
                           .forever = true,
                           .horizontal_flip = true,
                           .vertical_flip = false,
@@ -164,7 +160,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                           .graphics_indexes = LIZARD_WALK_SIDE_GFX_IDXES,
                       })
             .set_info(critter_animation_kind::WALK, direction::RIGHT,
-                      sprite_animate_action_info{
+                      sprite_animation_info{
                           .forever = true,
                           .horizontal_flip = false,
                           .vertical_flip = false,
@@ -172,7 +168,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                           .graphics_indexes = LIZARD_WALK_SIDE_GFX_IDXES,
                       })
             .set_info(critter_animation_kind::ATTACK, direction::UP,
-                      sprite_animate_action_info{
+                      sprite_animation_info{
                           .forever = false,
                           .horizontal_flip = false,
                           .vertical_flip = true,
@@ -180,7 +176,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                           .graphics_indexes = LIZARD_ATTACK_VERT_GFX_IDXES,
                       })
             .set_info(critter_animation_kind::ATTACK, direction::DOWN,
-                      sprite_animate_action_info{
+                      sprite_animation_info{
                           .forever = false,
                           .horizontal_flip = false,
                           .vertical_flip = false,
@@ -188,7 +184,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                           .graphics_indexes = LIZARD_ATTACK_VERT_GFX_IDXES,
                       })
             .set_info(critter_animation_kind::ATTACK, direction::LEFT,
-                      sprite_animate_action_info{
+                      sprite_animation_info{
                           .forever = false,
                           .horizontal_flip = true,
                           .vertical_flip = false,
@@ -196,7 +192,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                           .graphics_indexes = LIZARD_ATTACK_SIDE_GFX_IDXES,
                       })
             .set_info(critter_animation_kind::ATTACK, direction::RIGHT,
-                      sprite_animate_action_info{
+                      sprite_animation_info{
                           .forever = false,
                           .horizontal_flip = false,
                           .vertical_flip = false,

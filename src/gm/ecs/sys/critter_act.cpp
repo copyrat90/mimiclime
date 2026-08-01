@@ -108,22 +108,12 @@ void critter_act(actor_registry& actor_reg)
             BN_ERROR("Invalid species: ", static_cast<int>(states.species()));
         }
 
-        auto* spr_anim = actor_reg.try_get<sprite_animate_action_t>(critter);
+        auto* spr_anim = actor_reg.try_get<cpn::sprite_animation>(critter);
         BN_ASSERT(spr_anim);
+
+        // Go back to no action if animation is done
         if (spr_anim->done())
-        {
-            // Wait for additional wait updates after animation is done
-            if (states.remaining_wait_updates == 0)
-            {
-                states.remaining_wait_updates =
-                    static_cast<decltype(states.remaining_wait_updates)>(spr_anim->wait_updates());
-            }
-            // Go back to no action + idle animation if animation is fully done
-            else if (--states.remaining_wait_updates == 0)
-            {
-                states.executing_action = critter_action::NONE;
-            }
-        }
+            states.executing_action = critter_action::NONE;
 
         // Change character animation if needed
         static constexpr bn::fixed_point ZERO_VEC(0, 0);
@@ -159,13 +149,8 @@ void critter_act(actor_registry& actor_reg)
 
             const auto& anim_infos = cfg::critter_animation_infos::get(states.species());
             const auto& anim_info = anim_infos.get_info(anim_kind, states.facing_direction);
-            auto action_factory = anim_info.forever
-                                      ? static_cast<sprite_animate_action_factory_t>(sprite_animate_action_t::forever)
-                                      : static_cast<sprite_animate_action_factory_t>(sprite_animate_action_t::once);
 
-            spr->set_horizontal_flip(anim_info.horizontal_flip);
-            spr->set_vertical_flip(anim_info.vertical_flip);
-            *spr_anim = action_factory(*spr, anim_info.wait_updates, spr_item.tiles_item(), anim_info.graphics_indexes);
+            spr_anim->reset(*spr, spr_item.tiles_item(), anim_info);
         }
     });
 }

@@ -17,7 +17,7 @@ void room_exit_collide(actor_registry& actor_reg, singleton_registry& singleton_
 
         const auto* spr = actor_reg.try_get<bn::sprite_ptr>(player);
         BN_ASSERT(spr);
-        const auto* spr_anim = actor_reg.try_get<sprite_animate_action_t>(player);
+        const auto* spr_anim = actor_reg.try_get<cpn::sprite_animation>(player);
         BN_ASSERT(spr_anim);
 
         const auto* room = singleton_reg.try_get<cpn::room>(singleton_entity);

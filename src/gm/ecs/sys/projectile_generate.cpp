@@ -1,6 +1,5 @@
 #include "gm/ecs/sys/projectile_generate.h"
 
-#include "gm/cfg/game_configs.h"
 #include "gm/cfg/linear_sprite_animation_infos.h"
 #include "gm/cfg/sprite_datas.h"
 #include "ut/enum_utils.h"
@@ -30,11 +29,12 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
         BN_ASSERT(camera);
         const auto* sprite = actor_reg.try_get<bn::sprite_ptr>(shooter);
         BN_ASSERT(sprite);
-        const auto* spr_anim = actor_reg.try_get<sprite_animate_action_t>(shooter);
+        const auto* spr_anim = actor_reg.try_get<cpn::sprite_animation>(shooter);
         BN_ASSERT(spr_anim);
 
         // Projectile is only generated on the first update of the animation frame.
-        if (spr_anim->next_change_updates() != spr_anim->wait_updates())
+        BN_ASSERT(spr_anim->info);
+        if (spr_anim->current_wait_updates != spr_anim->info->wait_updates)
             return;
 
         // Generate projectiles
@@ -61,7 +61,7 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
             // Velocity component.
             actor_reg.emplace<cpn::velocity>(projectile, proj_velocity);
 
-            // Sprite and animate action components.
+            // Sprite and animation components.
             const auto spr_kind = ut::enum_to_enum<cfg::gen::sprite_kind>(proj_data.kind);
             const auto& spr_item = cfg::sprite_datas::get(spr_kind).sprite_item();
             const auto& anim_info = cfg::linear_sprite_animation_infos::get(spr_kind);
@@ -71,13 +71,7 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
                 .set_horizontal_flip(anim_info.horizontal_flip)
                 .set_vertical_flip(anim_info.vertical_flip);
             auto& spr = actor_reg.emplace<bn::sprite_ptr>(projectile, spr_builder.release_build());
-
-            auto action_factory = anim_info.forever
-                                      ? static_cast<sprite_animate_action_factory_t>(sprite_animate_action_t::forever)
-                                      : static_cast<sprite_animate_action_factory_t>(sprite_animate_action_t::once);
-            actor_reg.emplace<sprite_animate_action_t>(
-                projectile,
-                action_factory(spr, anim_info.wait_updates, spr_item.tiles_item(), anim_info.graphics_indexes));
+            actor_reg.emplace<cpn::sprite_animation>(projectile, spr, spr_item.tiles_item(), anim_info);
 
             // Collisions and destroyer components.
             auto& collision_events = actor_reg.emplace<cpn::collision_events>(projectile);

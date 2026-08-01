@@ -5,6 +5,6 @@
 namespace mc::gm::ecs::sys
 {
 
-void animate_action_update(actor_registry&);
+void sprite_animation_update(actor_registry&);
 
 }

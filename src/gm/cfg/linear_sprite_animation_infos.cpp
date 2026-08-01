@@ -1,6 +1,5 @@
 #include "gm/cfg/linear_sprite_animation_infos.h"
 
-#include "gm/cfg/game_configs.h"
 #include "gm/cfg/sprite_datas.h"
 #include "ut/enum_utils.h"
 
@@ -14,6 +13,8 @@ namespace mc::gm::cfg
 namespace
 {
 
+constexpr int MAX_ANIM_FRAMES = 32;
+
 constexpr bn::array<std::uint16_t, MAX_ANIM_FRAMES> LINEAR_GRAPHICS_INDEXES = [] {
     bn::array<std::uint16_t, MAX_ANIM_FRAMES> result;
     for (std::uint16_t idx = 0; idx < MAX_ANIM_FRAMES; ++idx)
@@ -21,8 +22,8 @@ constexpr bn::array<std::uint16_t, MAX_ANIM_FRAMES> LINEAR_GRAPHICS_INDEXES = []
     return result;
 }();
 
-constexpr bn::array<sprite_animate_action_info, ut::size_of_enum<gen::sprite_kind>()> INFOS = [] {
-    bn::array<sprite_animate_action_info, ut::size_of_enum<gen::sprite_kind>()> result;
+constexpr bn::array<sprite_animation_info, ut::size_of_enum<gen::sprite_kind>()> INFOS = [] {
+    bn::array<sprite_animation_info, ut::size_of_enum<gen::sprite_kind>()> result;
     // Set default settings
     for (int idx = 0; idx < ut::size_of_enum<gen::sprite_kind>(); ++idx)
     {
@@ -49,7 +50,7 @@ constexpr bn::array<sprite_animate_action_info, ut::size_of_enum<gen::sprite_kin
 
 } // namespace
 
-auto linear_sprite_animation_infos::get(gen::sprite_kind spr_kind) -> const sprite_animate_action_info&
+auto linear_sprite_animation_infos::get(gen::sprite_kind spr_kind) -> const sprite_animation_info&
 {
     const int idx = static_cast<int>(spr_kind);
     BN_ASSERT(0 <= idx && idx < ut::size_of_enum<decltype(spr_kind)>(), "Invalid sprite kind: ", idx);

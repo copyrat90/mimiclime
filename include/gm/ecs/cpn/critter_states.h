@@ -32,7 +32,6 @@ private:
 public:
     critter_action executing_action;
     critter_animation_kind executing_animation;
-    std::uint16_t remaining_wait_updates;
     direction facing_direction; // only 4 directions
 
     critter_action input_action;

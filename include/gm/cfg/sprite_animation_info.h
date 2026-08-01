@@ -7,7 +7,7 @@
 namespace mc::gm::cfg
 {
 
-struct sprite_animate_action_info final
+struct sprite_animation_info final
 {
     bool forever;
 
