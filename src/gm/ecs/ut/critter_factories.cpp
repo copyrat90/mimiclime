@@ -33,6 +33,7 @@ auto create_critter_base(ldtk::gen::species_kind species, const bn::fixed_point&
     spr_builder.set_top_left_position(position - pos_diff)
         .set_horizontal_flip(anim_info.horizontal_flip)
         .set_vertical_flip(anim_info.vertical_flip)
+        .set_blending_enabled(true)
         .set_camera(*camera);
     auto& spr = actor_reg.emplace<bn::sprite_ptr>(critter, spr_builder
 

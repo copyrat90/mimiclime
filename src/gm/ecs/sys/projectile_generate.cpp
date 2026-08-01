@@ -71,6 +71,7 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
             bn::sprite_builder spr_builder(spr_item);
             spr_builder.set_top_left_position(proj_position)
                 .set_camera(*camera)
+                .set_blending_enabled(true)
                 .set_horizontal_flip(anim_info.horizontal_flip)
                 .set_vertical_flip(anim_info.vertical_flip);
             auto& spr = actor_reg.emplace<bn::sprite_ptr>(projectile, spr_builder.release_build());
