@@ -35,7 +35,8 @@ public:
     static constexpr auto get(gen::sprite_kind) -> const sprite_datas&;
 
 public:
-    constexpr sprite_datas(gen::sprite_kind kind, const bn::sprite_item& sprite_item, decltype(_frames) frames) : _kind(kind), _sprite_item(sprite_item), _frames(frames)
+    constexpr sprite_datas(gen::sprite_kind kind, const bn::sprite_item& sprite_item, decltype(_frames) frames)
+        : _kind(kind), _sprite_item(sprite_item), _frames(frames)
     {
     }
 
@@ -51,7 +52,10 @@ public:
 
     constexpr auto frame(unsigned frame_index) const -> decltype(_frames)::const_reference
     {
-        BN_ASSERT(frame_index < static_cast<unsigned>(_frames.size()), "OOB index: ", frame_index, " (max ", _frames.size() - 1, ")");
+        static constexpr sprite_frame_datas EMPTY_FRAME_DATAS;
+
+        if (frame_index >= static_cast<unsigned>(_frames.size()))
+            return EMPTY_FRAME_DATAS;
 
         return _frames[frame_index];
     }

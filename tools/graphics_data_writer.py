@@ -30,14 +30,17 @@ def write_sprite_datas_sources(
 
     for json_path in sorted(sprites_folder_path.rglob("*.json")):
         name: str = json_path.stem
-        datas_header_path: Path = build_include_path.joinpath(f"spr_{name}").with_suffix(".h")
+        datas_header_path: Path = build_include_path.joinpath(
+            f"spr_{name}"
+        ).with_suffix(".h")
 
         json_obj: Any = None
         with open(json_path, "r", encoding="utf-8") as json_file:
             json_obj = json.load(json_file)
 
-        if not "mcedit" in json_obj or not "collisions" in json_obj["mcedit"]:
-            continue
+        collisions: Any = []
+        if "mcedit" in json_obj and "collisions" in json_obj["mcedit"]:
+            collisions = json_obj["mcedit"]["collisions"]
 
         sprite_names.append(name)
 
@@ -49,7 +52,6 @@ def write_sprite_datas_sources(
             continue
 
         sprite_kind_enum_regen = True
-        collisions = json_obj["mcedit"]["collisions"]
 
         with open(datas_header_path, "w", encoding="utf-8") as header:
             write_source_heading(header)
@@ -112,18 +114,22 @@ def write_sprite_datas_sources(
                     )
 
             # sprite_frame_datas
-            assert len(collisions) > 0
-            header.write(
-                f"inline constexpr bn::array<sprite_frame_datas, {len(collisions)}> {name}_frame_datas {{\n"
-            )
-            for frame in range(len(collisions)):
-                header.write(f"    sprite_frame_datas(\n")
-                header.write(f"        {name}_frame_{frame}_wallboxes, ")
-                header.write(f"{name}_frame_{frame}_hurtboxes,\n")
-                header.write(f"        {name}_frame_{frame}_hitboxes, ")
-                header.write(f"{name}_frame_{frame}_projectiles\n")
-                header.write("    ),\n")
-            header.write("};\n\n")
+            if len(collisions) > 0:
+                header.write(
+                    f"inline constexpr bn::array<sprite_frame_datas, {len(collisions)}> {name}_frame_datas {{\n"
+                )
+                for frame in range(len(collisions)):
+                    header.write(f"    sprite_frame_datas(\n")
+                    header.write(f"        {name}_frame_{frame}_wallboxes, ")
+                    header.write(f"{name}_frame_{frame}_hurtboxes,\n")
+                    header.write(f"        {name}_frame_{frame}_hitboxes, ")
+                    header.write(f"{name}_frame_{frame}_projectiles\n")
+                    header.write("    ),\n")
+                header.write("};\n\n")
+            else:
+                header.write(
+                    f"inline constexpr bn::span<const sprite_frame_datas> {name}_frame_datas;\n\n"
+                )
 
             # sprite_datas
             header.write(
