@@ -143,14 +143,11 @@ void critter_act(actor_registry& actor_reg)
             auto* spr = actor_reg.try_get<bn::sprite_ptr>(critter);
             BN_ASSERT(spr);
 
-            const auto& spr_datas =
-                cfg::sprite_datas::get(mc::ut::enum_to_enum<cfg::gen::sprite_kind>(states.species()));
-            const auto& spr_item = spr_datas.sprite_item();
-
+            const auto spr_kind = mc::ut::enum_to_enum<cfg::gen::sprite_kind>(states.species());
             const auto& anim_infos = cfg::critter_animation_infos::get(states.species());
             const auto& anim_info = anim_infos.get_info(anim_kind, states.facing_direction);
 
-            spr_anim->reset(*spr, spr_item.tiles_item(), anim_info);
+            spr_anim->reset(*spr, spr_kind, anim_info);
         }
     });
 }

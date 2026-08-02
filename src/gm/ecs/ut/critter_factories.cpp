@@ -22,7 +22,8 @@ auto create_critter_base(ldtk::gen::species_kind species, const bn::fixed_point&
     BN_ASSERT(camera);
 
     const auto& anim_infos = cfg::critter_animation_infos::get(species);
-    const auto& spr_datas = cfg::sprite_datas::get(mc::ut::enum_to_enum<cfg::gen::sprite_kind>(species));
+    const auto spr_kind = mc::ut::enum_to_enum<cfg::gen::sprite_kind>(species);
+    const auto& spr_datas = cfg::sprite_datas::get(spr_kind);
     const auto& spr_item = spr_datas.sprite_item();
     const bn::fixed_point pos_diff(spr_item.shape_size().width() / 2, spr_item.shape_size().height() / 2);
     const auto& anim_info = anim_infos.get_info(critter_animation_kind::IDLE, direction::DOWN);
@@ -38,7 +39,7 @@ auto create_critter_base(ldtk::gen::species_kind species, const bn::fixed_point&
     auto& spr = actor_reg.emplace<bn::sprite_ptr>(critter, spr_builder
 
                                                                .release_build());
-    actor_reg.emplace<cpn::sprite_animation>(critter, spr, spr_item.tiles_item(), anim_info);
+    actor_reg.emplace<cpn::sprite_animation>(critter, spr, spr_kind, anim_info);
 
     actor_reg.emplace<cpn::velocity>(critter);
     actor_reg.emplace<cpn::collision_events>(critter);

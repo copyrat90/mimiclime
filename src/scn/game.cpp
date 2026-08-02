@@ -44,7 +44,7 @@ bool game::update()
     gm::ecs::sys::critter_act(_actor_registry);
     gm::ecs::sys::projectile_generate(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::sprite_animation_update(_actor_registry);
-    gm::ecs::sys::velocity_movement(_actor_registry);
+    gm::ecs::sys::velocity_movement(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::auto_destroy(_actor_registry);
     gm::ecs::sys::camera_target_update(_actor_registry);
     gm::ecs::sys::camera_update(_singleton_registry, _singleton_entity, _actor_registry);

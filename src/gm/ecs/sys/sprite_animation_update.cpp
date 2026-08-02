@@ -1,6 +1,7 @@
 #include "gm/ecs/sys/sprite_animation_update.h"
 
 #include "gm/cfg/sprite_animation_info.h"
+#include "gm/cfg/sprite_datas.h"
 
 namespace mc::gm::ecs::sys
 {
@@ -22,8 +23,8 @@ void sprite_animation_update(actor_registry& actor_reg)
                 else
                     return;
 
-                BN_ASSERT(spr_anim.tiles_item);
-                spr.set_tiles(*spr_anim.tiles_item, spr_anim.current_graphics_index());
+                const auto& spr_datas = cfg::sprite_datas::get(spr_anim.sprite_kind);
+                spr.set_tiles(spr_datas.sprite_item().tiles_item(), spr_anim.current_graphics_index());
 
                 spr_anim.current_wait_updates = spr_anim.info->wait_updates;
             }

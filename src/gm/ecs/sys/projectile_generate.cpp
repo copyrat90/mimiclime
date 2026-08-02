@@ -75,7 +75,7 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
                 .set_horizontal_flip(anim_info.horizontal_flip)
                 .set_vertical_flip(anim_info.vertical_flip);
             auto& spr = actor_reg.emplace<bn::sprite_ptr>(projectile, spr_builder.release_build());
-            actor_reg.emplace<cpn::sprite_animation>(projectile, spr, spr_item.tiles_item(), anim_info);
+            actor_reg.emplace<cpn::sprite_animation>(projectile, spr, spr_kind, anim_info);
 
             // Collisions and destroyer components.
             auto& collision_events = actor_reg.emplace<cpn::collision_events>(projectile);
