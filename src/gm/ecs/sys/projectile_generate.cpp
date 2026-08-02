@@ -14,13 +14,6 @@
 namespace mc::gm::ecs::sys
 {
 
-namespace
-{
-
-constexpr decltype(cpn::auto_destroyer::delay) PROJECTILE_AUTO_DESTROY_DELAY = 180;
-
-} // namespace
-
 void projectile_generate(actor_registry& actor_reg, singleton_registry& singleton_reg,
                          const gba::entity singleton_entity)
 {
@@ -63,6 +56,7 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
 
             // Create the projectile.
             const gba::entity projectile = actor_reg.create();
+            actor_reg.emplace<cpn::projectile_states>(projectile);
 
             // Velocity component.
             actor_reg.emplace<cpn::velocity>(projectile, proj_velocity);
@@ -77,11 +71,9 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
             auto& spr = actor_reg.emplace<bn::sprite_ptr>(projectile, spr_builder.release_build());
             actor_reg.emplace<cpn::sprite_animation>(projectile, spr, spr_kind, anim_info);
 
-            // Collisions and destroyer components.
+            // Collision event component.
             auto& collision_events = actor_reg.emplace<cpn::collision_events>(projectile);
             collision_events.ignore_entity = shooter;
-
-            actor_reg.emplace<cpn::auto_destroyer>(projectile, PROJECTILE_AUTO_DESTROY_DELAY);
         }
     });
 }

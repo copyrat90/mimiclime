@@ -21,4 +21,13 @@ void critter_input(actor_registry& actor_reg, const singleton_registry& singleto
     });
 }
 
+void critter_input_clear(actor_registry& actor_reg)
+{
+    actor_reg.view<cpn::critter_states>().each([](cpn::critter_states& states) {
+        states.input_action = critter_action::NONE;
+        states.input_direction = direction::NONE;
+        states.input_velocity = bn::fixed_point(0, 0);
+    });
+}
+
 } // namespace mc::gm::ecs::sys

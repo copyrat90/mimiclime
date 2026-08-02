@@ -109,8 +109,6 @@ void velocity_movement(actor_registry& actor_reg, singleton_registry& singleton_
             {
             NO_WALL_COLLISIONS:
                 moved_pos += velocity.velocity;
-                if (coll_events)
-                    coll_events->collided_wall = false;
             }
 
             sprite.set_top_left_position(moved_pos - sprite_size_diff);

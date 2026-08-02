@@ -5,6 +5,6 @@
 namespace mc::gm::ecs::sys
 {
 
-void auto_destroy(actor_registry&);
+void projectile_hit(actor_registry&);
 
 }
