@@ -9,6 +9,26 @@
 namespace mc::gm::ecs::sys
 {
 
+namespace
+{
+
+void room_exit_collide(const bn::top_left_fixed_rect& box, const cpn::room& room, singleton_registry& singleton_reg,
+                       const gba::entity singleton_entity)
+{
+    // Don't deal with exit collision when room is already changing
+    if (singleton_reg.all_of<cpn::room_change_states>(singleton_entity))
+        return;
+
+    const bn::optional<cfg::room_entrance> entrance = room.collide_with_exit(box);
+    if (entrance.has_value())
+    {
+        singleton_reg.emplace<cpn::room_change_states>(singleton_entity, entrance.value(),
+                                                       cpn::room_change_states::fade_state::INIT);
+    }
+}
+
+} // namespace
+
 void velocity_movement(actor_registry& actor_reg, singleton_registry& singleton_reg, const gba::entity singleton_entity)
 {
     actor_reg.view<cpn::velocity, bn::sprite_ptr>().each(
@@ -16,6 +36,9 @@ void velocity_movement(actor_registry& actor_reg, singleton_registry& singleton_
             const auto* room = singleton_reg.try_get<cpn::room>(singleton_entity);
             BN_ASSERT(room);
             auto* coll_events = actor_reg.try_get<cpn::collision_events>(entity);
+
+            const auto* critter_states = actor_reg.try_get<cpn::critter_states>(entity);
+            const bool is_player = critter_states ? critter_states->is_player() : false;
 
             const bn::fixed_point sprite_size_diff(sprite.shape_size().width() / 2, sprite.shape_size().height() / 2);
             bn::fixed_point moved_pos = sprite.top_left_position() + sprite_size_diff;
@@ -41,6 +64,10 @@ void velocity_movement(actor_registry& actor_reg, singleton_registry& singleton_
                 {
                     const bn::top_left_fixed_rect box(moved_pos.x() + relative_box.x, moved_pos.y() + relative_box.y,
                                                       relative_box.width, relative_box.height);
+
+                    // room exit collide must be handled before revert
+                    if (is_player)
+                        room_exit_collide(box, *room, singleton_reg, singleton_entity);
 
                     // If moving right,
                     if (velocity.velocity.x() > 0)
@@ -76,6 +103,10 @@ void velocity_movement(actor_registry& actor_reg, singleton_registry& singleton_
                 {
                     const bn::top_left_fixed_rect box(moved_pos.x() + relative_box.x, moved_pos.y() + relative_box.y,
                                                       relative_box.width, relative_box.height);
+
+                    // room exit collide must be handled before revert
+                    if (is_player)
+                        room_exit_collide(box, *room, singleton_reg, singleton_entity);
 
                     // If moving down,
                     if (velocity.velocity.y() > 0)
