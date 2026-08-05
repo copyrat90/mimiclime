@@ -1,10 +1,14 @@
 #include "gm/ecs/cpn/critter_states.h"
 
 #include "gm/cfg/species_infos.h"
+#include "gm/cfg/sprite_datas.h"
+#include "ut/enum_utils.h"
 
 #include <algorithm>
 #include <memory>
 #include <utility>
+
+#include "gen/sprite_kind.h"
 
 namespace mc::gm::ecs::cpn
 {
@@ -31,14 +35,22 @@ void critter_states::change_species(ldtk::gen::species_kind species_)
     construct_substates(species_);
 }
 
+auto critter_states::sprite_datas() const -> const cfg::sprite_datas&
+{
+    const auto spr_kind = ut::enum_to_enum<cfg::gen::sprite_kind>(_species);
+
+    return cfg::sprite_datas::get(spr_kind);
+}
+
 void critter_states::change_hp(int diff)
 {
     _hp = static_cast<decltype(_hp)>(std::max(0, _hp + diff));
 }
 
 critter_states::critter_states(bool is_player_, ldtk::gen::species_kind species_)
-    : _is_player(is_player_), executing_action(critter_action::NONE), facing_direction(direction::NONE),
-      input_action(critter_action::NONE), input_direction(direction::NONE), attack_countdown(0), devour_countdown(0)
+    : _is_player(is_player_), executing_action(critter_action::NONE), executing_animation(critter_animation_kind::IDLE),
+      facing_direction(direction::DOWN), input_action(critter_action::NONE), input_direction(direction::NONE),
+      attack_countdown(0), devour_countdown(0)
 {
     construct_substates(species_);
 }

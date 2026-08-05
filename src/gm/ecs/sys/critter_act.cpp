@@ -1,8 +1,11 @@
 #include "gm/ecs/sys/critter_act.h"
 
+#include "gm/cfg/critter_animation_infos.h"
 #include "gm/cfg/species_infos.h"
+#include "gm/cfg/sprite_datas.h"
 #include "gm/ecs/sys/impl/critter_act_lizard.h"
 #include "gm/ecs/sys/impl/critter_act_slime.h"
+#include "ut/enum_utils.h"
 
 #include <type_traits>
 
@@ -105,17 +108,11 @@ void critter_act(actor_registry& actor_reg)
             BN_ERROR("Invalid species: ", static_cast<int>(states.species()));
         }
 
-        // Force facing down for invalid direction
-        if (states.facing_direction == direction::NONE)
-            states.facing_direction = direction::DOWN;
+        auto* spr_anim = actor_reg.try_get<cpn::sprite_animation>(critter);
+        BN_ASSERT(spr_anim);
 
-        // Go back to no action if animation is done playing
-        auto* chara_proxy = actor_reg.try_get<cpn::character_proxy>(critter);
-        BN_ASSERT(chara_proxy);
-        BN_ASSERT(chara_proxy->meta() == cpn::character_proxy::meta_kind::critter);
-        auto& chara = chara_proxy->character();
-
-        if (!chara.is_animation_playing())
+        // Go back to no action if animation is done
+        if (spr_anim->done())
             states.executing_action = critter_action::NONE;
 
         // Change character animation if needed
@@ -143,36 +140,14 @@ void critter_act(actor_registry& actor_reg)
                 BN_ERROR("Invalid executing action: ", static_cast<int>(states.executing_action));
             };
 
-            critter_animation_id anim_id = get_critter_animation_id(anim_kind, states.facing_direction);
+            auto* spr = actor_reg.try_get<bn::sprite_ptr>(critter);
+            BN_ASSERT(spr);
 
-            chara.set_facing_right(true);
-            chara.load_animation((int)anim_id);
+            const auto spr_kind = mc::ut::enum_to_enum<cfg::gen::sprite_kind>(states.species());
+            const auto& anim_infos = cfg::critter_animation_infos::get(states.species());
+            const auto& anim_info = anim_infos.get_info(anim_kind, states.facing_direction);
 
-            if (chara.current_animation_total_frames() <= 0)
-            {
-                // Fallback to flipped RIGHT animation for empty left animation
-                if (states.facing_direction == direction::LEFT)
-                {
-                    anim_id = static_cast<decltype(anim_id)>(
-                        static_cast<std::underlying_type_t<decltype(anim_id)>>(anim_id) - 2);
-
-                    chara.set_facing_right(false);
-                    chara.load_animation((int)anim_id);
-                }
-
-                if (chara.current_animation_total_frames() <= 0)
-                {
-                    // Fallback to UP animation
-                    if (states.facing_direction != direction::UP)
-                    {
-                        anim_id = static_cast<decltype(anim_id)>(
-                            static_cast<std::underlying_type_t<decltype(anim_id)>>(anim_id) / 4 * 4);
-
-                        chara.set_facing_right(true);
-                        chara.load_animation((int)anim_id);
-                    }
-                }
-            }
+            spr_anim->reset(*spr, spr_kind, anim_info);
         }
     });
 }

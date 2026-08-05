@@ -69,7 +69,7 @@
 							"id": "V_String",
 							"params": ["slime"]
 						}] },
-						{ "__identifier": "hp", "__type": "Int", "__value": 1, "__tile": null, "defUid": 30, "realEditorValues": [] },
+						{ "__identifier": "hp", "__type": "Int", "__value": 4, "__tile": null, "defUid": 30, "realEditorValues": [{ "id": "V_Int", "params": [4] }] },
 						{ "__identifier": "speed", "__type": "Float", "__value": 1.5, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.5] }] }
 					],
 					"__worldX": 256,

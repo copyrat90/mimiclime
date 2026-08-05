@@ -3,6 +3,8 @@
 #include "gm/cfg/species_infos.h"
 #include "gm/ecs/ut/find_critter.h"
 
+#include <bn_sprite_shape_size.h>
+
 namespace mc::gm::ecs::sys::impl
 {
 
@@ -18,15 +20,19 @@ void critter_input_mob_lizard(const gba::entity critter, actor_registry& actor_r
         break;
 
     case critter_action::NONE: {
-        auto* chara_proxy = actor_reg.try_get<cpn::character_proxy>(critter);
-        BN_ASSERT(chara_proxy);
+        auto* critter_spr = actor_reg.try_get<bn::sprite_ptr>(critter);
+        BN_ASSERT(critter_spr);
 
         const gba::entity player = ut::find_player_critter(actor_reg);
-        auto* player_chara_proxy = actor_reg.try_get<cpn::character_proxy>(player);
-        BN_ASSERT(player_chara_proxy);
+        auto* player_spr = actor_reg.try_get<bn::sprite_ptr>(player);
+        BN_ASSERT(player_spr);
 
-        const bn::fixed_point& critter_pos = chara_proxy->character().position();
-        const bn::fixed_point& player_pos = player_chara_proxy->character().position();
+        const bn::fixed_point critter_pos =
+            critter_spr->top_left_position() +
+            bn::fixed_point(critter_spr->shape_size().width() / 2, critter_spr->shape_size().height() / 2);
+        const bn::fixed_point player_pos =
+            player_spr->top_left_position() +
+            bn::fixed_point(player_spr->shape_size().width() / 2, player_spr->shape_size().height() / 2);
         const bn::fixed_point diff = player_pos - critter_pos;
 
         auto* coll_events = actor_reg.try_get<cpn::collision_events>(critter);

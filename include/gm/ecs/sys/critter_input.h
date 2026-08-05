@@ -7,5 +7,6 @@ namespace mc::gm::ecs::sys
 {
 
 void critter_input(actor_registry&, const singleton_registry&, const gba::entity singleton_entity);
+void critter_input_clear(actor_registry&);
 
-}
+} // namespace mc::gm::ecs::sys

@@ -33,6 +33,8 @@ if __name__ == "__main__":
     parser.add_argument("--texts", required=False, help="texts forder or files")
     parser.add_argument("--fonts-build", required=True, help="fonts build folder")
     parser.add_argument("--licenses", required=True, help="licenses folder")
+    parser.add_argument("--graphics", required=True, help="graphics folder")
+    parser.add_argument("--data-build", required=True, help="data build folder")
     parser.add_argument("--misc-build", required=True, help="misc build folder")
 
     try:
@@ -41,6 +43,8 @@ if __name__ == "__main__":
         ldtk_build = Path(args.ldtk_build)
         fonts_build = Path(args.fonts_build)
         licenses = Path(args.licenses)
+        graphics = Path(args.graphics)
+        data_build = Path(args.data_build)
         misc_build = Path(args.misc_build)
 
         if butano_ldtk.process_ldtk(ldtk_project, ldtk_build):
@@ -60,8 +64,10 @@ if __name__ == "__main__":
             f"{args.texts} {str(ldtk_build / "src")} {str(ldtk_build / "include")}",
         )
 
+        import graphics_data_writer
         import misc_writer
 
+        graphics_data_writer.write_datas(graphics, data_build)
         misc_writer.write_miscs(licenses, misc_build)
 
     except Exception as ex:

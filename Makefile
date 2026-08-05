@@ -49,12 +49,14 @@ BUILDFONTS  	:=  build_fonts
 LIBGBAKORFONTS	:=  libs/gba-kor-fonts
 BUILDMISC   	:=  build_misc
 LICENSES    	:=  licenses
+BUILDDATA   	:=  build_data
 PYTHON      	:=  python
-SOURCES     	:=  src src/ut src/scn src/gm src/gm/cfg src/gm/ecs src/gm/ecs/cpn src/gm/ecs/cpn/impl src/gm/ecs/sys src/gm/ecs/sys/impl src/gm/ecs/ut characters/gen/src $(LIBBUTANOLDTK)/src $(BUILDLDTK)/src $(LIBISOBUTANO)/src
-INCLUDES    	:=  include defs characters/gen/include $(LIBBUTANOLDTK)/include $(BUILDLDTK)/include $(LIBISOBUTANO)/include $(BUILDFONTS) $(BUILDMISC)/include
+SOURCES     	:=  src src/ut src/scn src/gm src/gm/cfg src/gm/ecs src/gm/ecs/cpn src/gm/ecs/cpn/impl src/gm/ecs/sys src/gm/ecs/sys/impl src/gm/ecs/ut $(LIBBUTANOLDTK)/src $(BUILDLDTK)/src $(LIBISOBUTANO)/src $(BUILDDATA)/src
+INCLUDES    	:=  include defs $(LIBBUTANOLDTK)/include $(BUILDLDTK)/include $(LIBISOBUTANO)/include $(BUILDFONTS) $(BUILDDATA)/include $(BUILDMISC)/include
 DATA        	:=  
 FONTS       	:=  $(LIBGBAKORFONTS)/fonts/galmuri7 $(LIBGBAKORFONTS)/fonts/galmuri9 $(LIBGBAKORFONTS)/fonts/galmuri11 $(LIBGBAKORFONTS)/fonts/galmuri11_bold $(LIBGBAKORFONTS)/fonts/galmuri11_condensed
 TEXTS       	:=  $(BUILDLDTK)/src $(BUILDLDTK)/include $(LICENSES)
+GRAPHICS_ROOT	:=  graphics
 GRAPHICS    	:=  graphics graphics/bg graphics/spr graphics/pal graphics/tile $(BUILDLDTK)/graphics $(BUILDFONTS)/fonts
 AUDIO       	:=  audio
 AUDIOBACKEND	:=  maxmod
@@ -72,8 +74,8 @@ USERLIBDIRS 	:=  $(CURDIR)/libs/stdgba
 USERLIBS    	:=  
 DEFAULTLIBS 	:=  
 STACKTRACE  	:=  YES
-USERBUILD   	:=  $(BUILDLDTK) $(BUILDFONTS) $(BUILDMISC)
-EXTTOOL     	:=  @$(PYTHON) -B tools/main.py --ldtk-project=$(LDTKPROJECT) --ldtk-build=$(BUILDLDTK) --fonts="$(FONTS)" --texts="$(TEXTS)" --fonts-build=$(BUILDFONTS) --licenses=$(LICENSES) --misc-build=$(BUILDMISC)
+USERBUILD   	:=  $(BUILDLDTK) $(BUILDFONTS) $(BUILDDATA) $(BUILDMISC)
+EXTTOOL     	:=  @$(PYTHON) -B tools/main.py --ldtk-project=$(LDTKPROJECT) --ldtk-build=$(BUILDLDTK) --fonts="$(FONTS)" --texts="$(TEXTS)" --fonts-build=$(BUILDFONTS) --licenses=$(LICENSES) --graphics=$(GRAPHICS_ROOT) --data-build=$(BUILDDATA) --misc-build=$(BUILDMISC)
 
 MC_DEVBUILD 	:=  true
 ifneq ($(strip $(MC_DEVBUILD)),)

@@ -1,78 +1,81 @@
 #include "gm/ecs/sys/projectile_generate.h"
 
+#include "gm/cfg/linear_sprite_animation_infos.h"
+#include "gm/cfg/sprite_datas.h"
+#include "ut/enum_utils.h"
+
+#include <bn_array.h>
+#include <bn_sprite_builder.h>
+
+#include <cstdint>
+
+#include "gen/sprite_kind.h"
+
 namespace mc::gm::ecs::sys
 {
-
-namespace
-{
-
-constexpr decltype(cpn::auto_destroyer::timeout_ticks) PROJECTILE_AUTO_DESTROY_TIMEOUT_TICKS = 180;
-
-}
 
 void projectile_generate(actor_registry& actor_reg, singleton_registry& singleton_reg,
                          const gba::entity singleton_entity)
 {
-    actor_reg.view<cpn::critter_states, cpn::character_proxy>().each(
-        [&](const gba::entity shooter, cpn::critter_states& states, cpn::character_proxy& chara_proxy) {
-            const auto& chara = chara_proxy.character();
+    actor_reg.view<cpn::critter_states>().each([&](const gba::entity shooter, cpn::critter_states& states) {
+        const auto* camera = singleton_reg.try_get<bn::camera_ptr>(singleton_entity);
+        BN_ASSERT(camera);
+        const auto* shooter_sprite = actor_reg.try_get<bn::sprite_ptr>(shooter);
+        BN_ASSERT(shooter_sprite);
+        const auto* shooter_spr_anim = actor_reg.try_get<cpn::sprite_animation>(shooter);
+        BN_ASSERT(shooter_spr_anim);
 
-            const bn::camera_ptr* camera = singleton_reg.try_get<bn::camera_ptr>(singleton_entity);
-            BN_ASSERT(camera);
+        // Projectile is only generated on the first update of the animation frame.
+        BN_ASSERT(shooter_spr_anim->info);
+        if (shooter_spr_anim->current_wait_updates != shooter_spr_anim->info->wait_updates)
+            return;
 
-            // If no projectile rect is found, don't do anything
-            const auto& projectile_rects =
-                chara.current_frame_collisions().get_rects_with_mask(gbatool::Character::Mask::CUSTOM_1);
-            if (projectile_rects.empty())
-                return;
+        // Generate projectiles
+        const auto& projectiles = states.sprite_datas().frame(shooter_spr_anim->current_graphics_index()).projectiles;
+        for (const auto& proj_data : projectiles)
+        {
+            const auto spr_kind = ut::enum_to_enum<cfg::gen::sprite_kind>(proj_data.kind);
+            const auto& spr_item = cfg::sprite_datas::get(spr_kind).sprite_item();
+            const auto& anim_info = cfg::linear_sprite_animation_infos::get(spr_kind);
 
-            // Set projectile kind considering the shooter's species.
-            projectile_kind proj_kind;
-            switch (states.species())
-            {
-                using species_kind = ldtk::gen::species_kind;
+            // Calculate the position of the projectile.
+            bn::fixed_point proj_pos_diff(shooter_sprite->horizontal_flip() ? -proj_data.x : proj_data.x,
+                                          shooter_sprite->vertical_flip() ? -proj_data.y : proj_data.y);
+            proj_pos_diff -= bn::fixed_point(spr_item.shape_size().width() / 2, spr_item.shape_size().height() / 2);
+            const bn::fixed_point proj_position =
+                shooter_sprite->top_left_position() +
+                bn::fixed_point(shooter_sprite->shape_size().width() / 2, shooter_sprite->shape_size().height() / 2) +
+                proj_pos_diff;
 
-            case species_kind::lizard:
-                proj_kind = projectile_kind::fireball;
-                break;
+            // Calculate the velocity of the projectile.
+            bn::fixed_point proj_velocity = to_normal_vector(proj_data.direction) * proj_data.speed;
+            if (shooter_sprite->horizontal_flip())
+                proj_velocity.set_x(-proj_velocity.x());
+            if (shooter_sprite->vertical_flip())
+                proj_velocity.set_y(-proj_velocity.y());
 
-            default:
-                BN_ERROR("Invalid shooter species: ", static_cast<int>(states.species()));
-            }
+            // Create the projectile.
+            const gba::entity projectile = actor_reg.create();
+            actor_reg.emplace<cpn::projectile_states>(projectile);
 
-            // Generate projectile in the rect positions,
-            for (const auto& relative_rect : projectile_rects)
-            {
-                const auto rect = relative_rect.get_absolute_rect(chara);
+            // Velocity component.
+            actor_reg.emplace<cpn::velocity>(projectile, proj_velocity);
 
-                // (width - 2) denotes the initial direction the projectile would fly to.
-                const direction projectile_direction = static_cast<direction>(rect.width().right_shift_integer() - 2);
+            // Sprite and animation components.
+            bn::sprite_builder spr_builder(spr_item);
+            spr_builder.set_top_left_position(proj_position)
+                .set_camera(*camera)
+                .set_blending_enabled(true)
+                .set_horizontal_flip(anim_info.horizontal_flip)
+                .set_vertical_flip(anim_info.vertical_flip);
+            auto& spr = actor_reg.emplace<bn::sprite_ptr>(projectile, spr_builder.release_build());
+            actor_reg.emplace<cpn::sprite_animation>(projectile, spr, spr_kind, anim_info);
 
-                // (height / 10) denotes the initial speed of the projectile.
-                const bn::fixed projectile_speed = rect.height() / 10;
-
-                // Calculate the initial velocity of the projectile.
-                bn::fixed_point projectile_velocity = to_normal_vector(projectile_direction) * projectile_speed;
-                if (!chara.is_facing_right())
-                    projectile_velocity.set_x(-projectile_velocity.x());
-
-                // Create the projectile.
-                const gba::entity projectile = actor_reg.create();
-
-                actor_reg.emplace<cpn::velocity>(projectile, projectile_velocity);
-                actor_reg.emplace<cpn::character_proxy>(projectile, proj_kind, rect.position(), *camera);
-
-                auto& collision_events = actor_reg.emplace<cpn::collision_events>(projectile);
-                collision_events.ignore_entity = shooter;
-
-                auto& auto_destroyer = actor_reg.emplace<cpn::auto_destroyer>(projectile);
-                auto_destroyer.destroy_on_timeout = true;
-                auto_destroyer.timeout_ticks = PROJECTILE_AUTO_DESTROY_TIMEOUT_TICKS;
-                auto_destroyer.destroy_on_collide_wall = true;
-                auto_destroyer.destroy_on_collide_critter = true;
-                auto_destroyer.destroy_on_collide_breakable = true;
-            }
-        });
+            // Collision event component.
+            auto& collision_events = actor_reg.emplace<cpn::collision_events>(projectile);
+            collision_events.ignore_entity = shooter;
+        }
+    });
 }
 
 } // namespace mc::gm::ecs::sys

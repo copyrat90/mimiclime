@@ -13,7 +13,14 @@ struct collision_events final
     gba::entity ignore_entity;
 
     bool collided_wall = false;
-    bn::vector<const gba::entity, 6> collided_entities;
+
+    struct entity_collision_event final
+    {
+        const gba::entity entity;
+        bool hurt; // the owner of this component, not the above one
+    };
+
+    bn::vector<entity_collision_event, 6> collided_entities;
 };
 
 } // namespace mc::gm::ecs::cpn
