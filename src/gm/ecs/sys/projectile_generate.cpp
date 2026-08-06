@@ -56,7 +56,7 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
 
             // Create the projectile.
             const gba::entity projectile = actor_reg.create();
-            actor_reg.emplace<cpn::projectile_states>(projectile);
+            actor_reg.emplace<cpn::projectile_states>(projectile, proj_data.kind);
 
             // Velocity component.
             actor_reg.emplace<cpn::velocity>(projectile, proj_velocity);
