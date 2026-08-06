@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gm/direction.h"
+#include "gm/projectile_kind.h"
 
 #include <bn_fixed.h>
 
@@ -11,12 +12,7 @@ namespace mc::gm::cfg
 
 struct projectile_data final
 {
-    enum class kind_t : std::uint8_t
-    {
-#include "projectile_kind.txt"
-    };
-
-    kind_t kind;
+    projectile_kind kind;
     std::int8_t x;
     std::int8_t y;
     gm::direction direction;

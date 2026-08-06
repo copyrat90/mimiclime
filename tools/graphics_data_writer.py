@@ -101,7 +101,7 @@ def write_sprite_datas_sources(
                     )
                     for proj in colls["projectiles"]:
                         header.write("    projectile_data(")
-                        header.write(f'projectile_data::kind_t::{proj["kind"]}, ')
+                        header.write(f'projectile_kind::{proj["kind"]}, ')
                         header.write(f'{proj["x"]}, ')
                         header.write(f'{proj["y"]}, ')
                         header.write(f'direction::{proj["direction"]}, ')
