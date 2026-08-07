@@ -72,7 +72,7 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
             actor_reg.emplace<cpn::sprite_animation>(projectile, spr, spr_kind, anim_info);
 
             // Collision event component.
-            auto& collision_events = actor_reg.emplace<cpn::collision_events>(projectile);
+            auto& collision_events = actor_reg.emplace<cpn::collision_events>(projectile, shooter, false);
             collision_events.ignore_entity = shooter;
         }
     });

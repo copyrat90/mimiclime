@@ -1,11 +1,11 @@
-#include "gm/ecs/sys/projectile_hit.h"
+#include "gm/ecs/sys/projectile_update.h"
 
 #include "gm/cfg/sprite_animation_info.h"
 
 namespace mc::gm::ecs::sys
 {
 
-void projectile_hit(actor_registry& actor_reg)
+void projectile_update(actor_registry& actor_reg)
 {
     actor_reg.view<cpn::projectile_states>().each(
         [&](const gba::entity projectile, cpn::projectile_states& proj_states) {
@@ -25,27 +25,17 @@ void projectile_hit(actor_registry& actor_reg)
                     }
                 };
 
-                // Hit to critter
+                bool hit_to_entity = false;
                 for (const auto [entity, hurt] : coll_evs->collided_entities)
                 {
-                    bool ever_hit = false;
-                    if (auto* critter_states = actor_reg.try_get<cpn::critter_states>(entity); critter_states)
+                    if (actor_reg.any_of<cpn::critter_states, cpn::breakable_states>(entity))
                     {
-                        // TODO: Proper hurt registration w/ critter hurt animation, knockback, etc.
-                        critter_states->change_hp(-1);
-
-                        ever_hit = true;
-                    }
-
-                    if (ever_hit)
-                    {
-                        vanish();
+                        hit_to_entity = true;
                         break;
                     }
                 }
 
-                // Hit by wall
-                if (coll_evs->collided_wall)
+                if (hit_to_entity || coll_evs->collided_wall)
                 {
                     vanish();
                     break;

@@ -1,6 +1,7 @@
 #include "gm/ecs/sys/room_change.h"
 
 #include "gm/ecs/cpn/room_change_states.h"
+#include "gm/ecs/ut/breakable_factories.h"
 #include "gm/ecs/ut/critter_factories.h"
 
 #include "ibn_transitions.h"
@@ -99,6 +100,15 @@ void room_change(singleton_registry& singleton_reg, const gba::entity singleton_
                                 .get<ldtk::gen::species_kind>();
 
                         ut::create_mob_critter(species, entity.px(), actor_reg, singleton_reg, singleton_entity);
+                    }
+                    break;
+
+                    case entity_ident::breakable: {
+                        const ldtk::gen::breakable_kind kind =
+                            entity.get_field(ldtk::gen::entity_field_ident::ENTITY_breakable_FIELD_kind)
+                                .get<ldtk::gen::breakable_kind>();
+
+                        ut::create_breakable(kind, entity.px(), actor_reg, singleton_reg, singleton_entity);
                     }
                     break;
 
