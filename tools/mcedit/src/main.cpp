@@ -118,6 +118,9 @@ int main(int, char**)
     ImGui_ImplSDL3_InitForSDLRenderer(window, renderer);
     ImGui_ImplSDLRenderer3_Init(renderer);
 
+    // resources should be alive when finalizing imgui to store project directory.
+    mcedit::model::resources resources;
+
     struct imgui_finalizer_t final
     {
         ~imgui_finalizer_t()
@@ -141,7 +144,6 @@ int main(int, char**)
 
     // Our state
     std::mt19937 rng(std::random_device{}());
-    mcedit::model::resources resources;
     mcedit::ctrl::resources_edits resources_edits(resources);
     mcedit::view::popup_modals popup_modals;
     mcedit::view::main_menu_bar main_menu_bar;
