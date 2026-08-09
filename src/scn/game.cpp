@@ -3,16 +3,19 @@
 #include "scn/scene_context.h"
 #include "ut/configs.h"
 
+#include "gm/ecs/sys/breakable_update.h"
 #include "gm/ecs/sys/camera_target_update.h"
 #include "gm/ecs/sys/camera_update.h"
 #include "gm/ecs/sys/collision_detect.h"
 #include "gm/ecs/sys/critter_act.h"
 #include "gm/ecs/sys/critter_input.h"
 #include "gm/ecs/sys/projectile_generate.h"
-#include "gm/ecs/sys/projectile_hit.h"
+#include "gm/ecs/sys/projectile_update.h"
 #include "gm/ecs/sys/room_change.h"
+#include "gm/ecs/sys/room_exit_collide.h"
 #include "gm/ecs/sys/sprite_animation_update.h"
 #include "gm/ecs/sys/sprites_y_sort.h"
+#include "gm/ecs/sys/terrain_collide.h"
 #include "gm/ecs/sys/velocity_movement.h"
 #include "gm/ecs/ut/critter_factories.h"
 
@@ -39,18 +42,21 @@ game::game(scene_context& ctx) : scene(ctx), _singleton_entity(_singleton_regist
 bool game::update()
 {
     gm::ecs::sys::room_change(_singleton_registry, _singleton_entity, context().transitions(), _actor_registry);
+    gm::ecs::sys::critter_input_clear(_actor_registry);
     gm::ecs::sys::critter_input(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::critter_act(_actor_registry);
     gm::ecs::sys::projectile_generate(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::sprite_animation_update(_actor_registry);
-    gm::ecs::sys::velocity_movement(_actor_registry, _singleton_registry, _singleton_entity);
+    gm::ecs::sys::velocity_movement(_actor_registry);
+    gm::ecs::sys::collision_detect_clear(_actor_registry);
     gm::ecs::sys::collision_detect(_actor_registry);
-    gm::ecs::sys::projectile_hit(_actor_registry);
+    gm::ecs::sys::room_exit_collide(_actor_registry, _singleton_registry, _singleton_entity);
+    gm::ecs::sys::terrain_collide(_actor_registry, _singleton_registry, _singleton_entity);
+    gm::ecs::sys::projectile_update(_actor_registry);
+    gm::ecs::sys::breakable_update(_actor_registry);
     gm::ecs::sys::camera_target_update(_actor_registry);
     gm::ecs::sys::camera_update(_singleton_registry, _singleton_entity, _actor_registry);
     gm::ecs::sys::sprites_y_sort(_actor_registry);
-    gm::ecs::sys::collision_detect_clear(_actor_registry);
-    gm::ecs::sys::critter_input_clear(_actor_registry);
 
     return false;
 }

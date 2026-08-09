@@ -70,6 +70,63 @@
 					}] }],
 					"__worldX": 457,
 					"__worldY": 442
+				},
+				{
+					"__identifier": "breakable",
+					"__grid": [104,152],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": { "tilesetUid": 4, "x": 240, "y": 384, "w": 16, "h": 16 },
+					"__smartColor": "#EAD4AA",
+					"iid": "8560d2d0-6fc0-11f1-be2a-0dc398d4dc76",
+					"width": 16,
+					"height": 16,
+					"defUid": 34,
+					"px": [104,152],
+					"fieldInstances": [{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["wood_fence"]
+					}] }],
+					"__worldX": 376,
+					"__worldY": 504
+				},
+				{
+					"__identifier": "breakable",
+					"__grid": [136,152],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": { "tilesetUid": 4, "x": 240, "y": 384, "w": 16, "h": 16 },
+					"__smartColor": "#EAD4AA",
+					"iid": "9cc91a40-6fc0-11f1-be2a-9d430d502080",
+					"width": 16,
+					"height": 16,
+					"defUid": 34,
+					"px": [136,152],
+					"fieldInstances": [{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["wood_fence"]
+					}] }],
+					"__worldX": 408,
+					"__worldY": 504
+				},
+				{
+					"__identifier": "breakable",
+					"__grid": [120,152],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": { "tilesetUid": 4, "x": 240, "y": 384, "w": 16, "h": 16 },
+					"__smartColor": "#EAD4AA",
+					"iid": "a78c13b0-6fc0-11f1-be2a-e5f18af48daa",
+					"width": 16,
+					"height": 16,
+					"defUid": 34,
+					"px": [120,152],
+					"fieldInstances": [{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["wood_fence"]
+					}] }],
+					"__worldX": 392,
+					"__worldY": 504
 				}
 			]
 		},

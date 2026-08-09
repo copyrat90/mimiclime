@@ -36,13 +36,11 @@ auto create_critter_base(ldtk::gen::species_kind species, const bn::fixed_point&
         .set_vertical_flip(anim_info.vertical_flip)
         .set_blending_enabled(true)
         .set_camera(*camera);
-    auto& spr = actor_reg.emplace<bn::sprite_ptr>(critter, spr_builder
-
-                                                               .release_build());
+    auto& spr = actor_reg.emplace<bn::sprite_ptr>(critter, spr_builder.release_build());
     actor_reg.emplace<cpn::sprite_animation>(critter, spr, spr_kind, anim_info);
 
     actor_reg.emplace<cpn::velocity>(critter);
-    actor_reg.emplace<cpn::collision_events>(critter);
+    actor_reg.emplace<cpn::collision_events>(critter, gba::entity_null, true);
 
     return critter;
 }

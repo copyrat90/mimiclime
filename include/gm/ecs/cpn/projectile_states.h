@@ -1,5 +1,7 @@
 #pragma once
 
+#include "gm/projectile_kind.h"
+
 #include <cstdint>
 
 namespace mc::gm::ecs::cpn
@@ -13,9 +15,13 @@ struct projectile_states final
         VANISH,
     };
 
-    state_t state = state_t::FLY;
+    projectile_kind kind;
 
-    std::uint8_t timeout = 180;
+    state_t state;
+
+    std::uint8_t timeout;
+
+    projectile_states(projectile_kind);
 };
 
 } // namespace mc::gm::ecs::cpn

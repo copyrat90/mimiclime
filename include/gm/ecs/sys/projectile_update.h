@@ -5,6 +5,6 @@
 namespace mc::gm::ecs::sys
 {
 
-void velocity_movement(actor_registry&);
+void projectile_update(actor_registry&);
 
 }

@@ -12,6 +12,8 @@ struct collision_events final
     // Do not detect collisions with this entity
     gba::entity ignore_entity;
 
+    bool terrain_bounce_off;
+
     bool collided_wall = false;
 
     struct entity_collision_event final
