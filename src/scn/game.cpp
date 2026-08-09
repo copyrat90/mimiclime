@@ -19,6 +19,8 @@
 #include "gm/ecs/sys/velocity_movement.h"
 #include "gm/ecs/ut/critter_factories.h"
 
+#include "dev/stats.h"
+
 namespace mc::scn
 {
 
@@ -57,6 +59,11 @@ bool game::update()
     gm::ecs::sys::camera_target_update(_actor_registry);
     gm::ecs::sys::camera_update(_singleton_registry, _singleton_entity, _actor_registry);
     gm::ecs::sys::sprites_y_sort(_actor_registry);
+
+#if IBN_CFG_STATS_ENABLED
+    auto& stats = dev::stats::instance();
+    stats.alive_actors = _actor_registry.size();
+#endif
 
     return false;
 }

@@ -27,7 +27,7 @@ where you play as a slime who becomes a monster it devours.
 
 ### Using stats viewer
 
-Open [`libs/iso-butano/tools/ibn_stats.lua`](libs/iso-butano/tools/ibn_stats.lua) with `Debug > Script Window` in [MesenCE](https://github.com/nesdev-org/MesenCE).
+Open [`tools/mc_dev_stats.lua`](tools/mc_dev_stats.lua) with `Debug > Script Window` in [MesenCE](https://github.com/nesdev-org/MesenCE).
 
 
 ## Edit
