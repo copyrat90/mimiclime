@@ -173,10 +173,8 @@ namespace gba::ecs {
         /// @endcode
         template<typename... ViewCs>
         class basic_view {
-            static_assert(sizeof...(ViewCs) > 0, "view requires at least one component");
-
             /// Required mask: alive + all requested components.
-            static constexpr std::uint32_t required = (bit_of<ViewCs> | ...) | alive_bit;
+            static constexpr std::uint32_t required = (alive_bit | ... | bit_of<ViewCs>);
 
             registry_impl* m_reg;
 
