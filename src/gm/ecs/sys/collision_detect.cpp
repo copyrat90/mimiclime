@@ -16,7 +16,7 @@ void collision_detect(actor_registry& actor_reg)
     // Critter
     actor_reg.view<cpn::critter_states>().each([&](const gba::entity critter, cpn::critter_states& critter_states) {
         // Ignore already dead critter
-        if (critter_states.hp() == 0)
+        if (!critter_states.alive())
             return;
 
         auto* critter_spr = actor_reg.try_get<bn::sprite_ptr>(critter);

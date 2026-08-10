@@ -65,7 +65,16 @@ public:
         return _hp;
     }
 
+    bool alive() const
+    {
+        return _hp != 0;
+    }
+
     void change_hp(int diff);
+
+    bool can_move() const;
+    bool can_attack() const;
+    bool can_devour() const;
 
 public:
     template <typename Substates>

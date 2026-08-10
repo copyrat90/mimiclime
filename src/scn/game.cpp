@@ -47,9 +47,9 @@ bool game::update()
     gm::ecs::sys::critter_input_clear(_actor_registry);
     gm::ecs::sys::critter_input(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::critter_act(_actor_registry);
-    gm::ecs::sys::projectile_generate(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::sprite_animation_update(_actor_registry);
     gm::ecs::sys::velocity_movement(_actor_registry);
+    gm::ecs::sys::projectile_generate(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::collision_detect_clear(_actor_registry);
     gm::ecs::sys::collision_detect(_actor_registry);
     gm::ecs::sys::room_exit_collide(_actor_registry, _singleton_registry, _singleton_entity);
