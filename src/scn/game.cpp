@@ -9,6 +9,7 @@
 #include "gm/ecs/sys/collision_detect.h"
 #include "gm/ecs/sys/critter_act.h"
 #include "gm/ecs/sys/critter_input.h"
+#include "gm/ecs/sys/critter_ui_update.h"
 #include "gm/ecs/sys/projectile_generate.h"
 #include "gm/ecs/sys/projectile_update.h"
 #include "gm/ecs/sys/room_change.h"
@@ -34,6 +35,7 @@ game::game(scene_context& ctx) : scene(ctx), _singleton_entity(_singleton_regist
     _singleton_registry.emplace<gm::ecs::cpn::room>(_singleton_entity, initial_entrance.room_id(), camera);
     _singleton_registry.emplace<gm::ecs::cpn::room_change_states>(
         _singleton_entity, initial_entrance, gm::ecs::cpn::room_change_states::fade_state::FADING_OUT);
+    _singleton_registry.emplace<gm::ecs::cpn::ui_states>(_singleton_entity);
 
     const bn::fixed_point player_position = initial_entrance.position();
 
@@ -59,6 +61,8 @@ bool game::update()
     gm::ecs::sys::camera_target_update(_actor_registry);
     gm::ecs::sys::camera_update(_singleton_registry, _singleton_entity, _actor_registry);
     gm::ecs::sys::sprites_y_sort(_actor_registry);
+    gm::ecs::sys::critter_ui_update(_singleton_registry, _singleton_entity, _actor_registry,
+                                    context().text_generators());
 
 #if IBN_CFG_STATS_ENABLED
     auto& stats = dev::stats::instance();
