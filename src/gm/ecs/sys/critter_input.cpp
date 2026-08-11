@@ -14,6 +14,10 @@ void critter_input(actor_registry& actor_reg, const singleton_registry& singleto
         return;
 
     actor_reg.view<cpn::critter_states>().each([&](const gba::entity critter, cpn::critter_states& states) {
+        // No input received for dead critters
+        if (!states.alive())
+            return;
+
         if (states.is_player())
             impl::critter_input_player(critter, actor_reg);
         else

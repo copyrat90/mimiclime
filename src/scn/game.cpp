@@ -9,6 +9,8 @@
 #include "gm/ecs/sys/collision_detect.h"
 #include "gm/ecs/sys/critter_act.h"
 #include "gm/ecs/sys/critter_input.h"
+#include "gm/ecs/sys/critter_knockback.h"
+#include "gm/ecs/sys/critter_take_damage.h"
 #include "gm/ecs/sys/critter_ui_update.h"
 #include "gm/ecs/sys/projectile_generate.h"
 #include "gm/ecs/sys/projectile_update.h"
@@ -50,12 +52,14 @@ bool game::update()
     gm::ecs::sys::critter_input(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::critter_act(_actor_registry);
     gm::ecs::sys::sprite_animation_update(_actor_registry);
+    gm::ecs::sys::critter_knockback(_actor_registry);
     gm::ecs::sys::velocity_movement(_actor_registry);
     gm::ecs::sys::projectile_generate(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::collision_detect_clear(_actor_registry);
     gm::ecs::sys::collision_detect(_actor_registry);
     gm::ecs::sys::room_exit_collide(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::terrain_collide(_actor_registry, _singleton_registry, _singleton_entity);
+    gm::ecs::sys::critter_take_damage(_actor_registry);
     gm::ecs::sys::projectile_update(_actor_registry);
     gm::ecs::sys::breakable_update(_actor_registry);
     gm::ecs::sys::camera_target_update(_actor_registry);

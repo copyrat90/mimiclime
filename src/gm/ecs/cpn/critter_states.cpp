@@ -65,7 +65,7 @@ bool critter_states::can_devour() const
 
 critter_states::critter_states(bool is_player_, ldtk::gen::species_kind species_)
     : _is_player(is_player_), executing_action(critter_action::NONE), executing_animation(critter_animation_kind::IDLE),
-      facing_direction(direction::DOWN), input_action(critter_action::NONE), input_direction(direction::NONE),
+      facing_direction(direction::DOWN), input_action(critter_action::NONE), input_direction(direction::NONE), knockback_countdown(0), devour_species(ldtk::gen::species_kind::slime),
       attack_countdown(0), devour_countdown(0)
 {
     construct_substates(species_);

@@ -28,8 +28,7 @@ void room_exit_collide(actor_registry& actor_reg, singleton_registry& singleton_
         const auto& frame_datas = critter_states.sprite_datas().frame(spr_anim->current_graphics_index());
         for (const auto& relative_box : frame_datas.wallboxes)
         {
-            const bn::top_left_fixed_rect box(player_pos.x() + relative_box.x, player_pos.y() + relative_box.y,
-                                              relative_box.width, relative_box.height);
+            const auto box = relative_box.absolute_rect(player_pos, spr->horizontal_flip(), spr->vertical_flip());
 
             const bn::optional<cfg::room_entrance> entrance = room->collide_with_exit(box);
             if (entrance.has_value())
