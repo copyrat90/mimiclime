@@ -7,7 +7,7 @@ namespace mc::gm::ecs::cpn
 
 struct focused_actor final
 {
-    const gba::entity actor;
+    gba::entity actor;
 };
 
 } // namespace mc::gm::ecs::cpn

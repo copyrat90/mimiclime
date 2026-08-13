@@ -38,6 +38,7 @@ game::game(scene_context& ctx) : scene(ctx), _singleton_entity(_singleton_regist
     _singleton_registry.emplace<gm::ecs::cpn::room_change_states>(
         _singleton_entity, initial_entrance, gm::ecs::cpn::room_change_states::fade_state::FADING_OUT);
     _singleton_registry.emplace<gm::ecs::cpn::ui_states>(_singleton_entity);
+    _singleton_registry.emplace<gm::ecs::cpn::focused_actor>(_singleton_entity);
 
     const bn::fixed_point player_position = initial_entrance.position();
 
@@ -59,7 +60,7 @@ bool game::update()
     gm::ecs::sys::collision_detect(_actor_registry);
     gm::ecs::sys::room_exit_collide(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::terrain_collide(_actor_registry, _singleton_registry, _singleton_entity);
-    gm::ecs::sys::critter_take_damage(_actor_registry);
+    gm::ecs::sys::critter_take_damage(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::projectile_update(_actor_registry);
     gm::ecs::sys::breakable_update(_actor_registry);
     gm::ecs::sys::camera_target_update(_actor_registry);

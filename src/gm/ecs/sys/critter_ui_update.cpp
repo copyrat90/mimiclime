@@ -22,7 +22,7 @@ constexpr bn::fixed_point PLAYER_UI_TEXT_POS(2, 2);
 constexpr bn::color PLAYER_UI_TEXT_COLOR = bn::colors::magenta;
 constexpr auto PLAYER_UI_TEXT_ALIGN = bn::sprite_text_generator::alignment_type::LEFT;
 
-constexpr bn::fixed_point MOB_UI_TEXT_POS(bn::display::width() / 2, bn::display::height() - 10);
+constexpr bn::fixed_point MOB_UI_TEXT_POS(bn::display::width() / 2, bn::display::height() - 12);
 constexpr bn::color MOB_UI_TEXT_COLOR = bn::colors::red;
 constexpr auto MOB_UI_TEXT_ALIGN = bn::sprite_text_generator::alignment_type::CENTER;
 
@@ -34,7 +34,8 @@ void critter_ui_update(singleton_registry& singleton_reg, const gba::entity sing
     auto* ui_states = singleton_reg.try_get<cpn::ui_states>(singleton_entity);
     BN_ASSERT(ui_states);
     const auto* focused_actor_component = singleton_reg.try_get<cpn::focused_actor>(singleton_entity);
-    const gba::entity focused_actor = (focused_actor_component) ? focused_actor_component->actor : gba::entity_null;
+    BN_ASSERT(focused_actor_component);
+    const gba::entity focused_actor = focused_actor_component->actor;
 
     bool focused_mob_found = false;
 
@@ -86,7 +87,7 @@ void critter_ui_update(singleton_registry& singleton_reg, const gba::entity sing
                 const auto prev_align = text_gen.alignment();
                 const auto prev_priority = text_gen.bg_priority();
                 text_generators.set_text_color(UI_TEXT_FONT, MOB_UI_TEXT_COLOR);
-                text_gen.set_left_alignment();
+                text_gen.set_center_alignment();
                 text_gen.set_bg_priority(UI_BG_PRIORITY);
                 {
                     auto str =
@@ -105,7 +106,12 @@ void critter_ui_update(singleton_registry& singleton_reg, const gba::entity sing
     });
 
     if (!focused_mob_found)
+    {
         ui_states->mob_texts.clear();
+
+        ui_states->last_mob_species = ldtk::gen::species_kind::slime;
+        ui_states->last_mob_hp = 0;
+    }
 }
 
 } // namespace mc::gm::ecs::sys
