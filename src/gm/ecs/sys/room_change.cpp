@@ -3,6 +3,7 @@
 #include "gm/ecs/cpn/room_change_states.h"
 #include "gm/ecs/ut/breakable_factories.h"
 #include "gm/ecs/ut/critter_factories.h"
+#include "gm/game_save.h"
 
 #include "ibn_transitions.h"
 
@@ -28,7 +29,7 @@ constexpr bn::fixed_point CAMERA_CENTER_OFFSET(-bn::display::width() / 2, -bn::d
 } // namespace
 
 void room_change(singleton_registry& singleton_reg, const gba::entity singleton_entity, ibn::transitions& transitions,
-                 actor_registry& actor_reg)
+                 actor_registry& actor_reg, const game_save& save)
 {
     auto* room_change_states = singleton_reg.try_get<cpn::room_change_states>(singleton_entity);
 
@@ -58,35 +59,48 @@ void room_change(singleton_registry& singleton_reg, const gba::entity singleton_
                 auto* room = singleton_reg.try_get<cpn::room>(singleton_entity);
                 BN_ASSERT(room);
                 room->reset(room_change_states->entrance.room_id());
+                room->level_bgs().set_visible(true);
 
                 const bn::fixed_point entrance_position = room_change_states->entrance.position();
-
-                actor_reg.view<>().each([&](const gba::entity entity) {
-                    // For the player,
-                    if (auto* critter_states = actor_reg.try_get<cpn::critter_states>(entity);
-                        critter_states && critter_states->is_player())
-                    {
-                        // Reset directions
-                        critter_states->input_direction = direction::NONE;
-
-                        // Move the player to the entrance position
-                        auto* spr = actor_reg.try_get<bn::sprite_ptr>(entity);
-                        BN_ASSERT(spr);
-
-                        const bn::fixed_point moved_pos =
-                            entrance_position -
-                            bn::fixed_point(spr->shape_size().width() / 2, spr->shape_size().height() / 2);
-                        spr->set_top_left_position(moved_pos);
-                    }
-                    // Remove all entities that are not the player
-                    else
-                        actor_reg.destroy(entity);
-                });
 
                 // Reset camera to entrance position
                 auto* camera = singleton_reg.try_get<bn::camera_ptr>(singleton_entity);
                 BN_ASSERT(camera);
                 camera->set_position(entrance_position + CAMERA_CENTER_OFFSET);
+
+                if (room_change_states->reload_player)
+                {
+                    // Remove all entities including player
+                    actor_reg.clear();
+
+                    // Re-create player as recently saved species
+                    ut::create_player_critter(save.player_species, entrance_position, actor_reg, singleton_reg,
+                                              singleton_entity);
+                }
+                else
+                {
+                    actor_reg.view<>().each([&](const gba::entity entity) {
+                        // For the player,
+                        if (auto* critter_states = actor_reg.try_get<cpn::critter_states>(entity);
+                            critter_states && critter_states->is_player())
+                        {
+                            // Reset directions
+                            critter_states->input_direction = direction::NONE;
+
+                            // Move the player to the entrance position
+                            auto* spr = actor_reg.try_get<bn::sprite_ptr>(entity);
+                            BN_ASSERT(spr);
+
+                            const bn::fixed_point moved_pos =
+                                entrance_position -
+                                bn::fixed_point(spr->shape_size().width() / 2, spr->shape_size().height() / 2);
+                            spr->set_top_left_position(moved_pos);
+                        }
+                        // Remove all entities that are not the player
+                        else
+                            actor_reg.destroy(entity);
+                    });
+                }
 
                 // Load entities
                 const ldtk::layer& entities_layer = room->level().get_layer(ldtk::gen::layer_ident::entities);

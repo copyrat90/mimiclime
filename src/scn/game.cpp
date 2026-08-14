@@ -12,6 +12,7 @@
 #include "gm/ecs/sys/critter_knockback.h"
 #include "gm/ecs/sys/critter_take_damage.h"
 #include "gm/ecs/sys/critter_ui_update.h"
+#include "gm/ecs/sys/player_dead_respawn.h"
 #include "gm/ecs/sys/projectile_generate.h"
 #include "gm/ecs/sys/projectile_update.h"
 #include "gm/ecs/sys/room_change.h"
@@ -39,7 +40,7 @@ game::game(scene_context& ctx) : scene(ctx), _singleton_entity(_singleton_regist
     auto& camera = _singleton_registry.emplace<bn::camera_ptr>(_singleton_entity, bn::camera_ptr::create());
     _singleton_registry.emplace<gm::ecs::cpn::room>(_singleton_entity, initial_entrance.room_id(), camera);
     _singleton_registry.emplace<gm::ecs::cpn::room_change_states>(
-        _singleton_entity, initial_entrance, gm::ecs::cpn::room_change_states::fade_state::FADING_OUT);
+        _singleton_entity, initial_entrance, false, gm::ecs::cpn::room_change_states::fade_state::FADING_OUT);
     _singleton_registry.emplace<gm::ecs::cpn::ui_states>(_singleton_entity);
     _singleton_registry.emplace<gm::ecs::cpn::focused_actor>(_singleton_entity);
 
@@ -51,7 +52,10 @@ game::game(scene_context& ctx) : scene(ctx), _singleton_entity(_singleton_regist
 
 bool game::update()
 {
-    gm::ecs::sys::room_change(_singleton_registry, _singleton_entity, context().transitions(), _actor_registry);
+    auto& ctx = context();
+
+    gm::ecs::sys::room_change(_singleton_registry, _singleton_entity, ctx.transitions(), _actor_registry,
+                              ctx.game_save());
     gm::ecs::sys::critter_input_clear(_actor_registry);
     gm::ecs::sys::critter_input(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::critter_act(_actor_registry);
@@ -61,9 +65,10 @@ bool game::update()
     gm::ecs::sys::projectile_generate(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::collision_detect_clear(_actor_registry);
     gm::ecs::sys::collision_detect(_actor_registry);
+    gm::ecs::sys::critter_take_damage(_actor_registry, _singleton_registry, _singleton_entity);
+    gm::ecs::sys::player_dead_respawn(_actor_registry, _singleton_registry, _singleton_entity, ctx.game_save());
     gm::ecs::sys::room_exit_collide(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::terrain_collide(_actor_registry, _singleton_registry, _singleton_entity);
-    gm::ecs::sys::critter_take_damage(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::projectile_update(_actor_registry);
     gm::ecs::sys::breakable_update(_actor_registry);
     gm::ecs::sys::camera_target_update(_actor_registry);

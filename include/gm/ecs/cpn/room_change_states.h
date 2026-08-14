@@ -23,6 +23,8 @@ struct room_change_states final
 
     cfg::room_entrance entrance;
 
+    bool reload_player;
+
     fade_state fade;
     std::int8_t countdown;
 };

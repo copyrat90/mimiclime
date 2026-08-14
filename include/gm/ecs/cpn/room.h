@@ -58,6 +58,11 @@ public:
         return _terrain_int_grid_size;
     }
 
+    auto level_bgs() -> decltype((_level_bgs))
+    {
+        return _level_bgs;
+    }
+
     auto level_bgs() const -> decltype((_level_bgs))
     {
         return _level_bgs;
