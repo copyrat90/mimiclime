@@ -1,5 +1,6 @@
 #pragma once
 
+#include "gm/game_save.h"
 #include "ut/config_save.h"
 #include "ut/text_generators.h"
 
@@ -16,7 +17,7 @@ class scene_stack;
 class scene_context final
 {
 public:
-    scene_context(scene_stack& st) : _scene_stack(st)
+    scene_context(scene_stack& st) : _scene_stack(st), _game_save(0)
     {
     }
 
@@ -27,6 +28,8 @@ private:
     scene_stack& _scene_stack;
 
     ut::config_save _config_save;
+    gm::game_save _game_save;
+
     ibn::transitions _transitions;
     ut::text_generators _text_generators;
 
@@ -51,6 +54,16 @@ public:
     auto config_save() const -> decltype((_config_save))
     {
         return _config_save;
+    }
+
+    auto game_save() -> decltype((_game_save))
+    {
+        return _game_save;
+    }
+
+    auto game_save() const -> decltype((_game_save))
+    {
+        return _game_save;
     }
 
     auto transitions() -> decltype((_transitions))

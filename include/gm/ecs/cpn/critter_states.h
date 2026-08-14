@@ -38,6 +38,9 @@ public:
     direction input_direction;
     bn::fixed_point input_velocity;
 
+    bn::fixed_point knockback_velocity;
+    std::uint8_t knockback_countdown;
+
     ldtk::gen::species_kind devour_species;
 
     std::uint16_t attack_countdown;
@@ -65,7 +68,16 @@ public:
         return _hp;
     }
 
+    bool alive() const
+    {
+        return _hp != 0;
+    }
+
     void change_hp(int diff);
+
+    bool can_move() const;
+    bool can_attack() const;
+    bool can_devour() const;
 
 public:
     template <typename Substates>

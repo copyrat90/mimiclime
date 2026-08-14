@@ -15,39 +15,38 @@ bool blocking_entity_collide(const bn::top_left_fixed_rect& box, actor_registry&
     bool collided = false;
 
     // Breakable
-    actor_reg.view<cpn::breakable_states>().each([&](const gba::entity breakable,
-                                                     cpn::breakable_states& breakable_states) {
-        // Ignore already vanishing breakable
-        if (breakable_states.state == cpn::breakable_states::state_t::VANISH)
-            return;
+    actor_reg.view<cpn::breakable_states>().each(
+        [&](const gba::entity breakable, cpn::breakable_states& breakable_states) {
+            // Ignore already vanishing breakable
+            if (breakable_states.state == cpn::breakable_states::state_t::VANISH)
+                return;
 
-        auto* breakable_spr = actor_reg.try_get<bn::sprite_ptr>(breakable);
-        BN_ASSERT(breakable_spr);
-        const auto breakable_pos =
-            breakable_spr->top_left_position() +
-            bn::fixed_point(breakable_spr->shape_size().width() / 2, breakable_spr->shape_size().height() / 2);
-        auto* breakable_anim = actor_reg.try_get<cpn::sprite_animation>(breakable);
-        BN_ASSERT(breakable_anim);
-        const auto breakable_gfx_idx = breakable_anim->current_graphics_index();
-        const auto breakable_spr_kind = ut::enum_to_enum<cfg::gen::sprite_kind>(breakable_states.kind);
-        const auto& breakable_spr_frame_datas = cfg::sprite_datas::get(breakable_spr_kind).frame(breakable_gfx_idx);
-        auto* breakable_coll_evs = actor_reg.try_get<cpn::collision_events>(breakable);
-        BN_ASSERT(breakable_coll_evs);
+            auto* breakable_spr = actor_reg.try_get<bn::sprite_ptr>(breakable);
+            BN_ASSERT(breakable_spr);
+            const auto breakable_pos =
+                breakable_spr->top_left_position() +
+                bn::fixed_point(breakable_spr->shape_size().width() / 2, breakable_spr->shape_size().height() / 2);
+            auto* breakable_anim = actor_reg.try_get<cpn::sprite_animation>(breakable);
+            BN_ASSERT(breakable_anim);
+            const auto breakable_gfx_idx = breakable_anim->current_graphics_index();
+            const auto breakable_spr_kind = ut::enum_to_enum<cfg::gen::sprite_kind>(breakable_states.kind);
+            const auto& breakable_spr_frame_datas = cfg::sprite_datas::get(breakable_spr_kind).frame(breakable_gfx_idx);
+            auto* breakable_coll_evs = actor_reg.try_get<cpn::collision_events>(breakable);
+            BN_ASSERT(breakable_coll_evs);
 
-        // Breakable wallbox
-        for (const auto& rel_breakable_wallbox : breakable_spr_frame_datas.wallboxes)
-        {
-            const bn::top_left_fixed_rect breakable_wallbox(breakable_pos.x() + rel_breakable_wallbox.x,
-                                                            breakable_pos.y() + rel_breakable_wallbox.y,
-                                                            rel_breakable_wallbox.width, rel_breakable_wallbox.height);
-
-            if (box.intersects(breakable_wallbox))
+            // Breakable wallbox
+            for (const auto& rel_breakable_wallbox : breakable_spr_frame_datas.wallboxes)
             {
-                collided = true;
-                break;
+                const auto breakable_wallbox = rel_breakable_wallbox.absolute_rect(
+                    breakable_pos, breakable_spr->horizontal_flip(), breakable_spr->vertical_flip());
+
+                if (box.intersects(breakable_wallbox))
+                {
+                    collided = true;
+                    break;
+                }
             }
-        }
-    });
+        });
 
     return collided;
 }
@@ -68,8 +67,7 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
     moved_pos.set_x(moved_pos.x() + velocity.velocity.x());
     for (const auto& relative_box : spr_frame_datas.wallboxes)
     {
-        const bn::top_left_fixed_rect box(moved_pos.x() + relative_box.x, moved_pos.y() + relative_box.y,
-                                          relative_box.width, relative_box.height);
+        const auto box = relative_box.absolute_rect(moved_pos, sprite.horizontal_flip(), sprite.vertical_flip());
 
         // If moving right,
         if (velocity.velocity.x() > 0)
@@ -109,8 +107,7 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
     moved_pos.set_y(moved_pos.y() + velocity.velocity.y());
     for (const auto& relative_box : spr_frame_datas.wallboxes)
     {
-        const bn::top_left_fixed_rect box(moved_pos.x() + relative_box.x, moved_pos.y() + relative_box.y,
-                                          relative_box.width, relative_box.height);
+        const auto box = relative_box.absolute_rect(moved_pos, sprite.horizontal_flip(), sprite.vertical_flip());
 
         // If moving down,
         if (velocity.velocity.y() > 0)
@@ -157,8 +154,7 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
     bool collided = false;
     for (const auto& relative_box : spr_frame_datas.wallboxes)
     {
-        const bn::top_left_fixed_rect box(spr_position.x() + relative_box.x, spr_position.y() + relative_box.y,
-                                          relative_box.width, relative_box.height);
+        const auto box = relative_box.absolute_rect(spr_position, sprite.horizontal_flip(), sprite.vertical_flip());
 
         // If moving right,
         if (velocity.velocity.x() > 0)

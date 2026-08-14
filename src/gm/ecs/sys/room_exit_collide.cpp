@@ -12,7 +12,7 @@ void room_exit_collide(actor_registry& actor_reg, singleton_registry& singleton_
         return;
 
     actor_reg.view<cpn::critter_states>().each([&](const gba::entity player, cpn::critter_states& critter_states) {
-        if (!critter_states.is_player())
+        if (!critter_states.is_player() || !critter_states.alive())
             return;
 
         const auto* spr = actor_reg.try_get<bn::sprite_ptr>(player);
@@ -28,13 +28,12 @@ void room_exit_collide(actor_registry& actor_reg, singleton_registry& singleton_
         const auto& frame_datas = critter_states.sprite_datas().frame(spr_anim->current_graphics_index());
         for (const auto& relative_box : frame_datas.wallboxes)
         {
-            const bn::top_left_fixed_rect box(player_pos.x() + relative_box.x, player_pos.y() + relative_box.y,
-                                              relative_box.width, relative_box.height);
+            const auto box = relative_box.absolute_rect(player_pos, spr->horizontal_flip(), spr->vertical_flip());
 
             const bn::optional<cfg::room_entrance> entrance = room->collide_with_exit(box);
             if (entrance.has_value())
             {
-                singleton_reg.emplace<cpn::room_change_states>(singleton_entity, entrance.value(),
+                singleton_reg.emplace<cpn::room_change_states>(singleton_entity, entrance.value(), false,
                                                                cpn::room_change_states::fade_state::INIT);
                 break;
             }

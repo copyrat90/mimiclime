@@ -37,7 +37,7 @@ void critter_act_slime(const gba::entity critter, actor_registry& actor_reg)
             velocity->velocity = states.input_velocity * ATTACK_MOVE_SPEED_MULTIPLIER;
             break;
 
-        case critter_action::DEVOUR:
+        case critter_action::PREPARE_DEVOUR:
             // TODO
             break;
 
@@ -52,7 +52,7 @@ void critter_act_slime(const gba::entity critter, actor_registry& actor_reg)
         velocity->velocity = states.input_velocity * ATTACK_MOVE_SPEED_MULTIPLIER;
         break;
 
-    case critter_action::DEVOUR:
+    case critter_action::PREPARE_DEVOUR:
         // TODO
         break;
 

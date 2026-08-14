@@ -11,8 +11,10 @@ enum class critter_action : std::uint8_t
 {
     NONE,
 
+    DEAD,
+
     ATTACK,
-    DEVOUR,
+    PREPARE_DEVOUR,
 
     DEVOURING,
     CHANGING_SPECIES,
