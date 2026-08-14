@@ -118,7 +118,7 @@ constexpr bn::array<critter_animation_infos, ut::size_of_enum<ldtk::gen::species
                           .horizontal_flip = false,
                           .vertical_flip = true,
                           .wait_updates = std::numeric_limits<decltype(sprite_animation_info::wait_updates)>::max(),
-                          .graphics_indexes = bn::span(LIZARD_IDLE_VERT_GFX_IDXES, 1),
+                          .graphics_indexes = LIZARD_IDLE_VERT_GFX_IDXES,
                       })
             .set_info(critter_animation_kind::IDLE, direction::DOWN,
                       sprite_animation_info{
