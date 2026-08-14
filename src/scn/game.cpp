@@ -31,7 +31,10 @@ game::game(scene_context& ctx) : scene(ctx), _singleton_entity(_singleton_regist
 {
     ctx.transitions().set_alpha(ibn::transitions::kinds::FADE, 1);
 
-    gm::cfg::room_entrance initial_entrance = get_initial_entrance();
+    auto& game_save = ctx.game_save();
+    game_save.load();
+
+    const gm::cfg::room_entrance& initial_entrance = game_save.room_entrance;
 
     auto& camera = _singleton_registry.emplace<bn::camera_ptr>(_singleton_entity, bn::camera_ptr::create());
     _singleton_registry.emplace<gm::ecs::cpn::room>(_singleton_entity, initial_entrance.room_id(), camera);
@@ -42,8 +45,8 @@ game::game(scene_context& ctx) : scene(ctx), _singleton_entity(_singleton_regist
 
     const bn::fixed_point player_position = initial_entrance.position();
 
-    gm::ecs::ut::create_player_critter(ldtk::gen::species_kind::slime, player_position, _actor_registry,
-                                       _singleton_registry, _singleton_entity);
+    gm::ecs::ut::create_player_critter(game_save.player_species, player_position, _actor_registry, _singleton_registry,
+                                       _singleton_entity);
 }
 
 bool game::update()
@@ -75,14 +78,6 @@ bool game::update()
 #endif
 
     return false;
-}
-
-auto game::get_initial_entrance() const -> gm::cfg::room_entrance
-{
-    static constexpr const ldtk::entity& GAME_INIT_EXIT =
-        ut::get_config_entity(ldtk::gen::entity_ident::exit, ldtk::gen::layer_ident::exits);
-
-    return gm::cfg::room_entrance::from_exit(GAME_INIT_EXIT);
 }
 
 } // namespace mc::scn

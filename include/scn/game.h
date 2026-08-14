@@ -19,9 +19,6 @@ public:
     bool update() override;
 
 private:
-    auto get_initial_entrance() const -> gm::cfg::room_entrance;
-
-private:
     gm::ecs::singleton_registry _singleton_registry;
     gm::ecs::actor_registry _actor_registry;
 
