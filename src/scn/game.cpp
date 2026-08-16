@@ -18,6 +18,7 @@
 #include "gm/ecs/sys/room_change.h"
 #include "gm/ecs/sys/room_exit_collide.h"
 #include "gm/ecs/sys/sprite_animation_update.h"
+#include "gm/ecs/sys/sprite_flicker_update.h"
 #include "gm/ecs/sys/sprites_y_sort.h"
 #include "gm/ecs/sys/terrain_collide.h"
 #include "gm/ecs/sys/velocity_movement.h"
@@ -60,6 +61,7 @@ bool game::update()
     gm::ecs::sys::critter_input(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::critter_act(_actor_registry);
     gm::ecs::sys::sprite_animation_update(_actor_registry);
+    gm::ecs::sys::sprite_flicker_update(_actor_registry);
     gm::ecs::sys::critter_knockback(_actor_registry);
     gm::ecs::sys::velocity_movement(_actor_registry);
     gm::ecs::sys::projectile_generate(_actor_registry, _singleton_registry, _singleton_entity);

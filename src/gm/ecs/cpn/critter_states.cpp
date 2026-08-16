@@ -60,13 +60,14 @@ bool critter_states::can_attack() const
 bool critter_states::can_devour() const
 {
     return (this->executing_action == critter_action::NONE && this->devour_countdown == 0) ||
-           this->executing_action == critter_action::PREPARE_DEVOUR;
+           this->executing_action == critter_action::WANT_TO_DEVOUR;
 }
 
 critter_states::critter_states(bool is_player_, ldtk::gen::species_kind species_)
-    : _is_player(is_player_), executing_action(critter_action::NONE), executing_animation(critter_animation_kind::IDLE),
-      facing_direction(direction::DOWN), input_action(critter_action::NONE), input_direction(direction::NONE), knockback_countdown(0), devour_species(ldtk::gen::species_kind::slime),
-      attack_countdown(0), devour_countdown(0)
+    : _is_player(is_player_), invincible_shared_counter(0), executing_action(critter_action::NONE),
+      executing_animation(critter_animation_kind::IDLE), facing_direction(direction::DOWN),
+      input_action(critter_action::NONE), input_direction(direction::NONE), knockback_countdown(0), attack_countdown(0),
+      devour_countdown(0)
 {
     construct_substates(species_);
 }
@@ -95,7 +96,6 @@ void critter_states::construct_substates(ldtk::gen::species_kind species_)
 
     _species = species_;
 
-    // TODO: Apply previous hp ratio
     _hp = static_cast<decltype(_hp)>(cfg::species_infos::get(species_).hp());
 }
 

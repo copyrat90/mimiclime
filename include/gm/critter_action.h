@@ -14,10 +14,11 @@ enum class critter_action : std::uint8_t
     DEAD,
 
     ATTACK,
-    PREPARE_DEVOUR,
 
-    DEVOURING,
-    CHANGING_SPECIES,
+    WANT_TO_DEVOUR,
+    MOVE_TO_DEVOUR,
+    PRE_CHANGE_SPECIES,
+    POST_CHANGE_SPECIES,
 };
 
 } // namespace mc::gm

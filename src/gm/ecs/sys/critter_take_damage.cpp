@@ -25,8 +25,7 @@ void critter_take_damage(actor_registry& actor_reg, singleton_registry& singleto
 
     actor_reg.view<cpn::critter_states, cpn::collision_events>().each(
         [&](const gba::entity critter, cpn::critter_states& states, cpn::collision_events& coll_events) {
-            // Invincible while knockback
-            if (states.knockback_countdown > 0)
+            if (states.invincible())
                 return;
 
             for (const auto [collided_entity, hurt] : coll_events.collided_entities)
@@ -34,6 +33,7 @@ void critter_take_damage(actor_registry& actor_reg, singleton_registry& singleto
                 if (states.alive() && hurt)
                 {
                     states.change_hp(-1);
+                    ++states.invincible_shared_counter;
 
                     states.knockback_countdown = KNOCKBACK_DURATION;
                     actor_reg.match<cpn::projectile_states, cpn::critter_states>(
