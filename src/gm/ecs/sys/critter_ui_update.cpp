@@ -1,5 +1,6 @@
 #include "gm/ecs/sys/critter_ui_update.h"
 
+#include "gm/cfg/species_infos.h"
 #include "txt/critter_ui_texts.h"
 #include "ut/enum_utils.h"
 #include "ut/text_generators.h"
@@ -57,9 +58,11 @@ void critter_ui_update(singleton_registry& singleton_reg, const gba::entity sing
                 text_gen.set_left_alignment();
                 text_gen.set_bg_priority(UI_BG_PRIORITY);
                 {
-                    auto str =
-                        bn::format<64>(txt::CRITTER_UI_TEXT_FMT, mc::ut::enum_to_string(critter_states.species()),
-                                       static_cast<int>(critter_states.hp()));
+                    const auto species_name = mc::ut::enum_to_string(critter_states.species());
+                    const auto current_hp = static_cast<int>(critter_states.hp());
+                    const auto max_hp = cfg::species_infos::get(critter_states.species()).hp();
+
+                    auto str = bn::format<64>(txt::CRITTER_UI_TEXT_FMT, species_name, current_hp, max_hp);
                     text_gen.generate_top_left(PLAYER_UI_TEXT_POS, str, ui_states->player_texts);
                 }
                 text_gen.set_bg_priority(prev_priority);
@@ -90,9 +93,11 @@ void critter_ui_update(singleton_registry& singleton_reg, const gba::entity sing
                 text_gen.set_center_alignment();
                 text_gen.set_bg_priority(UI_BG_PRIORITY);
                 {
-                    auto str =
-                        bn::format<64>(txt::CRITTER_UI_TEXT_FMT, mc::ut::enum_to_string(critter_states.species()),
-                                       static_cast<int>(critter_states.hp()));
+                    const auto species_name = mc::ut::enum_to_string(critter_states.species());
+                    const auto current_hp = static_cast<int>(critter_states.hp());
+                    const auto max_hp = cfg::species_infos::get(critter_states.species()).hp();
+
+                    auto str = bn::format<64>(txt::CRITTER_UI_TEXT_FMT, species_name, current_hp, max_hp);
                     text_gen.generate_top_left(MOB_UI_TEXT_POS, str, ui_states->mob_texts);
                 }
                 text_gen.set_bg_priority(prev_priority);
