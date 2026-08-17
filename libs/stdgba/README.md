@@ -1,8 +1,7 @@
 # Altered version of stdgba ECS
 
 This source is an *altered version* of stdgba ECS registry, edited by copyrat90.
-* It allows non-default-constructible components, while giving up constexpr support.
-* Exceptions are replaced with `BN_ASSERT`s
+* Compile-time asserts are replaced with run-time `BN_ASSERT`s
 
 It isn't well tested, so use it at your own risk.
 
