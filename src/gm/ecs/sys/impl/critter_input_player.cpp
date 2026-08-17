@@ -8,7 +8,8 @@
 namespace mc::gm::ecs::sys::impl
 {
 
-void critter_input_player(const gba::entity critter, actor_registry& actor_reg)
+void critter_input_player(const gba::entity critter, actor_registry& actor_reg, singleton_registry& singleton_reg,
+                          const gba::entity singleton_entity)
 {
     cpn::critter_states& states = actor_reg.get<cpn::critter_states>(critter);
 
@@ -37,9 +38,13 @@ void critter_input_player(const gba::entity critter, actor_registry& actor_reg)
                 dead_critter_spr->top_left_position() + bn::fixed_point(dead_critter_spr->shape_size().width() / 2,
                                                                         dead_critter_spr->shape_size().height() / 2);
 
+            auto* focused_actor = singleton_reg.try_get<cpn::focused_actor>(singleton_entity);
+            BN_ASSERT(focused_actor);
+
             static constexpr bn::fixed_point POS_DIFF(0, 1);
             states.target_position = dead_critter_pos + POS_DIFF;
             states.devour_critter = nearby_dead_critter;
+            focused_actor->actor = nearby_dead_critter;
             states.input_action = critter_action::WANT_TO_DEVOUR;
             states.input_velocity = bn::fixed_point(0, 0);
             states.input_direction = direction::NONE;
