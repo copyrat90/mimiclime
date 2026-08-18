@@ -6,7 +6,7 @@ namespace mc::gm::ecs::sys
 void sprite_flicker_update(actor_registry& actor_reg)
 {
     actor_reg.view<cpn::sprite_flicker, bn::sprite_ptr>().each(
-        [&](const gba::entity entity, cpn::sprite_flicker& flicker, bn::sprite_ptr& sprite) {
+        [&](cpn::sprite_flicker& flicker, bn::sprite_ptr& sprite) {
             if (flicker.destroy_countdown == 0 || --flicker.destroy_countdown == 0)
             {
                 sprite.set_visible(true);
