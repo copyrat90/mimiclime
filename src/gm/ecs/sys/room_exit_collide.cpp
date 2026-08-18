@@ -12,7 +12,7 @@ void room_exit_collide(actor_registry& actor_reg, singleton_registry& singleton_
         return;
 
     actor_reg.view<cpn::critter_states>().each([&](const gba::entity player, cpn::critter_states& critter_states) {
-        if (!critter_states.is_player() || !critter_states.alive())
+        if (!critter_states.is_player() || !critter_states.alive() || critter_states.invincible())
             return;
 
         const auto* spr = actor_reg.try_get<bn::sprite_ptr>(player);

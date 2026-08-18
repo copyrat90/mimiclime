@@ -1,5 +1,7 @@
 #include "gm/ecs/sys/camera_update.h"
 
+#include "gm/lerp.h"
+
 #include <bn_display.h>
 
 #include <limits>
@@ -58,15 +60,7 @@ void camera_update(singleton_registry& singleton_reg, const gba::entity singleto
     }
 
     // Lerp from current position to target position
-    bn::fixed_point lerped_pos = target_pos;
-    if (target_pos != camera->position())
-    {
-        lerped_pos = camera->position() + (target_pos - camera->position()) * LERP_RATIO;
-
-        const auto diff = target_pos - lerped_pos;
-        if (diff.x() * diff.x() + diff.y() * diff.y() <= LERP_EPSILON_SQUARED)
-            lerped_pos = target_pos;
-    }
+    const bn::fixed_point lerped_pos = lerp(camera->position(), target_pos, LERP_RATIO, LERP_EPSILON_SQUARED);
 
     // Apply edge-snapping
     bn::fixed_point snapped_pos = lerped_pos;

@@ -13,6 +13,7 @@ void critter_knockback(actor_registry& actor_reg)
         {
             if (--states.knockback_countdown == 0)
             {
+                --states.invincible_shared_counter;
                 states.knockback_velocity = bn::fixed_point(0, 0);
 
                 auto* sprite = actor_reg.try_get<bn::sprite_ptr>(critter);

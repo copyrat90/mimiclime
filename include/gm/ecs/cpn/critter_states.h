@@ -8,6 +8,8 @@
 
 #include <bn_fixed_point.h>
 
+#include <gba/bits/ecs/entity.hpp>
+
 #include <cstdint>
 #include <new>
 
@@ -30,6 +32,8 @@ private:
     std::uint16_t _hp;
 
 public:
+    std::uint8_t invincible_shared_counter;
+
     critter_action executing_action;
     critter_animation_kind executing_animation;
     direction facing_direction; // only 4 directions
@@ -38,10 +42,12 @@ public:
     direction input_direction;
     bn::fixed_point input_velocity;
 
+    bn::fixed_point target_position;
+
     bn::fixed_point knockback_velocity;
     std::uint8_t knockback_countdown;
 
-    ldtk::gen::species_kind devour_species;
+    gba::entity devour_critter;
 
     std::uint16_t attack_countdown;
     std::uint16_t devour_countdown;
@@ -71,6 +77,11 @@ public:
     bool alive() const
     {
         return _hp != 0;
+    }
+
+    bool invincible() const
+    {
+        return invincible_shared_counter != 0;
     }
 
     void change_hp(int diff);

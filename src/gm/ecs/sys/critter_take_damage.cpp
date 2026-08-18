@@ -20,13 +20,12 @@ void critter_take_damage(actor_registry& actor_reg, singleton_registry& singleto
 {
     const gba::entity player = ut::find_player_critter(actor_reg);
 
-    auto* focused_actor = singleton_reg.try_get<cpn::focused_actor>(singleton_entity);
-    BN_ASSERT(focused_actor);
+    auto* actors_of_interest = singleton_reg.try_get<cpn::actors_of_interest>(singleton_entity);
+    BN_ASSERT(actors_of_interest);
 
     actor_reg.view<cpn::critter_states, cpn::collision_events>().each(
         [&](const gba::entity critter, cpn::critter_states& states, cpn::collision_events& coll_events) {
-            // Invincible while knockback
-            if (states.knockback_countdown > 0)
+            if (states.invincible())
                 return;
 
             for (const auto [collided_entity, hurt] : coll_events.collided_entities)
@@ -34,6 +33,7 @@ void critter_take_damage(actor_registry& actor_reg, singleton_registry& singleto
                 if (states.alive() && hurt)
                 {
                     states.change_hp(-1);
+                    ++states.invincible_shared_counter;
 
                     states.knockback_countdown = KNOCKBACK_DURATION;
                     actor_reg.match<cpn::projectile_states, cpn::critter_states>(
@@ -46,23 +46,23 @@ void critter_take_damage(actor_registry& actor_reg, singleton_registry& singleto
 
                             states.knockback_velocity = to_normal_vector(proj_velocity->velocity) * KNOCKBACK_SPEED;
 
-                            // Focus on the mob that shot the player critter.
+                            // Show status of the mob that shot the player critter.
                             if (critter == player)
-                                focused_actor->actor = proj_coll_evs->ignore_entity;
-                            // Focus on the mob that the player critter shot.
+                                actors_of_interest->status_mob = proj_coll_evs->ignore_entity;
+                            // Show status of the mob that the player critter shot.
                             else if (proj_coll_evs->ignore_entity == player)
-                                focused_actor->actor = critter;
+                                actors_of_interest->status_mob = critter;
                         },
                         [&](cpn::critter_states& atk_critter_states) {
                             states.knockback_velocity =
                                 to_normal_vector(atk_critter_states.facing_direction) * KNOCKBACK_SPEED;
 
-                            // Focus on the mob that attacked the player critter.
+                            // Show status of the mob that attacked the player critter.
                             if (critter == player)
-                                focused_actor->actor = collided_entity;
-                            // Focus on the mob that's attacked by the player critter.
+                                actors_of_interest->status_mob = collided_entity;
+                            // Show status of the mob that's attacked by the player critter.
                             else if (collided_entity == player)
-                                focused_actor->actor = critter;
+                                actors_of_interest->status_mob = critter;
                         });
 
                     // Hurt palette while knockback

@@ -5,9 +5,10 @@
 namespace mc::gm::ecs::cpn
 {
 
-struct focused_actor final
+struct actors_of_interest final
 {
-    gba::entity actor;
+    gba::entity status_mob;
+    gba::entity nearby_devourable_mob;
 };
 
 } // namespace mc::gm::ecs::cpn

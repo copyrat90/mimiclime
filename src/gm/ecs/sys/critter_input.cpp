@@ -6,8 +6,7 @@
 namespace mc::gm::ecs::sys
 {
 
-void critter_input(actor_registry& actor_reg, const singleton_registry& singleton_reg,
-                   const gba::entity singleton_entity)
+void critter_input(actor_registry& actor_reg, singleton_registry& singleton_reg, const gba::entity singleton_entity)
 {
     // No input received when room is changing
     if (singleton_reg.all_of<cpn::room_change_states>(singleton_entity))
@@ -19,7 +18,7 @@ void critter_input(actor_registry& actor_reg, const singleton_registry& singleto
             return;
 
         if (states.is_player())
-            impl::critter_input_player(critter, actor_reg);
+            impl::critter_input_player(critter, actor_reg, singleton_reg, singleton_entity);
         else
             impl::critter_input_mob(critter, actor_reg);
     });

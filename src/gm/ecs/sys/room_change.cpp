@@ -79,27 +79,31 @@ void room_change(singleton_registry& singleton_reg, const gba::entity singleton_
                 }
                 else
                 {
-                    actor_reg.view<>().each([&](const gba::entity entity) {
-                        // For the player,
-                        if (auto* critter_states = actor_reg.try_get<cpn::critter_states>(entity);
-                            critter_states && critter_states->is_player())
-                        {
-                            // Reset directions
-                            critter_states->input_direction = direction::NONE;
+                    actor_reg.view<cpn::critter_states>().each(
+                        [&](const gba::entity critter, cpn::critter_states& critter_states) {
+                            // For the player,
+                            if (critter_states.is_player())
+                            {
+                                // Reset directions
+                                critter_states.input_direction = direction::NONE;
 
-                            // Move the player to the entrance position
-                            auto* spr = actor_reg.try_get<bn::sprite_ptr>(entity);
-                            BN_ASSERT(spr);
+                                // Move the player to the entrance position
+                                auto* spr = actor_reg.try_get<bn::sprite_ptr>(critter);
+                                BN_ASSERT(spr);
 
-                            const bn::fixed_point moved_pos =
-                                entrance_position -
-                                bn::fixed_point(spr->shape_size().width() / 2, spr->shape_size().height() / 2);
-                            spr->set_top_left_position(moved_pos);
-                        }
-                        // Remove all entities that are not the player
-                        else
-                            actor_reg.destroy(entity);
-                    });
+                                const bn::fixed_point moved_pos =
+                                    entrance_position -
+                                    bn::fixed_point(spr->shape_size().width() / 2, spr->shape_size().height() / 2);
+                                spr->set_top_left_position(moved_pos);
+                            }
+                            // Remove all critters that are not the player
+                            else
+                                actor_reg.destroy(critter);
+                        });
+
+                    // Remove all entities that are not the player
+                    actor_reg.view<gba::ecs::exclude<cpn::critter_states>>().each(
+                        [&](const gba::entity entity) { actor_reg.destroy(entity); });
                 }
 
                 // Load entities
