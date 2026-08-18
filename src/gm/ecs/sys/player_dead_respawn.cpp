@@ -32,10 +32,10 @@ void player_dead_respawn(actor_registry& actor_reg, singleton_registry& singleto
             BN_ASSERT(room);
             room->level_bgs().set_visible(false);
 
-            // Unfocus actor
-            auto* focused_actor = singleton_reg.try_get<cpn::focused_actor>(singleton_entity);
-            BN_ASSERT(focused_actor);
-            focused_actor->actor = gba::entity_null;
+            // Remove status mob
+            auto* actors_of_interest = singleton_reg.try_get<cpn::actors_of_interest>(singleton_entity);
+            BN_ASSERT(actors_of_interest);
+            actors_of_interest->status_mob = gba::entity_null;
 
             // Reserve change room with delay
             singleton_reg.emplace<cpn::room_change_states>(singleton_entity, save.room_entrance, true,

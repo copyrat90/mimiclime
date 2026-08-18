@@ -1,6 +1,6 @@
 #pragma once
 
-#include "gm/ecs/cpn/focused_actor.h"
+#include "gm/ecs/cpn/actors_of_interest.h"
 #include "gm/ecs/cpn/room.h"
 #include "gm/ecs/cpn/room_change_states.h"
 #include "gm/ecs/cpn/ui_states.h"
@@ -12,6 +12,6 @@ namespace mc::gm::ecs
 {
 
 using singleton_registry =
-    gba::ecs::registry<1, bn::camera_ptr, cpn::room, cpn::room_change_states, cpn::focused_actor, cpn::ui_states>;
+    gba::ecs::registry<1, bn::camera_ptr, cpn::room, cpn::room_change_states, cpn::actors_of_interest, cpn::ui_states>;
 
 }

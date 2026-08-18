@@ -11,6 +11,6 @@ class text_generators;
 namespace mc::gm::ecs::sys
 {
 
-void critter_ui_update(singleton_registry&, const gba::entity singleton_entity, actor_registry&, mc::ut::text_generators&);
+void ui_update(singleton_registry&, const gba::entity singleton_entity, actor_registry&, mc::ut::text_generators&, const ldtk::gen::lang);
 
 }

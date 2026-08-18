@@ -1,7 +1,5 @@
 #include "gm/ecs/sys/impl/critter_input_player.h"
 
-#include "gm/ecs/ut/find_critter.h"
-
 #include <bn_keypad.h>
 #include <bn_sprite_shape_size.h>
 
@@ -25,26 +23,26 @@ void critter_input_player(const gba::entity critter, actor_registry& actor_reg, 
     }
     else if (bn::keypad::b_held() && states.can_devour())
     {
-        const gba::entity nearby_dead_critter = ut::find_nearby_dead_critter(critter, actor_reg);
+        auto* actors_of_interest = singleton_reg.try_get<cpn::actors_of_interest>(singleton_entity);
+        BN_ASSERT(actors_of_interest);
 
-        if (nearby_dead_critter != gba::entity_null)
+        if (actor_reg.valid(actors_of_interest->nearby_devourable_mob))
         {
-            const auto* dead_critter_states = actor_reg.try_get<cpn::critter_states>(nearby_dead_critter);
-            BN_ASSERT(dead_critter_states);
+            const auto* devourable_mob_states =
+                actor_reg.try_get<cpn::critter_states>(actors_of_interest->nearby_devourable_mob);
+            BN_ASSERT(devourable_mob_states);
 
-            const auto* dead_critter_spr = actor_reg.try_get<bn::sprite_ptr>(nearby_dead_critter);
-            BN_ASSERT(dead_critter_spr);
-            const bn::fixed_point dead_critter_pos =
-                dead_critter_spr->top_left_position() + bn::fixed_point(dead_critter_spr->shape_size().width() / 2,
-                                                                        dead_critter_spr->shape_size().height() / 2);
-
-            auto* focused_actor = singleton_reg.try_get<cpn::focused_actor>(singleton_entity);
-            BN_ASSERT(focused_actor);
+            const auto* devourable_mob_spr =
+                actor_reg.try_get<bn::sprite_ptr>(actors_of_interest->nearby_devourable_mob);
+            BN_ASSERT(devourable_mob_spr);
+            const bn::fixed_point devourable_mob_pos = devourable_mob_spr->top_left_position() +
+                                                       bn::fixed_point(devourable_mob_spr->shape_size().width() / 2,
+                                                                       devourable_mob_spr->shape_size().height() / 2);
 
             static constexpr bn::fixed_point POS_DIFF(0, 1);
-            states.target_position = dead_critter_pos + POS_DIFF;
-            states.devour_critter = nearby_dead_critter;
-            focused_actor->actor = nearby_dead_critter;
+            states.target_position = devourable_mob_pos + POS_DIFF;
+            states.devour_critter = actors_of_interest->nearby_devourable_mob;
+            actors_of_interest->status_mob = actors_of_interest->nearby_devourable_mob;
             states.input_action = critter_action::WANT_TO_DEVOUR;
             states.input_velocity = bn::fixed_point(0, 0);
             states.input_direction = direction::NONE;
