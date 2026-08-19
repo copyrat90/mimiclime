@@ -4,7 +4,6 @@
 #include "gm/ecs/ut/find_critter.h"
 #include "gm/ingame_texts.h"
 #include "txt/critter_ui_texts.h"
-#include "ut/enum_utils.h"
 #include "ut/text_generators.h"
 
 #include <bn_colors.h>
@@ -66,9 +65,10 @@ void ui_update(singleton_registry& singleton_reg, const gba::entity singleton_en
         text_gen.set_alignment(PLAYER_STATUS_UI_TEXT_ALIGN);
         text_gen.set_bg_priority(UI_BG_PRIORITY);
         {
-            const auto species_name = mc::ut::enum_to_string(player_critter_states->species());
+            const auto& species_infos = cfg::species_infos::get(player_critter_states->species());
+            const auto species_name = species_infos.name(lang);
             const auto current_hp = static_cast<int>(player_critter_states->hp());
-            const auto max_hp = cfg::species_infos::get(player_critter_states->species()).hp();
+            const auto max_hp = species_infos.hp();
 
             auto str = bn::format<64>(txt::CRITTER_STATUS_UI_TEXT_FMT, species_name, current_hp, max_hp);
             text_gen.generate_top_left(PLAYER_STATUS_UI_TEXT_POS, str, ui_states->status_player_texts);
@@ -101,9 +101,10 @@ void ui_update(singleton_registry& singleton_reg, const gba::entity singleton_en
             text_gen.set_alignment(MOB_STATUS_UI_TEXT_ALIGN);
             text_gen.set_bg_priority(UI_BG_PRIORITY);
             {
-                const auto species_name = mc::ut::enum_to_string(critter_states->species());
+                const auto& species_infos = cfg::species_infos::get(critter_states->species());
+                const auto species_name = species_infos.name(lang);
                 const auto current_hp = static_cast<int>(critter_states->hp());
-                const auto max_hp = cfg::species_infos::get(critter_states->species()).hp();
+                const auto max_hp = species_infos.hp();
 
                 auto str = bn::format<64>(txt::CRITTER_STATUS_UI_TEXT_FMT, species_name, current_hp, max_hp);
                 text_gen.generate_top_left(MOB_STATUS_UI_TEXT_POS, str, ui_states->status_mob_texts);

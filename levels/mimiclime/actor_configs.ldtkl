@@ -69,6 +69,13 @@
 							"id": "V_String",
 							"params": ["slime"]
 						}] },
+						{ "__identifier": "names", "__type": "Array<String>", "__value": [ "Slime", "슬라임" ], "__tile": null, "defUid": 38, "realEditorValues": [ {
+							"id": "V_String",
+							"params": ["Slime"]
+						}, {
+							"id": "V_String",
+							"params": ["슬라임"]
+						} ] },
 						{ "__identifier": "hp", "__type": "Int", "__value": 4, "__tile": null, "defUid": 30, "realEditorValues": [{ "id": "V_Int", "params": [4] }] },
 						{ "__identifier": "speed", "__type": "Float", "__value": 1.5, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.5] }] }
 					],
@@ -92,6 +99,13 @@
 							"id": "V_String",
 							"params": ["lizard"]
 						}] },
+						{ "__identifier": "names", "__type": "Array<String>", "__value": [ "Lizard", "도마뱀" ], "__tile": null, "defUid": 38, "realEditorValues": [ {
+							"id": "V_String",
+							"params": ["Lizard"]
+						}, {
+							"id": "V_String",
+							"params": ["도마뱀"]
+						} ] },
 						{ "__identifier": "hp", "__type": "Int", "__value": 5, "__tile": null, "defUid": 30, "realEditorValues": [{ "id": "V_Int", "params": [5] }] },
 						{ "__identifier": "speed", "__type": "Float", "__value": 1, "__tile": null, "defUid": 29, "realEditorValues": [] }
 					],

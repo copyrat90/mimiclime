@@ -2,10 +2,13 @@
 
 #include "ldtk_entity.h"
 
+#include "ut/enum_utils.h"
+
 #include <bn_fixed.h>
 
 #include <cstdint>
 
+#include "ldtk_gen_enums.h"
 #include "ldtk_gen_idents.h"
 
 namespace ldtk::gen
@@ -39,6 +42,16 @@ public:
     {
         return _entity->get_field(ldtk::gen::entity_field_ident::ENTITY_species_configs_FIELD_species)
             .get<ldtk::gen::species_kind>();
+    }
+
+    constexpr auto name(ldtk::gen::lang lang) const -> bn::string_view
+    {
+        const auto lang_idx = static_cast<int>(lang);
+        BN_ASSERT(lang_idx < ut::size_of_enum<ldtk::gen::lang>(), "Invalid lang: ", lang_idx);
+
+        const auto names = _entity->get_field(ldtk::gen::entity_field_ident::ENTITY_species_configs_FIELD_names)
+                               .get<bn::span<const bn::string_view>>();
+        return names[lang_idx];
     }
 
     constexpr int hp() const
