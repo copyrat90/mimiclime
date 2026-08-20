@@ -11,7 +11,7 @@
 	"iid": "140c68a0-48b0-11f1-a411-f90e06ce3b1a",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 39,
+	"nextUid": 40,
 	"identifierStyle": "Lowercase",
 	"toc": [],
 	"worldLayout": "Free",
@@ -942,7 +942,8 @@
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
 		{ "identifier": "species_kind", "uid": 22, "values": [ { "id": "slime", "tileRect": null, "color": 12470831 }, { "id": "lizard", "tileRect": null, "color": 14120515 } ], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
 		{ "identifier": "breakable_kind", "uid": 33, "values": [{ "id": "wood_fence", "tileRect": null, "color": 12470831 }], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
-		{ "identifier": "ingame_text_kind", "uid": 37, "values": [ { "id": "tooltip_devour", "tileRect": null, "color": 12470831 }, { "id": "tooltip_save", "tileRect": null, "color": 14120515 } ], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] }
+		{ "identifier": "ingame_text_kind", "uid": 37, "values": [ { "id": "tooltip_devour", "tileRect": null, "color": 12470831 }, { "id": "tooltip_save", "tileRect": null, "color": 14120515 } ], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
+		{ "identifier": "game_flag", "uid": 39, "values": [ { "id": "lizard", "tileRect": null, "color": 12470831 }, { "id": "eel", "tileRect": null, "color": 14120515 } ], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] }
 	], "externalEnums": [], "levelFields": [] },
 	"levels": [
 		{
