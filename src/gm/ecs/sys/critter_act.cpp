@@ -47,6 +47,10 @@ static_assert(std::ranges::all_of(CRITTER_ACT_IMPL_FUNC_LUT,
 void critter_act(actor_registry& actor_reg)
 {
     actor_reg.view<cpn::critter_states>().each([&](const gba::entity critter, cpn::critter_states& states) {
+        // This function removes other critter, so it's possible to get invalid critter afterwards.
+        if (!actor_reg.valid(critter))
+            return;
+
         auto* velocity = actor_reg.try_get<cpn::velocity>(critter);
         BN_ASSERT(velocity);
 
