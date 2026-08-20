@@ -1,5 +1,6 @@
 #include "gm/ecs/sys/breakable_update.h"
 
+#include "gm/cfg/breakable_infos.h"
 #include "gm/cfg/sprite_animation_info.h"
 
 namespace mc::gm::ecs::sys
@@ -8,28 +9,36 @@ namespace mc::gm::ecs::sys
 void breakable_update(actor_registry& actor_reg)
 {
     actor_reg.view<cpn::breakable_states>().each([&](const gba::entity breakable, cpn::breakable_states& states) {
-        const auto* coll_evs = actor_reg.try_get<cpn::collision_events>(breakable);
-        BN_ASSERT(coll_evs);
-
         switch (states.state)
         {
             using state_t = cpn::breakable_states::state_t;
 
         case state_t::IDLE: {
-            auto vanish = [&] {
-                if (states.state != state_t::VANISH)
-                {
-                    states.state = state_t::VANISH;
-                    // TODO: Start vanish animation
-                }
-            };
-
-            for (const auto [entity, hurt] : coll_evs->collided_entities)
+            if (auto* coll_evs = actor_reg.try_get<cpn::collision_events>(breakable); coll_evs)
             {
-                if (actor_reg.all_of<cpn::projectile_states>(entity))
+                auto vanish = [&] {
+                    if (states.state != state_t::VANISH)
+                    {
+                        states.state = state_t::VANISH;
+
+                        actor_reg.remove_unchecked(*coll_evs);
+
+                        // TODO: Start vanish animation
+                    }
+                };
+
+                for (const auto [entity, hurt] : coll_evs->collided_entities)
                 {
-                    vanish();
-                    break;
+                    if (const auto* proj_states = actor_reg.try_get<cpn::projectile_states>(entity); proj_states)
+                    {
+                        const auto& breakable_infos = cfg::breakable_infos::get(states.kind);
+
+                        if (breakable_infos.broken_by(proj_states->kind))
+                        {
+                            vanish();
+                            break;
+                        }
+                    }
                 }
             }
         }
