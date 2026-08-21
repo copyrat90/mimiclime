@@ -1,7 +1,8 @@
 #include "gm/ecs/sys/ui_update.h"
 
+#include "gm/cfg/interactable_infos.h"
 #include "gm/cfg/species_infos.h"
-#include "gm/ecs/ut/find_critter.h"
+#include "gm/ecs/ut/find_entity.h"
 #include "gm/ingame_texts.h"
 #include "txt/critter_ui_texts.h"
 #include "ut/text_generators.h"
@@ -28,10 +29,10 @@ constexpr bn::fixed_point MOB_STATUS_UI_TEXT_POS(bn::display::width() / 2, bn::d
 constexpr bn::color MOB_STATUS_UI_TEXT_COLOR = bn::colors::red;
 constexpr auto MOB_STATUS_UI_TEXT_ALIGN = bn::sprite_text_generator::alignment_type::CENTER;
 
-constexpr auto DEVOUR_TOOLTIP_TEXT_FONT = mc::ut::text_generators::font::GALMURI_7;
-constexpr int DEVOUR_TOOLTIP_TEXT_BG_PRIORITY = UI_BG_PRIORITY + 1;
-constexpr bn::color DEVOUR_TOOLTIP_TEXT_COLOR = bn::colors::cyan;
-constexpr auto DEVOUR_TOOLTIP_TEXT_ALIGN = bn::sprite_text_generator::alignment_type::CENTER;
+constexpr auto INTERACTABLE_TOOLTIP_TEXT_FONT = mc::ut::text_generators::font::GALMURI_7;
+constexpr int INTERACTABLE_TOOLTIP_TEXT_BG_PRIORITY = UI_BG_PRIORITY + 1;
+constexpr bn::color INTERACTABLE_TOOLTIP_TEXT_COLOR = bn::colors::cyan;
+constexpr auto INTERACTABLE_TOOLTIP_TEXT_ALIGN = bn::sprite_text_generator::alignment_type::CENTER;
 
 } // namespace
 
@@ -44,7 +45,7 @@ void ui_update(singleton_registry& singleton_reg, const gba::entity singleton_en
     BN_ASSERT(actors_of_interest);
 
     const gba::entity status_mob = actors_of_interest->status_mob;
-    const gba::entity nearby_devourable_mob = actors_of_interest->nearby_devourable_mob;
+    const gba::entity nearby_interactable = actors_of_interest->nearby_interactable;
     const gba::entity player = ut::find_player_critter(actor_reg);
 
     // Player
@@ -125,61 +126,70 @@ void ui_update(singleton_registry& singleton_reg, const gba::entity singleton_en
         ui_states->last_status_mob_hp = 0;
     }
 
-    // Devour text on top of nearby devourable mob
-    if (actor_reg.valid(nearby_devourable_mob) && player_critter_states->can_devour())
+    // Tooltip text on top of nearby interactable
+    if (actor_reg.valid(nearby_interactable))
     {
-        const auto* mob_sprite = actor_reg.try_get<bn::sprite_ptr>(nearby_devourable_mob);
-        BN_ASSERT(mob_sprite);
-        const auto mob_position =
-            mob_sprite->top_left_position() +
-            bn::fixed_point(mob_sprite->shape_size().width() / 2, mob_sprite->shape_size().height() / 2);
+        const auto* interactable_sprite = actor_reg.try_get<bn::sprite_ptr>(nearby_interactable);
+        BN_ASSERT(interactable_sprite);
+        const auto interactable_position =
+            interactable_sprite->top_left_position() + bn::fixed_point(interactable_sprite->shape_size().width() / 2,
+                                                                       interactable_sprite->shape_size().height() / 2);
 
-        if (nearby_devourable_mob != ui_states->last_nearby_devourable_mob)
+        if (nearby_interactable != ui_states->last_nearby_interactable ||
+            ui_states->reserved_interactable_tooltip.has_value())
         {
-            ui_states->devour_tooltip_texts.clear();
+            const auto* interactable_states = actor_reg.try_get<cpn::interactable_states>(nearby_interactable);
+            BN_ASSERT(interactable_states);
+            const auto& interactable_infos = cfg::interactable_infos::get(interactable_states->kind);
+
+            ui_states->interactable_tooltip_texts.clear();
 
             const auto* camera = singleton_reg.try_get<bn::camera_ptr>(singleton_entity);
             BN_ASSERT(camera);
 
-            auto& text_gen = text_generators.get(DEVOUR_TOOLTIP_TEXT_FONT);
+            auto& text_gen = text_generators.get(INTERACTABLE_TOOLTIP_TEXT_FONT);
 
-            const auto prev_color = text_generators.text_color(DEVOUR_TOOLTIP_TEXT_FONT);
+            const auto prev_color = text_generators.text_color(INTERACTABLE_TOOLTIP_TEXT_FONT);
             const auto prev_align = text_gen.alignment();
             const auto prev_priority = text_gen.bg_priority();
             const auto prev_cam = text_gen.camera();
-            text_generators.set_text_color(DEVOUR_TOOLTIP_TEXT_FONT, DEVOUR_TOOLTIP_TEXT_COLOR);
-            text_gen.set_alignment(DEVOUR_TOOLTIP_TEXT_ALIGN);
-            text_gen.set_bg_priority(DEVOUR_TOOLTIP_TEXT_BG_PRIORITY);
+            text_generators.set_text_color(INTERACTABLE_TOOLTIP_TEXT_FONT, INTERACTABLE_TOOLTIP_TEXT_COLOR);
+            text_gen.set_alignment(INTERACTABLE_TOOLTIP_TEXT_ALIGN);
+            text_gen.set_bg_priority(INTERACTABLE_TOOLTIP_TEXT_BG_PRIORITY);
             text_gen.set_camera(*camera);
             {
-                text_gen.generate_top_left(mob_position,
-                                           get_ingame_text(ldtk::gen::ingame_text_kind::tooltip_devour, lang),
-                                           ui_states->devour_tooltip_texts);
+                const ldtk::gen::ingame_text_kind text =
+                    ui_states->reserved_interactable_tooltip.value_or(interactable_infos.text);
+
+                text_gen.generate_top_left(interactable_position, get_ingame_text(text, lang),
+                                           ui_states->interactable_tooltip_texts);
             }
             text_gen.set_camera(prev_cam);
             text_gen.set_bg_priority(prev_priority);
             text_gen.set_alignment(prev_align);
-            text_generators.set_text_color(DEVOUR_TOOLTIP_TEXT_FONT, prev_color);
+            text_generators.set_text_color(INTERACTABLE_TOOLTIP_TEXT_FONT, prev_color);
 
-            ui_states->last_nearby_devourable_mob = nearby_devourable_mob;
-            ui_states->last_nearby_devourable_mob_position = mob_position;
+            ui_states->last_nearby_interactable = nearby_interactable;
+            ui_states->last_nearby_interactable_position = interactable_position;
         }
-        // If devourable mob moved, the tooltip text should chase it, too.
-        else if (mob_position != ui_states->last_nearby_devourable_mob_position)
+        // If nearby interactable moved, the tooltip text should chase it, too.
+        else if (interactable_position != ui_states->last_nearby_interactable_position)
         {
-            const auto diff = mob_position - ui_states->last_nearby_devourable_mob_position;
-            for (auto& text_spr : ui_states->devour_tooltip_texts)
+            const auto diff = interactable_position - ui_states->last_nearby_interactable_position;
+            for (auto& text_spr : ui_states->interactable_tooltip_texts)
                 text_spr.set_position(text_spr.position() + diff);
 
-            ui_states->last_nearby_devourable_mob_position = mob_position;
+            ui_states->last_nearby_interactable_position = interactable_position;
         }
     }
     else
     {
-        ui_states->devour_tooltip_texts.clear();
+        ui_states->interactable_tooltip_texts.clear();
 
-        ui_states->last_nearby_devourable_mob = gba::entity_null;
+        ui_states->last_nearby_interactable = gba::entity_null;
     }
+
+    ui_states->reserved_interactable_tooltip.reset();
 }
 
 } // namespace mc::gm::ecs::sys

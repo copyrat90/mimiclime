@@ -8,11 +8,11 @@
 		"appVersion": "1.5.3",
 		"url": "https://ldtk.io"
 	},
-	"identifier": "room_3",
-	"iid": "e5f6f4f0-48b0-11f1-83b8-39e1954076dc",
-	"uid": 24,
+	"identifier": "room_4",
+	"iid": "3a9637b0-96d0-11f1-94e6-b5c50f4a4205",
+	"uid": 42,
 	"worldX": 272,
-	"worldY": 352,
+	"worldY": 512,
 	"worldDepth": 0,
 	"pxWid": 240,
 	"pxHei": 160,
@@ -39,8 +39,8 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": null,
 			"__tilesetRelPath": null,
-			"iid": "e5f6f4f1-48b0-11f1-83b8-391ac14a88cd",
-			"levelId": 24,
+			"iid": "3a965ec0-96d0-11f1-94e6-c5cde6a31562",
+			"levelId": 42,
 			"layerDefUid": 1,
 			"pxOffsetX": 0,
 			"pxOffsetY": 0,
@@ -48,29 +48,10 @@
 			"optionalRules": [],
 			"intGridCsv": [],
 			"autoLayerTiles": [],
-			"seed": 3197407,
+			"seed": 7078568,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
 			"entityInstances": [
-				{
-					"__identifier": "mob",
-					"__grid": [185,90],
-					"__pivot": [0.5,0.5],
-					"__tags": [],
-					"__tile": { "tilesetUid": 4, "x": 96, "y": 240, "w": 16, "h": 16 },
-					"__smartColor": "#E43B44",
-					"iid": "70ed2520-48b0-11f1-83b8-d13bf7da0eed",
-					"width": 16,
-					"height": 16,
-					"defUid": 20,
-					"px": [185,90],
-					"fieldInstances": [{ "__identifier": "species", "__type": "LocalEnum.species_kind", "__value": "lizard", "__tile": null, "defUid": 25, "realEditorValues": [{
-						"id": "V_String",
-						"params": ["lizard"]
-					}] }],
-					"__worldX": 457,
-					"__worldY": 442
-				},
 				{
 					"__identifier": "breakable",
 					"__grid": [104,152],
@@ -78,7 +59,7 @@
 					"__tags": [],
 					"__tile": { "tilesetUid": 4, "x": 240, "y": 384, "w": 16, "h": 16 },
 					"__smartColor": "#EAD4AA",
-					"iid": "8560d2d0-6fc0-11f1-be2a-0dc398d4dc76",
+					"iid": "82f12ab0-96d0-11f1-94e6-13ee0d9609a0",
 					"width": 16,
 					"height": 16,
 					"defUid": 34,
@@ -88,26 +69,7 @@
 						"params": ["wood_fence"]
 					}] }],
 					"__worldX": 376,
-					"__worldY": 504
-				},
-				{
-					"__identifier": "breakable",
-					"__grid": [136,152],
-					"__pivot": [0.5,0.5],
-					"__tags": [],
-					"__tile": { "tilesetUid": 4, "x": 240, "y": 384, "w": 16, "h": 16 },
-					"__smartColor": "#EAD4AA",
-					"iid": "9cc91a40-6fc0-11f1-be2a-9d430d502080",
-					"width": 16,
-					"height": 16,
-					"defUid": 34,
-					"px": [136,152],
-					"fieldInstances": [{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
-						"id": "V_String",
-						"params": ["wood_fence"]
-					}] }],
-					"__worldX": 408,
-					"__worldY": 504
+					"__worldY": 664
 				},
 				{
 					"__identifier": "breakable",
@@ -116,7 +78,7 @@
 					"__tags": [],
 					"__tile": { "tilesetUid": 4, "x": 240, "y": 384, "w": 16, "h": 16 },
 					"__smartColor": "#EAD4AA",
-					"iid": "a78c13b0-6fc0-11f1-be2a-e5f18af48daa",
+					"iid": "8b22a3d0-96d0-11f1-94e6-7b7a166844cc",
 					"width": 16,
 					"height": 16,
 					"defUid": 34,
@@ -126,7 +88,50 @@
 						"params": ["wood_fence"]
 					}] }],
 					"__worldX": 392,
-					"__worldY": 504
+					"__worldY": 664
+				},
+				{
+					"__identifier": "breakable",
+					"__grid": [136,152],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": { "tilesetUid": 4, "x": 240, "y": 384, "w": 16, "h": 16 },
+					"__smartColor": "#EAD4AA",
+					"iid": "8e981b80-96d0-11f1-94e6-f1457ce79cd3",
+					"width": 16,
+					"height": 16,
+					"defUid": 34,
+					"px": [136,152],
+					"fieldInstances": [{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["wood_fence"]
+					}] }],
+					"__worldX": 408,
+					"__worldY": 664
+				},
+				{
+					"__identifier": "save_point",
+					"__grid": [48,48],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": { "tilesetUid": 4, "x": 48, "y": 32, "w": 16, "h": 16 },
+					"__smartColor": "#124E89",
+					"iid": "be7efc60-96d0-11f1-94e6-f3e44aca1678",
+					"width": 16,
+					"height": 16,
+					"defUid": 40,
+					"px": [48,48],
+					"fieldInstances": [{ "__identifier": "spawn_point", "__type": "EntityRef", "__value": {
+						"entityIid": "ca6fc770-96d0-11f1-94e6-a18aa93a4b77",
+						"layerIid": "3a965ec1-96d0-11f1-94e6-b112107ef23f",
+						"levelIid": "3a9637b0-96d0-11f1-94e6-b5c50f4a4205",
+						"worldIid": "140c68a1-48b0-11f1-a411-f37bc73a2017"
+					}, "__tile": null, "defUid": 41, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["ca6fc770-96d0-11f1-94e6-a18aa93a4b77"]
+					}] }],
+					"__worldX": 320,
+					"__worldY": 560
 				}
 			]
 		},
@@ -141,8 +146,8 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": null,
 			"__tilesetRelPath": null,
-			"iid": "2b461421-48b0-11f1-9807-15d812678284",
-			"levelId": 24,
+			"iid": "3a965ec1-96d0-11f1-94e6-b112107ef23f",
+			"levelId": 42,
 			"layerDefUid": 32,
 			"pxOffsetX": 0,
 			"pxOffsetY": 0,
@@ -150,10 +155,26 @@
 			"optionalRules": [],
 			"intGridCsv": [],
 			"autoLayerTiles": [],
-			"seed": 1873770,
+			"seed": 533543,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
 			"entityInstances": [
+				{
+					"__identifier": "entrance",
+					"__grid": [48,68],
+					"__pivot": [0.5,0.5],
+					"__tags": ["entrance"],
+					"__tile": { "tilesetUid": 4, "x": 0, "y": 112, "w": 16, "h": 16 },
+					"__smartColor": "#B57A29",
+					"iid": "ca6fc770-96d0-11f1-94e6-a18aa93a4b77",
+					"width": 12,
+					"height": 12,
+					"defUid": 18,
+					"px": [48,68],
+					"fieldInstances": [],
+					"__worldX": 320,
+					"__worldY": 580
+				},
 				{
 					"__identifier": "entrance",
 					"__grid": [120,30],
@@ -161,30 +182,14 @@
 					"__tags": ["entrance"],
 					"__tile": { "tilesetUid": 4, "x": 0, "y": 112, "w": 16, "h": 16 },
 					"__smartColor": "#B57A29",
-					"iid": "fffb4400-48b0-11f1-83b8-5f7606bdc623",
+					"iid": "8fcb75f0-96d0-11f1-94e6-db5dd9465c15",
 					"width": 12,
 					"height": 12,
 					"defUid": 18,
 					"px": [120,30],
 					"fieldInstances": [],
 					"__worldX": 392,
-					"__worldY": 382
-				},
-				{
-					"__identifier": "entrance",
-					"__grid": [120,140],
-					"__pivot": [0.5,0.5],
-					"__tags": ["entrance"],
-					"__tile": { "tilesetUid": 4, "x": 0, "y": 112, "w": 16, "h": 16 },
-					"__smartColor": "#B57A29",
-					"iid": "8b499750-96d0-11f1-94e6-795f2d879a53",
-					"width": 12,
-					"height": 12,
-					"defUid": 18,
-					"px": [120,140],
-					"fieldInstances": [],
-					"__worldX": 392,
-					"__worldY": 492
+					"__worldY": 542
 				}
 			]
 		},
@@ -199,8 +204,8 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": null,
 			"__tilesetRelPath": null,
-			"iid": "0470a8f0-48b0-11f1-8e53-3b7c57867cc3",
-			"levelId": 24,
+			"iid": "3a965ec2-96d0-11f1-94e6-95edf51f0721",
+			"levelId": 42,
 			"layerDefUid": 31,
 			"pxOffsetX": 0,
 			"pxOffsetY": 0,
@@ -208,7 +213,7 @@
 			"optionalRules": [],
 			"intGridCsv": [],
 			"autoLayerTiles": [],
-			"seed": 7245613,
+			"seed": 1324928,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
 			"entityInstances": [
@@ -219,46 +224,22 @@
 					"__tags": ["exit"],
 					"__tile": null,
 					"__smartColor": "#6ABDD3",
-					"iid": "29020af0-48b0-11f1-83b8-51141d35974d",
+					"iid": "a833ef50-96d0-11f1-94e6-7f8f4f38458e",
 					"width": 48,
 					"height": 1,
 					"defUid": 19,
 					"px": [96,0],
 					"fieldInstances": [{ "__identifier": "destination", "__type": "EntityRef", "__value": {
-						"entityIid": "22a44060-48b0-11f1-83b8-050f37a812df",
-						"layerIid": "2b461420-48b0-11f1-9807-77aa0d83a79e",
-						"levelIid": "8226e4d0-48b0-11f1-83b8-d19e57531a62",
+						"entityIid": "8b499750-96d0-11f1-94e6-795f2d879a53",
+						"layerIid": "2b461421-48b0-11f1-9807-15d812678284",
+						"levelIid": "e5f6f4f0-48b0-11f1-83b8-39e1954076dc",
 						"worldIid": "140c68a1-48b0-11f1-a411-f37bc73a2017"
 					}, "__tile": null, "defUid": 21, "realEditorValues": [{
 						"id": "V_String",
-						"params": ["22a44060-48b0-11f1-83b8-050f37a812df"]
+						"params": ["8b499750-96d0-11f1-94e6-795f2d879a53"]
 					}] }],
 					"__worldX": 368,
-					"__worldY": 352
-				},
-				{
-					"__identifier": "exit",
-					"__grid": [96,158],
-					"__pivot": [0,0],
-					"__tags": ["exit"],
-					"__tile": null,
-					"__smartColor": "#6ABDD3",
-					"iid": "9c982210-96d0-11f1-94e6-55f4e79a5628",
-					"width": 48,
-					"height": 1,
-					"defUid": 19,
-					"px": [96,158],
-					"fieldInstances": [{ "__identifier": "destination", "__type": "EntityRef", "__value": {
-						"entityIid": "8fcb75f0-96d0-11f1-94e6-db5dd9465c15",
-						"layerIid": "3a965ec1-96d0-11f1-94e6-b112107ef23f",
-						"levelIid": "3a9637b0-96d0-11f1-94e6-b5c50f4a4205",
-						"worldIid": "140c68a1-48b0-11f1-a411-f37bc73a2017"
-					}, "__tile": null, "defUid": 21, "realEditorValues": [{
-						"id": "V_String",
-						"params": ["8fcb75f0-96d0-11f1-94e6-db5dd9465c15"]
-					}] }],
-					"__worldX": 368,
-					"__worldY": 510
+					"__worldY": 512
 				}
 			]
 		},
@@ -273,8 +254,8 @@
 			"__pxTotalOffsetY": 0,
 			"__tilesetDefUid": 14,
 			"__tilesetRelPath": "placeholder_tileset.png",
-			"iid": "e5f6f4f2-48b0-11f1-83b8-ed97e7056b6e",
-			"levelId": 24,
+			"iid": "3a965ec3-96d0-11f1-94e6-3babb3cbda5e",
+			"levelId": 42,
 			"layerDefUid": 15,
 			"pxOffsetX": 0,
 			"pxOffsetY": 0,
@@ -329,11 +310,11 @@
 				{ "px": [208,144], "src": [16,0], "f": 0, "t": 1, "d": [17,148], "a": 1 },
 				{ "px": [224,144], "src": [16,0], "f": 0, "t": 1, "d": [17,149], "a": 1 }
 			],
-			"seed": 7740736,
+			"seed": 7573100,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelIid": "8226e4d0-48b0-11f1-83b8-d19e57531a62", "dir": "n" }, { "levelIid": "3a9637b0-96d0-11f1-94e6-b5c50f4a4205", "dir": "s" } ]
+	"__neighbours": [{ "levelIid": "e5f6f4f0-48b0-11f1-83b8-39e1954076dc", "dir": "n" }]
 }

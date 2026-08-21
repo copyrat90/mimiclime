@@ -1,6 +1,6 @@
 #include "gm/ecs/sys/critter_take_damage.h"
 
-#include "gm/ecs/ut/find_critter.h"
+#include "gm/ecs/ut/find_entity.h"
 
 #include "bn_sprite_palette_items_pal_hurt.h"
 
@@ -67,9 +67,11 @@ void critter_take_damage(actor_registry& actor_reg, singleton_registry& singleto
                 states.knockback_countdown = KNOCKBACK_DURATION;
 
                 states.change_hp(-1);
-                ++states.invincible_shared_counter;
+                if (!states.alive() && !states.is_player())
+                    actor_reg.emplace<cpn::interactable_states>(critter, interactable_kind::devourable_mob);
 
                 // Hurt palette while knockback
+                ++states.invincible_shared_counter;
                 auto* critter_sprite = actor_reg.try_get<bn::sprite_ptr>(critter);
                 BN_ASSERT(critter_sprite);
                 critter_sprite->set_palette(bn::sprite_palette_items::pal_hurt);

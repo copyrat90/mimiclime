@@ -87,7 +87,12 @@ bool critter_states::can_attack() const
 bool critter_states::can_devour() const
 {
     return (this->executing_action == critter_action::NONE && this->devour_countdown == 0) ||
-           this->executing_action == critter_action::WANT_TO_DEVOUR;
+    this->executing_action == critter_action::WANT_TO_DEVOUR;
+}
+
+bool critter_states::can_interact() const
+{
+    return this->executing_action == critter_action::NONE;
 }
 
 critter_states::critter_states(bool is_player_, ldtk::gen::species_kind species_)

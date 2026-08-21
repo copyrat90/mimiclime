@@ -1,7 +1,7 @@
 #include "gm/ecs/sys/impl/critter_input_mob_lizard.h"
 
 #include "gm/cfg/species_infos.h"
-#include "gm/ecs/ut/find_critter.h"
+#include "gm/ecs/ut/find_entity.h"
 
 #include <bn_sprite_shape_size.h>
 
