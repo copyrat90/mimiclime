@@ -16,6 +16,8 @@ struct interactable_states final
 
     interactable_states(interactable_kind);
     interactable_states(interactable_kind, const cfg::room_entrance&);
+
+    ~interactable_states();
 };
 
 } // namespace mc::gm::ecs::cpn
