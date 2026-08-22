@@ -85,6 +85,7 @@ public:
     }
 
     void change_hp(int diff);
+    void set_hp_full();
 
     bool can_move() const;
     bool can_attack() const;

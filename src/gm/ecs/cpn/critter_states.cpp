@@ -74,6 +74,11 @@ void critter_states::change_hp(int diff)
     _hp = static_cast<decltype(_hp)>(std::max(0, _hp + diff));
 }
 
+void critter_states::set_hp_full()
+{
+    _hp = static_cast<decltype(_hp)>(cfg::species_infos::get(_species).hp());
+}
+
 bool critter_states::can_move() const
 {
     return this->executing_action == critter_action::NONE || this->executing_action == critter_action::ATTACK;
@@ -87,7 +92,7 @@ bool critter_states::can_attack() const
 bool critter_states::can_devour() const
 {
     return (this->executing_action == critter_action::NONE && this->devour_countdown == 0) ||
-    this->executing_action == critter_action::WANT_TO_DEVOUR;
+           this->executing_action == critter_action::WANT_TO_DEVOUR;
 }
 
 bool critter_states::can_interact() const
@@ -118,7 +123,7 @@ void critter_states::construct_substates(ldtk::gen::species_kind species_)
 
     _species = species_;
 
-    _hp = static_cast<decltype(_hp)>(cfg::species_infos::get(species_).hp());
+    set_hp_full();
 }
 
 void critter_states::destroy_substates()

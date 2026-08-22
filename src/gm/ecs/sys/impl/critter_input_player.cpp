@@ -58,6 +58,8 @@ void critter_input_player(const gba::entity critter, actor_registry& actor_reg, 
             case interactable_kind::save_point:
                 if (bn::keypad::b_pressed() && states.can_interact())
                 {
+                    states.set_hp_full();
+
                     auto* reserved_commands = singleton_reg.try_get<cpn::reserved_commands>(singleton_entity);
                     BN_ASSERT(reserved_commands);
 
