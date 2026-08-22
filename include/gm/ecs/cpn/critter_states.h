@@ -85,10 +85,12 @@ public:
     }
 
     void change_hp(int diff);
+    void set_hp_full();
 
     bool can_move() const;
     bool can_attack() const;
     bool can_devour() const;
+    bool can_interact() const;
 
 public:
     template <typename Substates>

@@ -5,7 +5,9 @@
 #include "ut/enum_utils.h"
 
 #include <algorithm>
+#include <functional>
 #include <memory>
+#include <meta>
 #include <utility>
 
 #include "gen/sprite_kind.h"
@@ -27,6 +29,31 @@ void construct_substates_at(impl::critter_substates_buffer* buffer, Args&&... ar
     std::construct_at(reinterpret_cast<Substates*>(buffer), std::forward<Args>(args)...);
 }
 
+// I don't think I would ever need to pass additional parameters, probably??
+using construct_substates_func_ptr = void (*)(impl::critter_substates_buffer* buffer);
+
+constexpr bn::array<construct_substates_func_ptr, ut::size_of_enum<ldtk::gen::species_kind>()>
+    CONSTRUCT_SUBSTATES_FUNC_LUT{
+        construct_substates_at<impl::critter_substates_slime>,
+        construct_substates_at<impl::critter_substates_lizard>,
+    };
+
+static_assert(std::ranges::all_of(CONSTRUCT_SUBSTATES_FUNC_LUT,
+                                  [](construct_substates_func_ptr func_ptr) { return func_ptr != nullptr; }),
+              "Missing substate construct function for some critters");
+
+// For `critter_states::destroy_substates()`, ugly because no easy way to select non-const variant
+constexpr bn::array<std::meta::info, ut::size_of_enum<ldtk::gen::species_kind>()> SUBSTATES_GETTER_FUNC_PTR_INFO_LUT{
+    std::meta::reflect_constant(static_cast<impl::critter_substates_slime& (critter_states::*)()>(
+        &critter_states::substates<impl::critter_substates_slime>)),
+    std::meta::reflect_constant(static_cast<impl::critter_substates_lizard& (critter_states::*)()>(
+        &critter_states::substates<impl::critter_substates_lizard>)),
+};
+
+static_assert(std::ranges::all_of(SUBSTATES_GETTER_FUNC_PTR_INFO_LUT,
+                                  [](std::meta::info info) { return info != std::meta::info{}; }),
+              "Missing substate getter function for some critters");
+
 } // namespace
 
 void critter_states::change_species(ldtk::gen::species_kind species_)
@@ -47,6 +74,11 @@ void critter_states::change_hp(int diff)
     _hp = static_cast<decltype(_hp)>(std::max(0, _hp + diff));
 }
 
+void critter_states::set_hp_full()
+{
+    _hp = static_cast<decltype(_hp)>(cfg::species_infos::get(_species).hp());
+}
+
 bool critter_states::can_move() const
 {
     return this->executing_action == critter_action::NONE || this->executing_action == critter_action::ATTACK;
@@ -61,6 +93,11 @@ bool critter_states::can_devour() const
 {
     return (this->executing_action == critter_action::NONE && this->devour_countdown == 0) ||
            this->executing_action == critter_action::WANT_TO_DEVOUR;
+}
+
+bool critter_states::can_interact() const
+{
+    return this->executing_action == critter_action::NONE;
 }
 
 critter_states::critter_states(bool is_player_, ldtk::gen::species_kind species_)
@@ -79,42 +116,36 @@ critter_states::~critter_states()
 
 void critter_states::construct_substates(ldtk::gen::species_kind species_)
 {
-    switch (_species)
-    {
-        using species_kind = ldtk::gen::species_kind;
+    const auto species_idx = static_cast<int>(species_);
+    BN_ASSERT(species_idx < ut::size_of_enum<ldtk::gen::species_kind>(), "Invalid species_kind: ", species_idx);
 
-    case species_kind::slime:
-        construct_substates_at<impl::critter_substates_slime>(&substates_buffer);
-        break;
-    case species_kind::lizard:
-        construct_substates_at<impl::critter_substates_lizard>(&substates_buffer);
-        break;
-
-    default:
-        BN_ERROR("Invalid species_kind: ", static_cast<int>(_species));
-    }
+    CONSTRUCT_SUBSTATES_FUNC_LUT[species_idx](&substates_buffer);
 
     _species = species_;
 
-    _hp = static_cast<decltype(_hp)>(cfg::species_infos::get(species_).hp());
+    set_hp_full();
 }
 
 void critter_states::destroy_substates()
 {
-    switch (_species)
+    const auto species_idx = static_cast<int>(_species);
+
+// GCC 16.1 warning bug: `substates_getter_fptr_info` shadows itself with template for expansion
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshadow"
+    template for (int substates_idx = 0;
+                  constexpr std::meta::info substates_getter_fptr_info : SUBSTATES_GETTER_FUNC_PTR_INFO_LUT)
     {
-        using species_kind = ldtk::gen::species_kind;
-
-    case species_kind::slime:
-        std::destroy_at(&substates<impl::critter_substates_slime>());
-        break;
-    case species_kind::lizard:
-        std::destroy_at(&substates<impl::critter_substates_lizard>());
-        break;
-
-    default:
-        BN_ERROR("Invalid species_kind: ", static_cast<int>(_species));
+        if (species_idx == substates_idx++)
+        {
+            auto& substates = std::invoke([:substates_getter_fptr_info:], *this);
+            std::destroy_at(&substates);
+            return;
+        }
     }
+#pragma GCC diagnostic pop
+
+    BN_ERROR("Invalid species_kind: ", species_idx);
 }
 
 } // namespace mc::gm::ecs::cpn

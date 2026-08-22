@@ -21,31 +21,55 @@ void critter_input_player(const gba::entity critter, actor_registry& actor_reg, 
     {
         states.input_action = critter_action::ATTACK;
     }
-    else if (bn::keypad::b_held() && states.can_devour())
+    else if (bn::keypad::b_held())
     {
         auto* actors_of_interest = singleton_reg.try_get<cpn::actors_of_interest>(singleton_entity);
         BN_ASSERT(actors_of_interest);
 
-        if (actor_reg.valid(actors_of_interest->nearby_devourable_mob))
+        if (actor_reg.valid(actors_of_interest->nearby_interactable))
         {
-            const auto* devourable_mob_states =
-                actor_reg.try_get<cpn::critter_states>(actors_of_interest->nearby_devourable_mob);
-            BN_ASSERT(devourable_mob_states);
+            const auto* interactable_states =
+                actor_reg.try_get<cpn::interactable_states>(actors_of_interest->nearby_interactable);
+            BN_ASSERT(interactable_states);
 
-            const auto* devourable_mob_spr =
-                actor_reg.try_get<bn::sprite_ptr>(actors_of_interest->nearby_devourable_mob);
-            BN_ASSERT(devourable_mob_spr);
-            const bn::fixed_point devourable_mob_pos = devourable_mob_spr->top_left_position() +
-                                                       bn::fixed_point(devourable_mob_spr->shape_size().width() / 2,
-                                                                       devourable_mob_spr->shape_size().height() / 2);
+            switch (interactable_states->kind)
+            {
+            case interactable_kind::devourable_mob:
+                if (states.can_devour())
+                {
+                    const auto* devourable_mob_spr =
+                        actor_reg.try_get<bn::sprite_ptr>(actors_of_interest->nearby_interactable);
+                    BN_ASSERT(devourable_mob_spr);
+                    const bn::fixed_point devourable_mob_pos =
+                        devourable_mob_spr->top_left_position() +
+                        bn::fixed_point(devourable_mob_spr->shape_size().width() / 2,
+                                        devourable_mob_spr->shape_size().height() / 2);
 
-            static constexpr bn::fixed_point POS_DIFF(0, 1);
-            states.target_position = devourable_mob_pos + POS_DIFF;
-            states.devour_critter = actors_of_interest->nearby_devourable_mob;
-            actors_of_interest->status_mob = actors_of_interest->nearby_devourable_mob;
-            states.input_action = critter_action::WANT_TO_DEVOUR;
-            states.input_velocity = bn::fixed_point(0, 0);
-            states.input_direction = direction::NONE;
+                    static constexpr bn::fixed_point POS_DIFF(0, 1);
+                    states.target_position = devourable_mob_pos + POS_DIFF;
+                    states.devour_critter = actors_of_interest->nearby_interactable;
+                    actors_of_interest->status_mob = actors_of_interest->nearby_interactable;
+                    states.input_action = critter_action::WANT_TO_DEVOUR;
+                    states.input_velocity = bn::fixed_point(0, 0);
+                    states.input_direction = direction::NONE;
+                }
+                break;
+
+            case interactable_kind::save_point:
+                if (bn::keypad::b_pressed() && states.can_interact())
+                {
+                    states.set_hp_full();
+
+                    auto* reserved_commands = singleton_reg.try_get<cpn::reserved_commands>(singleton_entity);
+                    BN_ASSERT(reserved_commands);
+
+                    reserved_commands->save_game = interactable_states->entrance;
+                }
+                break;
+
+            default:
+                BN_ERROR("Invalid interactable kind: ", static_cast<int>(interactable_states->kind));
+            }
         }
     }
 }

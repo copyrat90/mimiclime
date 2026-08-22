@@ -4,6 +4,7 @@
 #include "gm/ecs/cpn/camera_target.h"
 #include "gm/ecs/cpn/collision_events.h"
 #include "gm/ecs/cpn/critter_states.h"
+#include "gm/ecs/cpn/interactable_states.h"
 #include "gm/ecs/cpn/projectile_states.h"
 #include "gm/ecs/cpn/sprite_animation.h"
 #include "gm/ecs/cpn/sprite_flicker.h"
@@ -19,6 +20,6 @@ inline constexpr int MAX_ACTORS_COUNT = 64;
 
 using actor_registry = gba::ecs::registry<MAX_ACTORS_COUNT, bn::sprite_ptr, cpn::sprite_animation, cpn::sprite_flicker,
                                           cpn::velocity, cpn::camera_target, cpn::collision_events, cpn::critter_states,
-                                          cpn::projectile_states, cpn::breakable_states>;
+                                          cpn::projectile_states, cpn::breakable_states, cpn::interactable_states>;
 
 } // namespace mc::gm::ecs

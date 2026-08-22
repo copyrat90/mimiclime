@@ -105,19 +105,39 @@
 							"id": "V_String",
 							"params": ["라이선스"]
 						} ] },
-						{ "__identifier": "ingame_texts", "__type": "Array<String>", "__value": [ "Hold : Devour", " 홀드: 삼키기", " Save", " 저장" ], "__tile": null, "defUid": 36, "realEditorValues": [ {
-							"id": "V_String",
-							"params": ["Hold : Devour"]
-						}, {
-							"id": "V_String",
-							"params": [" 홀드: 삼키기"]
-						}, {
-							"id": "V_String",
-							"params": [" Save"]
-						}, {
-							"id": "V_String",
-							"params": [" 저장"]
-						} ] }
+						{ "__identifier": "ingame_texts", "__type": "Array<String>", "__value": [
+							"Hold : Devour",
+							" 홀드: 삼키기",
+							" Save",
+							" 저장",
+							"Save completed.",
+							"저장 완료."
+						], "__tile": null, "defUid": 36, "realEditorValues": [
+							{
+								"id": "V_String",
+								"params": ["Hold : Devour"]
+							},
+							{
+								"id": "V_String",
+								"params": [" 홀드: 삼키기"]
+							},
+							{
+								"id": "V_String",
+								"params": [" Save"]
+							},
+							{
+								"id": "V_String",
+								"params": [" 저장"]
+							},
+							{
+								"id": "V_String",
+								"params": ["Save completed."]
+							},
+							{
+								"id": "V_String",
+								"params": ["저장 완료."]
+							}
+						] }
 					],
 					"__worldX": 16,
 					"__worldY": 16

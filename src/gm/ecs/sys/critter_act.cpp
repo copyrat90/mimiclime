@@ -8,9 +8,13 @@
 #include "gm/lerp.h"
 #include "ut/enum_utils.h"
 
+#include <bn_array.h>
 #include <bn_sprite_builder.h>
 
 #include <type_traits>
+#include <algorithm>
+
+#include "ldtk_gen_enums.h"
 
 namespace mc::gm::ecs::sys
 {
@@ -26,11 +30,27 @@ constexpr decltype(cpn::critter_states::devour_countdown) DEVOUR_COOLDOWN = 60;
 
 constexpr decltype(cpn::sprite_flicker::toggle_ticks) FLICKER_TOGGLE_TICKS = 3;
 
+using critter_act_impl_func_ptr = void (*)(const gba::entity, actor_registry&);
+
+constexpr bn::array<critter_act_impl_func_ptr, ut::size_of_enum<ldtk::gen::species_kind>()> CRITTER_ACT_IMPL_FUNC_LUT{
+    impl::critter_act_slime,
+    impl::critter_act_lizard,
+};
+
+// Check if forgot to add critter act impl function in the LUT
+static_assert(std::ranges::all_of(CRITTER_ACT_IMPL_FUNC_LUT,
+                                  [](critter_act_impl_func_ptr func_ptr) { return func_ptr != nullptr; }),
+              "Missing act impl function for some critters");
+
 } // namespace
 
 void critter_act(actor_registry& actor_reg)
 {
     actor_reg.view<cpn::critter_states>().each([&](const gba::entity critter, cpn::critter_states& states) {
+        // This function removes other critter, so it's possible to get invalid critter afterwards.
+        if (!actor_reg.valid(critter))
+            return;
+
         auto* velocity = actor_reg.try_get<cpn::velocity>(critter);
         BN_ASSERT(velocity);
 
@@ -208,20 +228,11 @@ void critter_act(actor_registry& actor_reg)
                 INDIVIDUAL_CRITTER_ACTS:
                     // Call individual critter act functions.
                     // These would see the input states, and apply those to current states, possibly with modifications.
-                    switch (states.species())
-                    {
-                        using species_kind = ldtk::gen::species_kind;
+                    const auto species_idx = static_cast<int>(states.species());
+                    BN_ASSERT(species_idx < ut::size_of_enum<ldtk::gen::species_kind>(),
+                              "Invalid critter species: ", species_idx);
 
-                    case species_kind::slime:
-                        impl::critter_act_slime(critter, actor_reg);
-                        break;
-                    case species_kind::lizard:
-                        impl::critter_act_lizard(critter, actor_reg);
-                        break;
-
-                    default:
-                        BN_ERROR("Invalid species: ", static_cast<int>(states.species()));
-                    }
+                    CRITTER_ACT_IMPL_FUNC_LUT[species_idx](critter, actor_reg);
                 }
             }
         }

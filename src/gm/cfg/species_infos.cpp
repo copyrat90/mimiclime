@@ -1,7 +1,5 @@
 #include "gm/cfg/species_infos.h"
 
-#include "ut/enum_utils.h"
-
 #include <bn_array.h>
 
 #include <algorithm>
@@ -36,6 +34,10 @@ constexpr bn::array<species_infos, ut::size_of_enum<ldtk::gen::species_kind>()> 
 
         BN_ASSERT(!defined[(int)kind], "`species_configs` is duplicated");
         defined[(int)kind] = true;
+
+        const auto names = entity.get_field(ldtk::gen::entity_field_ident::ENTITY_species_configs_FIELD_names)
+                               .get<bn::span<const bn::string_view>>();
+        BN_ASSERT(names.size() == ut::size_of_enum<ldtk::gen::lang>(), "Missing name(s) for some language(s)");
 
         elem = species_infos(&entity);
     }

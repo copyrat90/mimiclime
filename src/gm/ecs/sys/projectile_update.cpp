@@ -9,9 +9,6 @@ void projectile_update(actor_registry& actor_reg)
 {
     actor_reg.view<cpn::projectile_states>().each(
         [&](const gba::entity projectile, cpn::projectile_states& proj_states) {
-            const auto* coll_evs = actor_reg.try_get<cpn::collision_events>(projectile);
-            BN_ASSERT(coll_evs);
-
             switch (proj_states.state)
             {
                 using state_t = cpn::projectile_states::state_t;
@@ -21,24 +18,31 @@ void projectile_update(actor_registry& actor_reg)
                     if (proj_states.state != state_t::VANISH)
                     {
                         proj_states.state = state_t::VANISH;
+
+                        if (auto* coll_evs = actor_reg.try_get<cpn::collision_events>(projectile); coll_evs)
+                            actor_reg.remove_unchecked(*coll_evs);
+
                         // TODO: Start vanish animation
                     }
                 };
 
-                bool hit_to_entity = false;
-                for (const auto [entity, hurt] : coll_evs->collided_entities)
+                if (const auto* coll_evs = actor_reg.try_get<cpn::collision_events>(projectile); coll_evs)
                 {
-                    if (actor_reg.any_of<cpn::critter_states, cpn::breakable_states>(entity))
+                    bool hit_to_entity = false;
+                    for (const auto [entity, hurt] : coll_evs->collided_entities)
                     {
-                        hit_to_entity = true;
+                        if (actor_reg.any_of<cpn::critter_states, cpn::breakable_states>(entity))
+                        {
+                            hit_to_entity = true;
+                            break;
+                        }
+                    }
+
+                    if (hit_to_entity || coll_evs->collided_wall)
+                    {
+                        vanish();
                         break;
                     }
-                }
-
-                if (hit_to_entity || coll_evs->collided_wall)
-                {
-                    vanish();
-                    break;
                 }
 
                 // Timeout

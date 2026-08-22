@@ -10,7 +10,8 @@ namespace mc::gm::ecs::sys
 namespace
 {
 
-bool blocking_entity_collide(const bn::top_left_fixed_rect& box, actor_registry& actor_reg)
+template <typename CollChecker>
+bool blocking_entity_collide(const bn::top_left_fixed_rect& box, actor_registry& actor_reg, CollChecker coll_checker)
 {
     bool collided = false;
 
@@ -40,7 +41,7 @@ bool blocking_entity_collide(const bn::top_left_fixed_rect& box, actor_registry&
                 const auto breakable_wallbox = rel_breakable_wallbox.absolute_rect(
                     breakable_pos, breakable_spr->horizontal_flip(), breakable_spr->vertical_flip());
 
-                if (box.intersects(breakable_wallbox))
+                if (coll_checker(box, breakable_wallbox))
                 {
                     collided = true;
                     break;
@@ -49,6 +50,34 @@ bool blocking_entity_collide(const bn::top_left_fixed_rect& box, actor_registry&
         });
 
     return collided;
+}
+
+bool blocking_entity_blocked_moving_right(const bn::top_left_fixed_rect& moving_box,
+                                          const bn::top_left_fixed_rect& blocking_box)
+{
+    return (blocking_box.left() < moving_box.right() && moving_box.right() < blocking_box.right()) &&
+           (blocking_box.top() < moving_box.bottom() && blocking_box.bottom() > moving_box.top());
+}
+
+bool blocking_entity_blocked_moving_left(const bn::top_left_fixed_rect& moving_box,
+                                         const bn::top_left_fixed_rect& blocking_box)
+{
+    return (blocking_box.left() < moving_box.left() && moving_box.left() < blocking_box.right()) &&
+           (blocking_box.top() < moving_box.bottom() && blocking_box.bottom() > moving_box.top());
+}
+
+bool blocking_entity_blocked_moving_down(const bn::top_left_fixed_rect& moving_box,
+                                         const bn::top_left_fixed_rect& blocking_box)
+{
+    return (blocking_box.top() < moving_box.bottom() && moving_box.bottom() < blocking_box.bottom()) &&
+           (blocking_box.left() < moving_box.right() && blocking_box.right() > moving_box.left());
+}
+
+bool blocking_entity_blocked_moving_up(const bn::top_left_fixed_rect& moving_box,
+                                       const bn::top_left_fixed_rect& blocking_box)
+{
+    return (blocking_box.top() < moving_box.top() && moving_box.top() < blocking_box.bottom()) &&
+           (blocking_box.left() < moving_box.right() && blocking_box.right() > moving_box.left());
 }
 
 void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& spr_frame_datas, cpn::velocity& velocity,
@@ -73,7 +102,8 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
         if (velocity.velocity.x() > 0)
         {
             if (room.collide_with_wall({box.right(), box.center_y()}) || room.collide_with_wall(box.top_right()) ||
-                room.collide_with_wall(box.bottom_right()))
+                room.collide_with_wall(box.bottom_right()) ||
+                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_right))
             {
                 revert_x = true;
                 break;
@@ -83,17 +113,12 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
         else if (velocity.velocity.x() < 0)
         {
             if (room.collide_with_wall({box.left(), box.center_y()}) || room.collide_with_wall(box.top_left()) ||
-                room.collide_with_wall(box.bottom_left()))
+                room.collide_with_wall(box.bottom_left()) ||
+                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_left))
             {
                 revert_x = true;
                 break;
             }
-        }
-
-        if (blocking_entity_collide(box, actor_reg))
-        {
-            revert_x = true;
-            break;
         }
     }
 
@@ -113,7 +138,8 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
         if (velocity.velocity.y() > 0)
         {
             if (room.collide_with_wall({box.center_x(), box.bottom()}) || room.collide_with_wall(box.bottom_left()) ||
-                room.collide_with_wall(box.bottom_right()))
+                room.collide_with_wall(box.bottom_right()) ||
+                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_down))
             {
                 revert_y = true;
                 break;
@@ -123,17 +149,12 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
         else if (velocity.velocity.y() < 0)
         {
             if (room.collide_with_wall({box.center_x(), box.top()}) || room.collide_with_wall(box.top_left()) ||
-                room.collide_with_wall(box.top_right()))
+                room.collide_with_wall(box.top_right()) ||
+                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_up))
             {
                 revert_y = true;
                 break;
             }
-        }
-
-        if (blocking_entity_collide(box, actor_reg))
-        {
-            revert_y = true;
-            break;
         }
     }
 
@@ -160,7 +181,8 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
         if (velocity.velocity.x() > 0)
         {
             if (room.collide_with_wall({box.right(), box.center_y()}) || room.collide_with_wall(box.top_right()) ||
-                room.collide_with_wall(box.bottom_right()))
+                room.collide_with_wall(box.bottom_right()) ||
+                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_right))
             {
                 collided = true;
                 break;
@@ -170,7 +192,8 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
         else if (velocity.velocity.x() < 0)
         {
             if (room.collide_with_wall({box.left(), box.center_y()}) || room.collide_with_wall(box.top_left()) ||
-                room.collide_with_wall(box.bottom_left()))
+                room.collide_with_wall(box.bottom_left()) ||
+                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_left))
             {
                 collided = true;
                 break;
@@ -181,7 +204,8 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
         if (velocity.velocity.y() > 0)
         {
             if (room.collide_with_wall({box.center_x(), box.bottom()}) || room.collide_with_wall(box.bottom_left()) ||
-                room.collide_with_wall(box.bottom_right()))
+                room.collide_with_wall(box.bottom_right()) ||
+                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_down))
             {
                 collided = true;
                 break;
@@ -191,17 +215,12 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
         else if (velocity.velocity.y() < 0)
         {
             if (room.collide_with_wall({box.center_x(), box.top()}) || room.collide_with_wall(box.top_left()) ||
-                room.collide_with_wall(box.top_right()))
+                room.collide_with_wall(box.top_right()) ||
+                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_up))
             {
                 collided = true;
                 break;
             }
-        }
-
-        if (blocking_entity_collide(box, actor_reg))
-        {
-            collided = true;
-            break;
         }
     }
 
