@@ -54,7 +54,7 @@
 			"entityInstances": [
 				{
 					"__identifier": "breakable",
-					"__grid": [104,152],
+					"__grid": [232,72],
 					"__pivot": [0.5,0.5],
 					"__tags": [],
 					"__tile": { "tilesetUid": 4, "x": 240, "y": 384, "w": 16, "h": 16 },
@@ -63,17 +63,17 @@
 					"width": 16,
 					"height": 16,
 					"defUid": 34,
-					"px": [104,152],
+					"px": [232,72],
 					"fieldInstances": [{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
 						"id": "V_String",
 						"params": ["wood_fence"]
 					}] }],
-					"__worldX": 376,
-					"__worldY": 664
+					"__worldX": 504,
+					"__worldY": 584
 				},
 				{
 					"__identifier": "breakable",
-					"__grid": [120,152],
+					"__grid": [232,88],
 					"__pivot": [0.5,0.5],
 					"__tags": [],
 					"__tile": { "tilesetUid": 4, "x": 240, "y": 384, "w": 16, "h": 16 },
@@ -82,17 +82,17 @@
 					"width": 16,
 					"height": 16,
 					"defUid": 34,
-					"px": [120,152],
+					"px": [232,88],
 					"fieldInstances": [{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
 						"id": "V_String",
 						"params": ["wood_fence"]
 					}] }],
-					"__worldX": 392,
-					"__worldY": 664
+					"__worldX": 504,
+					"__worldY": 600
 				},
 				{
 					"__identifier": "breakable",
-					"__grid": [136,152],
+					"__grid": [232,104],
 					"__pivot": [0.5,0.5],
 					"__tags": [],
 					"__tile": { "tilesetUid": 4, "x": 240, "y": 384, "w": 16, "h": 16 },
@@ -101,13 +101,13 @@
 					"width": 16,
 					"height": 16,
 					"defUid": 34,
-					"px": [136,152],
+					"px": [232,104],
 					"fieldInstances": [{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
 						"id": "V_String",
 						"params": ["wood_fence"]
 					}] }],
-					"__worldX": 408,
-					"__worldY": 664
+					"__worldX": 504,
+					"__worldY": 616
 				},
 				{
 					"__identifier": "save_point",
@@ -190,6 +190,22 @@
 					"fieldInstances": [],
 					"__worldX": 392,
 					"__worldY": 542
+				},
+				{
+					"__identifier": "entrance",
+					"__grid": [204,88],
+					"__pivot": [0.5,0.5],
+					"__tags": ["entrance"],
+					"__tile": { "tilesetUid": 4, "x": 0, "y": 112, "w": 16, "h": 16 },
+					"__smartColor": "#B57A29",
+					"iid": "ac08ca00-96d0-11f1-9039-439d7b69b044",
+					"width": 12,
+					"height": 12,
+					"defUid": 18,
+					"px": [204,88],
+					"fieldInstances": [],
+					"__worldX": 476,
+					"__worldY": 600
 				}
 			]
 		},
@@ -240,6 +256,30 @@
 					}] }],
 					"__worldX": 368,
 					"__worldY": 512
+				},
+				{
+					"__identifier": "exit",
+					"__grid": [239,64],
+					"__pivot": [0,0],
+					"__tags": ["exit"],
+					"__tile": null,
+					"__smartColor": "#6ABDD3",
+					"iid": "25c4e1d0-96d0-11f1-9039-cf6b66a4993d",
+					"width": 1,
+					"height": 48,
+					"defUid": 19,
+					"px": [239,64],
+					"fieldInstances": [{ "__identifier": "destination", "__type": "EntityRef", "__value": {
+						"entityIid": "fa00cfa0-96d0-11f1-9039-aff04c019831",
+						"layerIid": "a1c8e341-96d0-11f1-9039-657ec57ba4c2",
+						"levelIid": "a1c8bc30-96d0-11f1-9039-a37f6daccd63",
+						"worldIid": "140c68a1-48b0-11f1-a411-f37bc73a2017"
+					}, "__tile": null, "defUid": 21, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["fa00cfa0-96d0-11f1-9039-aff04c019831"]
+					}] }],
+					"__worldX": 511,
+					"__worldY": 576
 				}
 			]
 		},
@@ -264,7 +304,7 @@
 			"intGridCsv": [
 				1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,
-				0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+				0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,
 				1,0,0,0,1,1,1,1,1,1
 			],
@@ -288,11 +328,8 @@
 				{ "px": [0,48], "src": [16,0], "f": 0, "t": 1, "d": [17,45], "a": 1 },
 				{ "px": [224,48], "src": [16,0], "f": 0, "t": 1, "d": [17,59], "a": 1 },
 				{ "px": [0,64], "src": [16,0], "f": 0, "t": 1, "d": [17,60], "a": 1 },
-				{ "px": [224,64], "src": [16,0], "f": 0, "t": 1, "d": [17,74], "a": 1 },
 				{ "px": [0,80], "src": [16,0], "f": 0, "t": 1, "d": [17,75], "a": 1 },
-				{ "px": [224,80], "src": [16,0], "f": 0, "t": 1, "d": [17,89], "a": 1 },
 				{ "px": [0,96], "src": [16,0], "f": 0, "t": 1, "d": [17,90], "a": 1 },
-				{ "px": [224,96], "src": [16,0], "f": 0, "t": 1, "d": [17,104], "a": 1 },
 				{ "px": [0,112], "src": [16,0], "f": 0, "t": 1, "d": [17,105], "a": 1 },
 				{ "px": [224,112], "src": [16,0], "f": 0, "t": 1, "d": [17,119], "a": 1 },
 				{ "px": [0,128], "src": [16,0], "f": 0, "t": 1, "d": [17,120], "a": 1 },
@@ -316,5 +353,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [{ "levelIid": "e5f6f4f0-48b0-11f1-83b8-39e1954076dc", "dir": "n" }]
+	"__neighbours": [ { "levelIid": "e5f6f4f0-48b0-11f1-83b8-39e1954076dc", "dir": "n" }, { "levelIid": "a1c8bc30-96d0-11f1-9039-a37f6daccd63", "dir": "e" } ]
 }

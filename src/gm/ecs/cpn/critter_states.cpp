@@ -36,6 +36,8 @@ constexpr bn::array<construct_substates_func_ptr, ut::size_of_enum<ldtk::gen::sp
     CONSTRUCT_SUBSTATES_FUNC_LUT{
         construct_substates_at<impl::critter_substates_slime>,
         construct_substates_at<impl::critter_substates_lizard>,
+        construct_substates_at<impl::critter_substates_eel>,
+        construct_substates_at<impl::critter_substates_butterfly>,
     };
 
 static_assert(std::ranges::all_of(CONSTRUCT_SUBSTATES_FUNC_LUT,
@@ -48,6 +50,10 @@ constexpr bn::array<std::meta::info, ut::size_of_enum<ldtk::gen::species_kind>()
         &critter_states::substates<impl::critter_substates_slime>)),
     std::meta::reflect_constant(static_cast<impl::critter_substates_lizard& (critter_states::*)()>(
         &critter_states::substates<impl::critter_substates_lizard>)),
+    std::meta::reflect_constant(static_cast<impl::critter_substates_eel& (critter_states::*)()>(
+        &critter_states::substates<impl::critter_substates_eel>)),
+    std::meta::reflect_constant(static_cast<impl::critter_substates_butterfly& (critter_states::*)()>(
+        &critter_states::substates<impl::critter_substates_butterfly>)),
 };
 
 static_assert(std::ranges::all_of(SUBSTATES_GETTER_FUNC_PTR_INFO_LUT,

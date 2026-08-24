@@ -20,4 +20,7 @@ auto to_direction_9(const bn::fixed_point& vector) -> direction;
 auto to_direction_5(const bn::fixed_point& vector, direction hint) -> direction;
 auto to_direction_5(direction raw, direction hint) -> direction;
 
+auto get_cw(direction, int shift) -> direction;
+auto get_ccw(direction, int shift) -> direction;
+
 } // namespace mc::gm

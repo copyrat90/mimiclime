@@ -1,0 +1,184 @@
+{
+    "type": "sprite",
+    "height": 32,
+    "mcedit": {
+        "collisions": [
+            {
+                "wallboxes": [
+                    {
+                        "x": -13,
+                        "y": -2,
+                        "width": 26,
+                        "height": 6
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -12,
+                        "y": -1,
+                        "width": 24,
+                        "height": 4
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -13,
+                        "y": -2,
+                        "width": 26,
+                        "height": 6
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -12,
+                        "y": -1,
+                        "width": 24,
+                        "height": 4
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -13,
+                        "y": -2,
+                        "width": 26,
+                        "height": 6
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -12,
+                        "y": -1,
+                        "width": 24,
+                        "height": 4
+                    }
+                ],
+                "projectiles": [
+                    {
+                        "kind": "elecball",
+                        "x": 0,
+                        "y": -7,
+                        "direction": "UP",
+                        "speed": 2.0
+                    },
+                    {
+                        "kind": "elecball",
+                        "x": 0,
+                        "y": 9,
+                        "direction": "DOWN",
+                        "speed": 2.0
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -13,
+                        "y": -2,
+                        "width": 26,
+                        "height": 6
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -12,
+                        "y": -1,
+                        "width": 24,
+                        "height": 4
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -3,
+                        "y": -13,
+                        "width": 6,
+                        "height": 26
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -2,
+                        "y": -12,
+                        "width": 4,
+                        "height": 24
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -3,
+                        "y": -13,
+                        "width": 6,
+                        "height": 26
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -2,
+                        "y": -12,
+                        "width": 4,
+                        "height": 24
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -3,
+                        "y": -13,
+                        "width": 6,
+                        "height": 26
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -2,
+                        "y": -12,
+                        "width": 4,
+                        "height": 24
+                    }
+                ],
+                "projectiles": [
+                    {
+                        "kind": "elecball",
+                        "x": 8,
+                        "y": 0,
+                        "direction": "RIGHT",
+                        "speed": 2.0
+                    },
+                    {
+                        "kind": "elecball",
+                        "x": -8,
+                        "y": 0,
+                        "direction": "LEFT",
+                        "speed": 2.0
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -3,
+                        "y": -13,
+                        "width": 6,
+                        "height": 26
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -2,
+                        "y": -12,
+                        "width": 4,
+                        "height": 24
+                    }
+                ]
+            }
+        ]
+    }
+}

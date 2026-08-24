@@ -107,9 +107,69 @@
 							"params": ["도마뱀"]
 						} ] },
 						{ "__identifier": "hp", "__type": "Int", "__value": 5, "__tile": null, "defUid": 30, "realEditorValues": [{ "id": "V_Int", "params": [5] }] },
-						{ "__identifier": "speed", "__type": "Float", "__value": 1, "__tile": null, "defUid": 29, "realEditorValues": [] }
+						{ "__identifier": "speed", "__type": "Float", "__value": 1.25, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.25] }] }
 					],
 					"__worldX": 288,
+					"__worldY": 16
+				},
+				{
+					"__identifier": "species_configs",
+					"__grid": [80,16],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": { "tilesetUid": 4, "x": 96, "y": 240, "w": 16, "h": 16 },
+					"__smartColor": "#808080",
+					"iid": "c3a48950-96d0-11f1-9a15-130344b2dd8c",
+					"width": 16,
+					"height": 16,
+					"defUid": 27,
+					"px": [80,16],
+					"fieldInstances": [
+						{ "__identifier": "species", "__type": "LocalEnum.species_kind", "__value": "eel", "__tile": null, "defUid": 28, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["eel"]
+						}] },
+						{ "__identifier": "names", "__type": "Array<String>", "__value": [ "Eel", "장어" ], "__tile": null, "defUid": 38, "realEditorValues": [ {
+							"id": "V_String",
+							"params": ["Eel"]
+						}, {
+							"id": "V_String",
+							"params": ["장어"]
+						} ] },
+						{ "__identifier": "hp", "__type": "Int", "__value": 5, "__tile": null, "defUid": 30, "realEditorValues": [{ "id": "V_Int", "params": [5] }] },
+						{ "__identifier": "speed", "__type": "Float", "__value": 1.5, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.5] }] }
+					],
+					"__worldX": 320,
+					"__worldY": 16
+				},
+				{
+					"__identifier": "species_configs",
+					"__grid": [112,16],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": { "tilesetUid": 4, "x": 96, "y": 240, "w": 16, "h": 16 },
+					"__smartColor": "#808080",
+					"iid": "2ba15cc0-96d0-11f1-8262-5d13ffa2dedb",
+					"width": 16,
+					"height": 16,
+					"defUid": 27,
+					"px": [112,16],
+					"fieldInstances": [
+						{ "__identifier": "species", "__type": "LocalEnum.species_kind", "__value": "butterfly", "__tile": null, "defUid": 28, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["butterfly"]
+						}] },
+						{ "__identifier": "names", "__type": "Array<String>", "__value": [ "Butterfly", "나비" ], "__tile": null, "defUid": 38, "realEditorValues": [ {
+							"id": "V_String",
+							"params": ["Butterfly"]
+						}, {
+							"id": "V_String",
+							"params": ["나비"]
+						} ] },
+						{ "__identifier": "hp", "__type": "Int", "__value": 2, "__tile": null, "defUid": 30, "realEditorValues": [{ "id": "V_Int", "params": [2] }] },
+						{ "__identifier": "speed", "__type": "Float", "__value": 1.75, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.75] }] }
+					],
+					"__worldX": 352,
 					"__worldY": 16
 				}
 			]

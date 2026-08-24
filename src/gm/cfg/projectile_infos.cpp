@@ -15,6 +15,10 @@ constexpr bn::array<projectile_infos, ut::size_of_enum<projectile_kind>()> INFOS
         .kind = projectile_kind::fireball,
         .timeout = 180,
     },
+    projectile_infos{
+        .kind = projectile_kind::elecball,
+        .timeout = 120,
+    },
 };
 
 static_assert(

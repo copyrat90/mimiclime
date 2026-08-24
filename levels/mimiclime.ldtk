@@ -11,7 +11,7 @@
 	"iid": "140c68a0-48b0-11f1-a411-f90e06ce3b1a",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 43,
+	"nextUid": 44,
 	"identifierStyle": "Lowercase",
 	"toc": [],
 	"worldLayout": "Free",
@@ -1013,7 +1013,12 @@
 			{ "id": "licenses", "tileRect": null, "color": 14120515 },
 			{ "id": "back", "tileRect": null, "color": 15389866 }
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
-		{ "identifier": "species_kind", "uid": 22, "values": [ { "id": "slime", "tileRect": null, "color": 12470831 }, { "id": "lizard", "tileRect": null, "color": 14120515 } ], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
+		{ "identifier": "species_kind", "uid": 22, "values": [
+			{ "id": "slime", "tileRect": null, "color": 12470831 },
+			{ "id": "lizard", "tileRect": null, "color": 14120515 },
+			{ "id": "eel", "tileRect": null, "color": 15389866 },
+			{ "id": "butterfly", "tileRect": null, "color": 14984818 }
+		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
 		{ "identifier": "breakable_kind", "uid": 33, "values": [{ "id": "wood_fence", "tileRect": null, "color": 12470831 }], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
 		{ "identifier": "ingame_text_kind", "uid": 37, "values": [
 			{ "id": "tooltip_devour", "tileRect": null, "color": 12470831 },
@@ -1113,7 +1118,7 @@
 			"externalRelPath": "mimiclime/room_3.ldtkl",
 			"fieldInstances": [],
 			"layerInstances": null,
-			"__neighbours": [ { "levelIid": "8226e4d0-48b0-11f1-83b8-d19e57531a62", "dir": "n" }, { "levelIid": "3a9637b0-96d0-11f1-94e6-b5c50f4a4205", "dir": "s" } ]
+			"__neighbours": [ { "levelIid": "8226e4d0-48b0-11f1-83b8-d19e57531a62", "dir": "n" }, { "levelIid": "3a9637b0-96d0-11f1-94e6-b5c50f4a4205", "dir": "s" }, { "levelIid": "a1c8bc30-96d0-11f1-9039-a37f6daccd63", "dir": "se" } ]
 		},
 		{
 			"identifier": "room_4",
@@ -1136,7 +1141,30 @@
 			"externalRelPath": "mimiclime/room_4.ldtkl",
 			"fieldInstances": [],
 			"layerInstances": null,
-			"__neighbours": [{ "levelIid": "e5f6f4f0-48b0-11f1-83b8-39e1954076dc", "dir": "n" }]
+			"__neighbours": [ { "levelIid": "e5f6f4f0-48b0-11f1-83b8-39e1954076dc", "dir": "n" }, { "levelIid": "a1c8bc30-96d0-11f1-9039-a37f6daccd63", "dir": "e" } ]
+		},
+		{
+			"identifier": "room_5",
+			"iid": "a1c8bc30-96d0-11f1-9039-a37f6daccd63",
+			"uid": 43,
+			"worldX": 512,
+			"worldY": 512,
+			"worldDepth": 0,
+			"pxWid": 352,
+			"pxHei": 240,
+			"__bgColor": "#000000",
+			"bgColor": null,
+			"useAutoIdentifier": true,
+			"bgRelPath": null,
+			"bgPos": null,
+			"bgPivotX": 0.5,
+			"bgPivotY": 0.5,
+			"__smartColor": "#737373",
+			"__bgPos": null,
+			"externalRelPath": "mimiclime/room_5.ldtkl",
+			"fieldInstances": [],
+			"layerInstances": null,
+			"__neighbours": [ { "levelIid": "e5f6f4f0-48b0-11f1-83b8-39e1954076dc", "dir": "nw" }, { "levelIid": "3a9637b0-96d0-11f1-94e6-b5c50f4a4205", "dir": "w" } ]
 		}
 	],
 	"worlds": [],

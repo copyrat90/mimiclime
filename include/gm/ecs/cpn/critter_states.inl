@@ -20,6 +20,8 @@ namespace details
 inline constexpr bn::array<bn::type_id_t, ut::size_of_enum<ldtk::gen::species_kind>()> CRIT_SUBST_TYPE_IDS = {
     bn::type_id<impl::critter_substates_slime>(),
     bn::type_id<impl::critter_substates_lizard>(),
+    bn::type_id<impl::critter_substates_eel>(),
+    bn::type_id<impl::critter_substates_butterfly>(),
 };
 
 static_assert(std::ranges::all_of(CRIT_SUBST_TYPE_IDS,

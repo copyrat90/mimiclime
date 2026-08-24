@@ -1,0 +1,124 @@
+{
+    "type": "sprite",
+    "height": 16,
+    "mcedit": {
+        "collisions": [
+            {
+                "wallboxes": [
+                    {
+                        "x": -5,
+                        "y": -3,
+                        "width": 10,
+                        "height": 7
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -4,
+                        "y": -3,
+                        "width": 8,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -5,
+                        "y": -3,
+                        "width": 10,
+                        "height": 7
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -4,
+                        "y": -3,
+                        "width": 8,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -5,
+                        "y": -3,
+                        "width": 10,
+                        "height": 7
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -4,
+                        "y": -3,
+                        "width": 8,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -5,
+                        "y": -3,
+                        "width": 10,
+                        "height": 7
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -4,
+                        "y": -3,
+                        "width": 8,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -5,
+                        "y": -3,
+                        "width": 10,
+                        "height": 7
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -4,
+                        "y": -3,
+                        "width": 8,
+                        "height": 6
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -5,
+                        "y": -3,
+                        "width": 10,
+                        "height": 7
+                    }
+                ],
+                "hurtboxes": [
+                    {
+                        "x": -4,
+                        "y": -3,
+                        "width": 8,
+                        "height": 6
+                    }
+                ],
+                "hitboxes": [
+                    {
+                        "x": -3,
+                        "y": -4,
+                        "width": 6,
+                        "height": 11
+                    }
+                ]
+            }
+        ]
+    }
+}
