@@ -13,6 +13,7 @@
 #include "gm/ecs/sys/critter_take_damage.h"
 #include "gm/ecs/sys/hitbox_to_hurtbox_collision_detect.h"
 #include "gm/ecs/sys/nearby_interactable_update.h"
+#include "gm/ecs/sys/openable_update.h"
 #include "gm/ecs/sys/player_dead_respawn.h"
 #include "gm/ecs/sys/projectile_generate.h"
 #include "gm/ecs/sys/projectile_update.h"
@@ -23,6 +24,7 @@
 #include "gm/ecs/sys/sprite_flicker_update.h"
 #include "gm/ecs/sys/sprites_y_sort.h"
 #include "gm/ecs/sys/terrain_collide.h"
+#include "gm/ecs/sys/triggerable_update.h"
 #include "gm/ecs/sys/ui_update.h"
 #include "gm/ecs/sys/velocity_movement.h"
 #include "gm/ecs/ut/critter_factories.h"
@@ -78,6 +80,8 @@ bool game::update()
     gm::ecs::sys::terrain_collide(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::projectile_update(_actor_registry);
     gm::ecs::sys::breakable_update(_actor_registry);
+    gm::ecs::sys::triggerable_update(_actor_registry, ctx.game_save());
+    gm::ecs::sys::openable_update(_actor_registry, ctx.game_save());
     gm::ecs::sys::camera_target_update(_actor_registry);
     gm::ecs::sys::camera_update(_singleton_registry, _singleton_entity, _actor_registry);
     gm::ecs::sys::sprites_y_sort(_actor_registry);

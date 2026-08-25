@@ -10,26 +10,28 @@ namespace mc::gm::ecs::cpn
 {
 
 sprite_animation::sprite_animation(bn::sprite_ptr& sprite, cfg::gen::sprite_kind sprite_kind_,
-                                   const cfg::sprite_animation_info& info_)
-    : sprite_kind(sprite_kind_)
+                                   const cfg::sprite_animation_info& info_, bool done_, bool paused_)
+    : sprite_kind(sprite_kind_), paused(paused_)
 {
-    reset(sprite, sprite_kind_, info_);
+    reset(sprite, sprite_kind_, info_, done_);
 }
 
 void sprite_animation::reset(bn::sprite_ptr& sprite, cfg::gen::sprite_kind sprite_kind_,
-                             const cfg::sprite_animation_info& info_)
+                             const cfg::sprite_animation_info& info_, bool done_)
 {
     const auto& sprite_item = cfg::sprite_datas::get(sprite_kind_).sprite_item();
 
+    const auto graphics_index = done_ ? info_.graphics_indexes.back() : info_.graphics_indexes.front();
+
     if (sprite_kind_ == this->sprite_kind)
     {
-        sprite.set_tiles(sprite_item.tiles_item(), info_.graphics_indexes[0]);
+        sprite.set_tiles(sprite_item.tiles_item(), graphics_index);
         sprite.set_horizontal_flip(info_.horizontal_flip);
         sprite.set_vertical_flip(info_.vertical_flip);
     }
     else
     {
-        sprite = bn::sprite_builder(sprite_item, info_.graphics_indexes[0])
+        sprite = bn::sprite_builder(sprite_item, graphics_index)
                      .set_camera(sprite.camera())
                      .set_position(sprite.position())
                      .set_blending_enabled(true)
@@ -41,7 +43,7 @@ void sprite_animation::reset(bn::sprite_ptr& sprite, cfg::gen::sprite_kind sprit
     this->info = &info_;
     this->sprite_kind = sprite_kind_;
     this->current_wait_updates = info_.wait_updates;
-    this->current_graphics_indexes_index = 0;
+    this->current_graphics_indexes_index = done_ ? info_.graphics_indexes.size() - 1 : 0;
 }
 
 bool sprite_animation::done() const

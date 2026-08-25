@@ -132,6 +132,56 @@
 					}] }],
 					"__worldX": 320,
 					"__worldY": 560
+				},
+				{
+					"__identifier": "triggerable",
+					"__grid": [35,125],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": { "tilesetUid": 4, "x": 400, "y": 16, "w": 16, "h": 16 },
+					"__smartColor": "#A527E1",
+					"iid": "e2b85a90-96d0-11f1-8e8a-ad00fbf8697f",
+					"width": 16,
+					"height": 16,
+					"defUid": 44,
+					"px": [35,125],
+					"fieldInstances": [
+						{ "__identifier": "kind", "__type": "LocalEnum.triggerable_kind", "__value": "elec_switch", "__tile": null, "defUid": 46, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["elec_switch"]
+						}] },
+						{ "__identifier": "triggered", "__type": "LocalEnum.game_flag", "__value": "room_4_south_gate", "__tile": null, "defUid": 47, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["room_4_south_gate"]
+						}] }
+					],
+					"__worldX": 307,
+					"__worldY": 637
+				},
+				{
+					"__identifier": "openable",
+					"__grid": [112,152],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": { "tilesetUid": 4, "x": 384, "y": 128, "w": 16, "h": 16 },
+					"__smartColor": "#E4A672",
+					"iid": "910ccd60-96d0-11f1-8e8a-bdbd7f33167c",
+					"width": 32,
+					"height": 16,
+					"defUid": 48,
+					"px": [112,152],
+					"fieldInstances": [
+						{ "__identifier": "kind", "__type": "LocalEnum.openable_kind", "__value": "elec_gate", "__tile": null, "defUid": 51, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["elec_gate"]
+						}] },
+						{ "__identifier": "opened", "__type": "LocalEnum.game_flag", "__value": "room_4_south_gate", "__tile": null, "defUid": 49, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["room_4_south_gate"]
+						}] }
+					],
+					"__worldX": 384,
+					"__worldY": 664
 				}
 			]
 		},
@@ -306,7 +356,7 @@
 				0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,
-				1,0,0,0,1,1,1,1,1,1
+				1,0,0,1,1,1,1,1,1,1
 			],
 			"autoLayerTiles": [
 				{ "px": [0,0], "src": [16,0], "f": 0, "t": 1, "d": [17,0], "a": 1 },
@@ -340,6 +390,7 @@
 				{ "px": [48,144], "src": [16,0], "f": 0, "t": 1, "d": [17,138], "a": 1 },
 				{ "px": [64,144], "src": [16,0], "f": 0, "t": 1, "d": [17,139], "a": 1 },
 				{ "px": [80,144], "src": [16,0], "f": 0, "t": 1, "d": [17,140], "a": 1 },
+				{ "px": [128,144], "src": [16,0], "f": 0, "t": 1, "d": [17,143], "a": 1 },
 				{ "px": [144,144], "src": [16,0], "f": 0, "t": 1, "d": [17,144], "a": 1 },
 				{ "px": [160,144], "src": [16,0], "f": 0, "t": 1, "d": [17,145], "a": 1 },
 				{ "px": [176,144], "src": [16,0], "f": 0, "t": 1, "d": [17,146], "a": 1 },

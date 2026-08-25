@@ -73,7 +73,7 @@ def write_sprite_datas_sources(
 
                 # collision boxes
                 def write_boxes(boxes_identifier: str):
-                    if boxes_identifier in colls and len(colls[boxes_identifier]) > 0:
+                    if colls is not None and boxes_identifier in colls and len(colls[boxes_identifier]) > 0:
                         header.write(
                             f"inline constexpr bn::array<box_data, {len(colls[boxes_identifier])}> {name}_frame_{frame}_{boxes_identifier} {{\n"
                         )
@@ -95,7 +95,7 @@ def write_sprite_datas_sources(
                 write_boxes("hitboxes")
 
                 # projectiles
-                if "projectiles" in colls and len(colls["projectiles"]) > 0:
+                if colls is not None and "projectiles" in colls and len(colls["projectiles"]) > 0:
                     header.write(
                         f"inline constexpr bn::array<projectile_data, {len(colls["projectiles"])}> {name}_frame_{frame}_projectiles {{\n"
                     )
