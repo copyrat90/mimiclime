@@ -7,9 +7,9 @@
                 "wallboxes": [
                     {
                         "x": -7,
-                        "y": 0,
+                        "y": -4,
                         "width": 15,
-                        "height": 7
+                        "height": 11
                     }
                 ],
                 "hurtboxes": [
