@@ -10,6 +10,9 @@ void sprite_animation_update(actor_registry& actor_reg)
 {
     actor_reg.view<cpn::sprite_animation, bn::sprite_ptr>().each(
         [&](cpn::sprite_animation& spr_anim, bn::sprite_ptr& spr) {
+            if (spr_anim.paused)
+                return;
+
             if (spr_anim.current_wait_updates != 0)
                 --spr_anim.current_wait_updates;
             else

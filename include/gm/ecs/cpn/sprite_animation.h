@@ -26,9 +26,11 @@ struct sprite_animation final
     std::uint16_t current_wait_updates;
     std::uint16_t current_graphics_indexes_index;
 
-    sprite_animation(bn::sprite_ptr&, cfg::gen::sprite_kind, const cfg::sprite_animation_info&);
+    bool paused;
 
-    void reset(bn::sprite_ptr&, cfg::gen::sprite_kind, const cfg::sprite_animation_info&);
+    sprite_animation(bn::sprite_ptr&, cfg::gen::sprite_kind, const cfg::sprite_animation_info&, bool done_ = false, bool paused_ = false);
+
+    void reset(bn::sprite_ptr&, cfg::gen::sprite_kind, const cfg::sprite_animation_info&, bool done_ = false);
 
     bool done() const;
 

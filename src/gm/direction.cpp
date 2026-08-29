@@ -8,6 +8,17 @@
 namespace mc::gm
 {
 
+namespace
+{
+
+// Copied from https://stackoverflow.com/a/38999752/12875525
+[[nodiscard]] constexpr int py_mod(int a, int b)
+{
+    return ((a % b) + b) % b;
+}
+
+} // namespace
+
 auto get_direction_from_held_keypad() -> direction
 {
     const int x = (!bn::keypad::left_held() && !bn::keypad::right_held()) ? 0
@@ -274,6 +285,22 @@ auto to_direction_5(direction raw, const direction hint) -> direction
     }
 
     return result;
+}
+
+auto get_cw(direction dir, int shift) -> direction
+{
+    if (dir == direction::NONE)
+        return direction::NONE;
+
+    return static_cast<direction>(py_mod(static_cast<int>(dir) + shift, 8));
+}
+
+auto get_ccw(direction dir, int shift) -> direction
+{
+    if (dir == direction::NONE)
+        return direction::NONE;
+
+    return static_cast<direction>(py_mod(static_cast<int>(dir) - shift, 8));
 }
 
 } // namespace mc::gm

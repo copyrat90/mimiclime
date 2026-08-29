@@ -4,6 +4,8 @@
 #include "gm/ecs/ut/breakable_factories.h"
 #include "gm/ecs/ut/critter_factories.h"
 #include "gm/ecs/ut/interactable_factories.h"
+#include "gm/ecs/ut/openable_factories.h"
+#include "gm/ecs/ut/triggerable_factories.h"
 #include "gm/game_save.h"
 
 #include "ibn_transitions.h"
@@ -139,6 +141,31 @@ void room_change(singleton_registry& singleton_reg, const gba::entity singleton_
                                 .get<ldtk::entity_ref>());
 
                         ut::create_save_point(entity.px(), entrance, actor_reg, singleton_reg, singleton_entity);
+                    }
+                    break;
+
+                    case entity_ident::triggerable: {
+                        const ldtk::gen::triggerable_kind kind =
+                            entity.get_field(ldtk::gen::entity_field_ident::ENTITY_triggerable_FIELD_kind)
+                                .get<ldtk::gen::triggerable_kind>();
+                        const ldtk::gen::game_flag triggered =
+                            entity.get_field(ldtk::gen::entity_field_ident::ENTITY_triggerable_FIELD_triggered)
+                                .get<ldtk::gen::game_flag>();
+
+                        ut::create_triggerable(kind, triggered, entity.px(), actor_reg, singleton_reg,
+                                               singleton_entity, save);
+                    }
+                    break;
+
+                    case entity_ident::openable: {
+                        const ldtk::gen::openable_kind kind =
+                            entity.get_field(ldtk::gen::entity_field_ident::ENTITY_openable_FIELD_kind)
+                                .get<ldtk::gen::openable_kind>();
+                        const ldtk::gen::game_flag opened =
+                            entity.get_field(ldtk::gen::entity_field_ident::ENTITY_openable_FIELD_opened)
+                                .get<ldtk::gen::game_flag>();
+
+                        ut::create_openable(kind, opened, entity.px(), actor_reg, singleton_reg, singleton_entity, save);
                     }
                     break;
 

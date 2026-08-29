@@ -6,10 +6,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -4,
-                        "y": -12,
-                        "width": 8,
-                        "height": 27
+                        "x": -5,
+                        "y": -11,
+                        "width": 10,
+                        "height": 25
                     }
                 ],
                 "hurtboxes": [
@@ -24,10 +24,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -4,
-                        "y": -12,
-                        "width": 8,
-                        "height": 27
+                        "x": -5,
+                        "y": -11,
+                        "width": 10,
+                        "height": 25
                     }
                 ],
                 "hurtboxes": [
@@ -42,10 +42,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -4,
-                        "y": -12,
-                        "width": 8,
-                        "height": 27
+                        "x": -5,
+                        "y": -11,
+                        "width": 10,
+                        "height": 25
                     }
                 ],
                 "hurtboxes": [
@@ -60,10 +60,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -4,
-                        "y": -12,
-                        "width": 8,
-                        "height": 27
+                        "x": -5,
+                        "y": -11,
+                        "width": 10,
+                        "height": 25
                     }
                 ],
                 "hurtboxes": [
@@ -78,10 +78,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -4,
-                        "y": -12,
-                        "width": 8,
-                        "height": 27
+                        "x": -5,
+                        "y": -11,
+                        "width": 10,
+                        "height": 25
                     }
                 ],
                 "hurtboxes": [
@@ -96,10 +96,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -4,
-                        "y": -12,
-                        "width": 8,
-                        "height": 27
+                        "x": -5,
+                        "y": -11,
+                        "width": 10,
+                        "height": 25
                     }
                 ],
                 "hurtboxes": [
@@ -114,10 +114,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -4,
-                        "y": -12,
-                        "width": 8,
-                        "height": 27
+                        "x": -5,
+                        "y": -11,
+                        "width": 10,
+                        "height": 25
                     }
                 ],
                 "hurtboxes": [
@@ -132,10 +132,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -4,
-                        "y": -12,
-                        "width": 8,
-                        "height": 27
+                        "x": -5,
+                        "y": -11,
+                        "width": 10,
+                        "height": 25
                     }
                 ],
                 "hurtboxes": [
@@ -150,10 +150,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -4,
-                        "y": -12,
-                        "width": 8,
-                        "height": 27
+                        "x": -5,
+                        "y": -11,
+                        "width": 10,
+                        "height": 25
                     }
                 ],
                 "hurtboxes": [
@@ -177,10 +177,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -12,
-                        "y": -4,
-                        "width": 27,
-                        "height": 8
+                        "x": -11,
+                        "y": -5,
+                        "width": 25,
+                        "height": 10
                     }
                 ],
                 "hurtboxes": [
@@ -195,10 +195,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -12,
-                        "y": -4,
-                        "width": 27,
-                        "height": 8
+                        "x": -11,
+                        "y": -5,
+                        "width": 25,
+                        "height": 10
                     }
                 ],
                 "hurtboxes": [
@@ -213,10 +213,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -12,
-                        "y": -4,
-                        "width": 27,
-                        "height": 8
+                        "x": -11,
+                        "y": -5,
+                        "width": 25,
+                        "height": 10
                     }
                 ],
                 "hurtboxes": [
@@ -231,10 +231,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -12,
-                        "y": -4,
-                        "width": 27,
-                        "height": 8
+                        "x": -11,
+                        "y": -5,
+                        "width": 25,
+                        "height": 10
                     }
                 ],
                 "hurtboxes": [
@@ -249,10 +249,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -12,
-                        "y": -4,
-                        "width": 27,
-                        "height": 8
+                        "x": -11,
+                        "y": -5,
+                        "width": 25,
+                        "height": 10
                     }
                 ],
                 "hurtboxes": [
@@ -267,10 +267,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -12,
-                        "y": -4,
-                        "width": 27,
-                        "height": 8
+                        "x": -11,
+                        "y": -5,
+                        "width": 25,
+                        "height": 10
                     }
                 ],
                 "hurtboxes": [
@@ -285,10 +285,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -12,
-                        "y": -4,
-                        "width": 27,
-                        "height": 8
+                        "x": -11,
+                        "y": -5,
+                        "width": 25,
+                        "height": 10
                     }
                 ],
                 "hurtboxes": [
@@ -303,10 +303,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -12,
-                        "y": -4,
-                        "width": 27,
-                        "height": 8
+                        "x": -11,
+                        "y": -5,
+                        "width": 25,
+                        "height": 10
                     }
                 ],
                 "hurtboxes": [
@@ -321,10 +321,10 @@
             {
                 "wallboxes": [
                     {
-                        "x": -12,
-                        "y": -4,
-                        "width": 27,
-                        "height": 8
+                        "x": -11,
+                        "y": -5,
+                        "width": 25,
+                        "height": 10
                     }
                 ],
                 "hurtboxes": [

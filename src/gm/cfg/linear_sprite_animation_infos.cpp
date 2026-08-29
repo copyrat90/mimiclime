@@ -43,7 +43,12 @@ constexpr bn::array<sprite_animation_info, ut::size_of_enum<gen::sprite_kind>()>
                                                               LINEAR_GRAPHICS_INDEXES.cbegin() + gfx_count);
     }
 
+    // Override settings
     result[static_cast<int>(gen::sprite_kind::fireball)].wait_updates = 3;
+    result[static_cast<int>(gen::sprite_kind::elec_switch)].forever = false;
+    auto& elec_gate = result[static_cast<int>(gen::sprite_kind::elec_gate)];
+    elec_gate.forever = false;
+    elec_gate.wait_updates = 2;
 
     return result;
 }();

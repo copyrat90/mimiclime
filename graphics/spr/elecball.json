@@ -1,0 +1,80 @@
+{
+    "type": "sprite",
+    "height": 16,
+    "mcedit": {
+        "collisions": [
+            {
+                "wallboxes": [
+                    {
+                        "x": -2,
+                        "y": -2,
+                        "width": 4,
+                        "height": 4
+                    }
+                ],
+                "hitboxes": [
+                    {
+                        "x": -2,
+                        "y": -2,
+                        "width": 4,
+                        "height": 4
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -2,
+                        "y": -2,
+                        "width": 4,
+                        "height": 4
+                    }
+                ],
+                "hitboxes": [
+                    {
+                        "x": -2,
+                        "y": -2,
+                        "width": 4,
+                        "height": 4
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -2,
+                        "y": -2,
+                        "width": 4,
+                        "height": 4
+                    }
+                ],
+                "hitboxes": [
+                    {
+                        "x": -2,
+                        "y": -2,
+                        "width": 4,
+                        "height": 4
+                    }
+                ]
+            },
+            {
+                "wallboxes": [
+                    {
+                        "x": -2,
+                        "y": -2,
+                        "width": 4,
+                        "height": 4
+                    }
+                ],
+                "hitboxes": [
+                    {
+                        "x": -2,
+                        "y": -2,
+                        "width": 4,
+                        "height": 4
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -11,37 +11,28 @@ namespace
 {
 
 template <typename CollChecker>
-bool blocking_entity_collide(const bn::top_left_fixed_rect& box, actor_registry& actor_reg, CollChecker coll_checker)
+bool wall_entity_collide(const bn::top_left_fixed_rect& box, actor_registry& actor_reg, CollChecker coll_checker)
 {
     bool collided = false;
 
-    // Breakable
-    actor_reg.view<cpn::breakable_states>().each(
-        [&](const gba::entity breakable, cpn::breakable_states& breakable_states) {
-            // Ignore already vanishing breakable
-            if (breakable_states.state == cpn::breakable_states::state_t::VANISH)
-                return;
-
-            auto* breakable_spr = actor_reg.try_get<bn::sprite_ptr>(breakable);
-            BN_ASSERT(breakable_spr);
-            const auto breakable_pos =
-                breakable_spr->top_left_position() +
-                bn::fixed_point(breakable_spr->shape_size().width() / 2, breakable_spr->shape_size().height() / 2);
-            auto* breakable_anim = actor_reg.try_get<cpn::sprite_animation>(breakable);
-            BN_ASSERT(breakable_anim);
-            const auto breakable_gfx_idx = breakable_anim->current_graphics_index();
-            const auto breakable_spr_kind = ut::enum_to_enum<cfg::gen::sprite_kind>(breakable_states.kind);
-            const auto& breakable_spr_frame_datas = cfg::sprite_datas::get(breakable_spr_kind).frame(breakable_gfx_idx);
-            auto* breakable_coll_evs = actor_reg.try_get<cpn::collision_events>(breakable);
-            BN_ASSERT(breakable_coll_evs);
+    actor_reg.view<cpn::wall, cpn::collision_events, cpn::sprite_animation>().each(
+        [&](const gba::entity wall_entity, cpn::wall&, cpn::collision_events&,
+            cpn::sprite_animation& wall_anim) {
+            auto* wall_spr = actor_reg.try_get<bn::sprite_ptr>(wall_entity);
+            BN_ASSERT(wall_spr);
+            const auto wall_pos = wall_spr->top_left_position() + bn::fixed_point(wall_spr->shape_size().width() / 2,
+                                                                                  wall_spr->shape_size().height() / 2);
+            const auto wall_gfx_idx = wall_anim.current_graphics_index();
+            const auto wall_spr_kind = wall_anim.sprite_kind;
+            const auto& wall_spr_frame_datas = cfg::sprite_datas::get(wall_spr_kind).frame(wall_gfx_idx);
 
             // Breakable wallbox
-            for (const auto& rel_breakable_wallbox : breakable_spr_frame_datas.wallboxes)
+            for (const auto& rel_wallbox : wall_spr_frame_datas.wallboxes)
             {
-                const auto breakable_wallbox = rel_breakable_wallbox.absolute_rect(
-                    breakable_pos, breakable_spr->horizontal_flip(), breakable_spr->vertical_flip());
+                const auto wallbox =
+                    rel_wallbox.absolute_rect(wall_pos, wall_spr->horizontal_flip(), wall_spr->vertical_flip());
 
-                if (coll_checker(box, breakable_wallbox))
+                if (coll_checker(box, wallbox))
                 {
                     collided = true;
                     break;
@@ -52,32 +43,29 @@ bool blocking_entity_collide(const bn::top_left_fixed_rect& box, actor_registry&
     return collided;
 }
 
-bool blocking_entity_blocked_moving_right(const bn::top_left_fixed_rect& moving_box,
-                                          const bn::top_left_fixed_rect& blocking_box)
+bool wall_entity_blocked_moving_right(const bn::top_left_fixed_rect& moving_box,
+                                      const bn::top_left_fixed_rect& wall_box)
 {
-    return (blocking_box.left() < moving_box.right() && moving_box.right() < blocking_box.right()) &&
-           (blocking_box.top() < moving_box.bottom() && blocking_box.bottom() > moving_box.top());
+    return (wall_box.left() < moving_box.right() && moving_box.right() < wall_box.right()) &&
+           (wall_box.top() < moving_box.bottom() && wall_box.bottom() > moving_box.top());
 }
 
-bool blocking_entity_blocked_moving_left(const bn::top_left_fixed_rect& moving_box,
-                                         const bn::top_left_fixed_rect& blocking_box)
+bool wall_entity_blocked_moving_left(const bn::top_left_fixed_rect& moving_box, const bn::top_left_fixed_rect& wall_box)
 {
-    return (blocking_box.left() < moving_box.left() && moving_box.left() < blocking_box.right()) &&
-           (blocking_box.top() < moving_box.bottom() && blocking_box.bottom() > moving_box.top());
+    return (wall_box.left() < moving_box.left() && moving_box.left() < wall_box.right()) &&
+           (wall_box.top() < moving_box.bottom() && wall_box.bottom() > moving_box.top());
 }
 
-bool blocking_entity_blocked_moving_down(const bn::top_left_fixed_rect& moving_box,
-                                         const bn::top_left_fixed_rect& blocking_box)
+bool wall_entity_blocked_moving_down(const bn::top_left_fixed_rect& moving_box, const bn::top_left_fixed_rect& wall_box)
 {
-    return (blocking_box.top() < moving_box.bottom() && moving_box.bottom() < blocking_box.bottom()) &&
-           (blocking_box.left() < moving_box.right() && blocking_box.right() > moving_box.left());
+    return (wall_box.top() < moving_box.bottom() && moving_box.bottom() < wall_box.bottom()) &&
+           (wall_box.left() < moving_box.right() && wall_box.right() > moving_box.left());
 }
 
-bool blocking_entity_blocked_moving_up(const bn::top_left_fixed_rect& moving_box,
-                                       const bn::top_left_fixed_rect& blocking_box)
+bool wall_entity_blocked_moving_up(const bn::top_left_fixed_rect& moving_box, const bn::top_left_fixed_rect& wall_box)
 {
-    return (blocking_box.top() < moving_box.top() && moving_box.top() < blocking_box.bottom()) &&
-           (blocking_box.left() < moving_box.right() && blocking_box.right() > moving_box.left());
+    return (wall_box.top() < moving_box.top() && moving_box.top() < wall_box.bottom()) &&
+           (wall_box.left() < moving_box.right() && wall_box.right() > moving_box.left());
 }
 
 void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& spr_frame_datas, cpn::velocity& velocity,
@@ -103,7 +91,7 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
         {
             if (room.collide_with_wall({box.right(), box.center_y()}) || room.collide_with_wall(box.top_right()) ||
                 room.collide_with_wall(box.bottom_right()) ||
-                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_right))
+                wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_right))
             {
                 revert_x = true;
                 break;
@@ -114,7 +102,7 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
         {
             if (room.collide_with_wall({box.left(), box.center_y()}) || room.collide_with_wall(box.top_left()) ||
                 room.collide_with_wall(box.bottom_left()) ||
-                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_left))
+                wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_left))
             {
                 revert_x = true;
                 break;
@@ -139,7 +127,7 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
         {
             if (room.collide_with_wall({box.center_x(), box.bottom()}) || room.collide_with_wall(box.bottom_left()) ||
                 room.collide_with_wall(box.bottom_right()) ||
-                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_down))
+                wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_down))
             {
                 revert_y = true;
                 break;
@@ -150,7 +138,7 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
         {
             if (room.collide_with_wall({box.center_x(), box.top()}) || room.collide_with_wall(box.top_left()) ||
                 room.collide_with_wall(box.top_right()) ||
-                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_up))
+                wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_up))
             {
                 revert_y = true;
                 break;
@@ -182,7 +170,7 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
         {
             if (room.collide_with_wall({box.right(), box.center_y()}) || room.collide_with_wall(box.top_right()) ||
                 room.collide_with_wall(box.bottom_right()) ||
-                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_right))
+                wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_right))
             {
                 collided = true;
                 break;
@@ -193,7 +181,7 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
         {
             if (room.collide_with_wall({box.left(), box.center_y()}) || room.collide_with_wall(box.top_left()) ||
                 room.collide_with_wall(box.bottom_left()) ||
-                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_left))
+                wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_left))
             {
                 collided = true;
                 break;
@@ -205,7 +193,7 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
         {
             if (room.collide_with_wall({box.center_x(), box.bottom()}) || room.collide_with_wall(box.bottom_left()) ||
                 room.collide_with_wall(box.bottom_right()) ||
-                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_down))
+                wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_down))
             {
                 collided = true;
                 break;
@@ -216,7 +204,7 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
         {
             if (room.collide_with_wall({box.center_x(), box.top()}) || room.collide_with_wall(box.top_left()) ||
                 room.collide_with_wall(box.top_right()) ||
-                blocking_entity_collide(box, actor_reg, blocking_entity_blocked_moving_up))
+                wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_up))
             {
                 collided = true;
                 break;

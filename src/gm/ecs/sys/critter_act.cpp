@@ -3,16 +3,19 @@
 #include "gm/cfg/critter_animation_infos.h"
 #include "gm/cfg/species_infos.h"
 #include "gm/cfg/sprite_datas.h"
-#include "gm/ecs/sys/impl/critter_act_lizard.h"
-#include "gm/ecs/sys/impl/critter_act_slime.h"
 #include "gm/lerp.h"
 #include "ut/enum_utils.h"
+
+#include "gm/ecs/sys/impl/critter_act_butterfly.h"
+#include "gm/ecs/sys/impl/critter_act_eel.h"
+#include "gm/ecs/sys/impl/critter_act_lizard.h"
+#include "gm/ecs/sys/impl/critter_act_slime.h"
 
 #include <bn_array.h>
 #include <bn_sprite_builder.h>
 
-#include <type_traits>
 #include <algorithm>
+#include <type_traits>
 
 #include "ldtk_gen_enums.h"
 
@@ -35,6 +38,8 @@ using critter_act_impl_func_ptr = void (*)(const gba::entity, actor_registry&);
 constexpr bn::array<critter_act_impl_func_ptr, ut::size_of_enum<ldtk::gen::species_kind>()> CRITTER_ACT_IMPL_FUNC_LUT{
     impl::critter_act_slime,
     impl::critter_act_lizard,
+    impl::critter_act_eel,
+    impl::critter_act_butterfly,
 };
 
 // Check if forgot to add critter act impl function in the LUT

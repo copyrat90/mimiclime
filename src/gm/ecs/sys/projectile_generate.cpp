@@ -18,6 +18,10 @@ void projectile_generate(actor_registry& actor_reg, singleton_registry& singleto
                          const gba::entity singleton_entity)
 {
     actor_reg.view<cpn::critter_states>().each([&](const gba::entity shooter, cpn::critter_states& states) {
+        // Only the attack can generate the projectile.
+        if (states.executing_action != critter_action::ATTACK)
+            return;
+
         const auto* camera = singleton_reg.try_get<bn::camera_ptr>(singleton_entity);
         BN_ASSERT(camera);
         const auto* shooter_sprite = actor_reg.try_get<bn::sprite_ptr>(shooter);
