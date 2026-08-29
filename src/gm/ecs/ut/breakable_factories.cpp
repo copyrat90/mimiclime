@@ -34,6 +34,7 @@ auto create_breakable(ldtk::gen::breakable_kind kind, const bn::fixed_point& pos
     actor_reg.emplace<cpn::sprite_animation>(breakable, spr, spr_kind, anim_info);
 
     actor_reg.emplace<cpn::collision_events>(breakable, gba::entity_null, true);
+    actor_reg.emplace<cpn::wall>(breakable);
     actor_reg.emplace<cpn::breakable_states>(breakable, kind);
 
     return breakable;

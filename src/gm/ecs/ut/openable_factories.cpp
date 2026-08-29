@@ -38,6 +38,7 @@ auto create_openable(ldtk::gen::openable_kind kind, ldtk::gen::game_flag opened,
     actor_reg.emplace<cpn::sprite_animation>(openable, spr, spr_kind, anim_info, is_opened, !is_opened);
 
     actor_reg.emplace<cpn::collision_events>(openable, gba::entity_null, true);
+    actor_reg.emplace<cpn::wall>(openable);
     actor_reg.emplace<cpn::openable_states>(openable, kind, opened, is_opened);
 
     return openable;
