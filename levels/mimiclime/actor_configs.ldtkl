@@ -77,7 +77,8 @@
 							"params": ["슬라임"]
 						} ] },
 						{ "__identifier": "hp", "__type": "Int", "__value": 4, "__tile": null, "defUid": 30, "realEditorValues": [{ "id": "V_Int", "params": [4] }] },
-						{ "__identifier": "speed", "__type": "Float", "__value": 1.5, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.5] }] }
+						{ "__identifier": "speed", "__type": "Float", "__value": 1.5, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.5] }] },
+						{ "__identifier": "pass_pit", "__type": "Bool", "__value": false, "__tile": null, "defUid": 56, "realEditorValues": [] }
 					],
 					"__worldX": 256,
 					"__worldY": 16
@@ -107,7 +108,8 @@
 							"params": ["도마뱀"]
 						} ] },
 						{ "__identifier": "hp", "__type": "Int", "__value": 5, "__tile": null, "defUid": 30, "realEditorValues": [{ "id": "V_Int", "params": [5] }] },
-						{ "__identifier": "speed", "__type": "Float", "__value": 1.25, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.25] }] }
+						{ "__identifier": "speed", "__type": "Float", "__value": 1.25, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.25] }] },
+						{ "__identifier": "pass_pit", "__type": "Bool", "__value": false, "__tile": null, "defUid": 56, "realEditorValues": [] }
 					],
 					"__worldX": 288,
 					"__worldY": 16
@@ -137,7 +139,8 @@
 							"params": ["장어"]
 						} ] },
 						{ "__identifier": "hp", "__type": "Int", "__value": 5, "__tile": null, "defUid": 30, "realEditorValues": [{ "id": "V_Int", "params": [5] }] },
-						{ "__identifier": "speed", "__type": "Float", "__value": 1.5, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.5] }] }
+						{ "__identifier": "speed", "__type": "Float", "__value": 1.5, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.5] }] },
+						{ "__identifier": "pass_pit", "__type": "Bool", "__value": false, "__tile": null, "defUid": 56, "realEditorValues": [] }
 					],
 					"__worldX": 320,
 					"__worldY": 16
@@ -167,7 +170,11 @@
 							"params": ["나비"]
 						} ] },
 						{ "__identifier": "hp", "__type": "Int", "__value": 2, "__tile": null, "defUid": 30, "realEditorValues": [{ "id": "V_Int", "params": [2] }] },
-						{ "__identifier": "speed", "__type": "Float", "__value": 1.75, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.75] }] }
+						{ "__identifier": "speed", "__type": "Float", "__value": 1.75, "__tile": null, "defUid": 29, "realEditorValues": [{ "id": "V_Float", "params": [1.75] }] },
+						{ "__identifier": "pass_pit", "__type": "Bool", "__value": true, "__tile": null, "defUid": 56, "realEditorValues": [{
+							"id": "V_Bool",
+							"params": [ true ]
+						}] }
 					],
 					"__worldX": 352,
 					"__worldY": 16
@@ -225,6 +232,31 @@
 			"entityInstances": []
 		},
 		{
+			"__identifier": "tiles",
+			"__type": "Tiles",
+			"__cWid": 15,
+			"__cHei": 10,
+			"__gridSize": 16,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": 14,
+			"__tilesetRelPath": "laboratory_tileset.png",
+			"iid": "2844aef0-96d0-11f1-98a8-97ef869f8656",
+			"levelId": 26,
+			"layerDefUid": 53,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 6747802,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": []
+		},
+		{
 			"__identifier": "terrain",
 			"__type": "IntGrid",
 			"__cWid": 15,
@@ -233,8 +265,8 @@
 			"__opacity": 1,
 			"__pxTotalOffsetX": 0,
 			"__pxTotalOffsetY": 0,
-			"__tilesetDefUid": 14,
-			"__tilesetRelPath": "placeholder_tileset.png",
+			"__tilesetDefUid": null,
+			"__tilesetRelPath": null,
 			"iid": "2bf1b932-48b0-11f1-8010-2be35c9c232c",
 			"levelId": 26,
 			"layerDefUid": 15,

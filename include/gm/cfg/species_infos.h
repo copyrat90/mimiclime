@@ -65,6 +65,11 @@ public:
         return _entity->get_field(ldtk::gen::entity_field_ident::ENTITY_species_configs_FIELD_speed).get<bn::fixed>();
     }
 
+    constexpr bool pass_pit() const
+    {
+        return _entity->get_field(ldtk::gen::entity_field_ident::ENTITY_species_configs_FIELD_pass_pit).get<bool>();
+    }
+
 private:
     const ldtk::entity* _entity;
 };

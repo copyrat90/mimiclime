@@ -39,7 +39,7 @@ public:
 
     auto dimensions() const -> bn::fixed_point;
 
-    bool collide_with_wall(const bn::fixed_point& position) const;
+    bool collide_with_wall(const bn::fixed_point& position, bool include_pit) const;
     auto collide_with_exit(const bn::top_left_fixed_rect& collision) const -> bn::optional<cfg::room_entrance>;
 
 public:

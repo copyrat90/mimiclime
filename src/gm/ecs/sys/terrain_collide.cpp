@@ -1,5 +1,6 @@
 #include "gm/ecs/sys/terrain_collide.h"
 
+#include "gm/cfg/species_infos.h"
 #include "gm/cfg/sprite_datas.h"
 
 #include <bn_sprite_shape_size.h>
@@ -16,8 +17,7 @@ bool wall_entity_collide(const bn::top_left_fixed_rect& box, actor_registry& act
     bool collided = false;
 
     actor_reg.view<cpn::wall, cpn::collision_events, cpn::sprite_animation>().each(
-        [&](const gba::entity wall_entity, cpn::wall&, cpn::collision_events&,
-            cpn::sprite_animation& wall_anim) {
+        [&](const gba::entity wall_entity, cpn::wall&, cpn::collision_events&, cpn::sprite_animation& wall_anim) {
             auto* wall_spr = actor_reg.try_get<bn::sprite_ptr>(wall_entity);
             BN_ASSERT(wall_spr);
             const auto wall_pos = wall_spr->top_left_position() + bn::fixed_point(wall_spr->shape_size().width() / 2,
@@ -68,8 +68,9 @@ bool wall_entity_blocked_moving_up(const bn::top_left_fixed_rect& moving_box, co
            (wall_box.left() < moving_box.right() && wall_box.right() > moving_box.left());
 }
 
-void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& spr_frame_datas, cpn::velocity& velocity,
-                        bn::sprite_ptr& sprite, cpn::collision_events& coll_events, actor_registry& actor_reg)
+void terrain_bounce_off(const cpn::room& room, bool include_pit, const cfg::sprite_frame_datas& spr_frame_datas,
+                        cpn::velocity& velocity, bn::sprite_ptr& sprite, cpn::collision_events& coll_events,
+                        actor_registry& actor_reg)
 {
     const bn::fixed_point sprite_size_diff(sprite.shape_size().width() / 2, sprite.shape_size().height() / 2);
     bn::fixed_point moved_pos = sprite.top_left_position() + sprite_size_diff;
@@ -89,8 +90,9 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
         // If moving right,
         if (velocity.velocity.x() > 0)
         {
-            if (room.collide_with_wall({box.right(), box.center_y()}) || room.collide_with_wall(box.top_right()) ||
-                room.collide_with_wall(box.bottom_right()) ||
+            if (room.collide_with_wall({box.right(), box.center_y()}, include_pit) ||
+                room.collide_with_wall(box.top_right(), include_pit) ||
+                room.collide_with_wall(box.bottom_right(), include_pit) ||
                 wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_right))
             {
                 revert_x = true;
@@ -100,8 +102,9 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
         // If moving left,
         else if (velocity.velocity.x() < 0)
         {
-            if (room.collide_with_wall({box.left(), box.center_y()}) || room.collide_with_wall(box.top_left()) ||
-                room.collide_with_wall(box.bottom_left()) ||
+            if (room.collide_with_wall({box.left(), box.center_y()}, include_pit) ||
+                room.collide_with_wall(box.top_left(), include_pit) ||
+                room.collide_with_wall(box.bottom_left(), include_pit) ||
                 wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_left))
             {
                 revert_x = true;
@@ -125,8 +128,9 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
         // If moving down,
         if (velocity.velocity.y() > 0)
         {
-            if (room.collide_with_wall({box.center_x(), box.bottom()}) || room.collide_with_wall(box.bottom_left()) ||
-                room.collide_with_wall(box.bottom_right()) ||
+            if (room.collide_with_wall({box.center_x(), box.bottom()}, include_pit) ||
+                room.collide_with_wall(box.bottom_left(), include_pit) ||
+                room.collide_with_wall(box.bottom_right(), include_pit) ||
                 wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_down))
             {
                 revert_y = true;
@@ -136,8 +140,9 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
         // If moving up,
         else if (velocity.velocity.y() < 0)
         {
-            if (room.collide_with_wall({box.center_x(), box.top()}) || room.collide_with_wall(box.top_left()) ||
-                room.collide_with_wall(box.top_right()) ||
+            if (room.collide_with_wall({box.center_x(), box.top()}, include_pit) ||
+                room.collide_with_wall(box.top_left(), include_pit) ||
+                room.collide_with_wall(box.top_right(), include_pit) ||
                 wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_up))
             {
                 revert_y = true;
@@ -154,8 +159,9 @@ void terrain_bounce_off(const cpn::room& room, const cfg::sprite_frame_datas& sp
     sprite.set_top_left_position(moved_pos - sprite_size_diff);
 }
 
-void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& spr_frame_datas, cpn::velocity& velocity,
-                         bn::sprite_ptr& sprite, cpn::collision_events& coll_events, actor_registry& actor_reg)
+void terrain_detect_only(const cpn::room& room, bool include_pit, const cfg::sprite_frame_datas& spr_frame_datas,
+                         cpn::velocity& velocity, bn::sprite_ptr& sprite, cpn::collision_events& coll_events,
+                         actor_registry& actor_reg)
 {
     const bn::fixed_point sprite_size_diff(sprite.shape_size().width() / 2, sprite.shape_size().height() / 2);
     bn::fixed_point spr_position = sprite.top_left_position() + sprite_size_diff;
@@ -168,8 +174,9 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
         // If moving right,
         if (velocity.velocity.x() > 0)
         {
-            if (room.collide_with_wall({box.right(), box.center_y()}) || room.collide_with_wall(box.top_right()) ||
-                room.collide_with_wall(box.bottom_right()) ||
+            if (room.collide_with_wall({box.right(), box.center_y()}, include_pit) ||
+                room.collide_with_wall(box.top_right(), include_pit) ||
+                room.collide_with_wall(box.bottom_right(), include_pit) ||
                 wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_right))
             {
                 collided = true;
@@ -179,8 +186,9 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
         // If moving left,
         else if (velocity.velocity.x() < 0)
         {
-            if (room.collide_with_wall({box.left(), box.center_y()}) || room.collide_with_wall(box.top_left()) ||
-                room.collide_with_wall(box.bottom_left()) ||
+            if (room.collide_with_wall({box.left(), box.center_y()}, include_pit) ||
+                room.collide_with_wall(box.top_left(), include_pit) ||
+                room.collide_with_wall(box.bottom_left(), include_pit) ||
                 wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_left))
             {
                 collided = true;
@@ -191,8 +199,9 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
         // If moving down,
         if (velocity.velocity.y() > 0)
         {
-            if (room.collide_with_wall({box.center_x(), box.bottom()}) || room.collide_with_wall(box.bottom_left()) ||
-                room.collide_with_wall(box.bottom_right()) ||
+            if (room.collide_with_wall({box.center_x(), box.bottom()}, include_pit) ||
+                room.collide_with_wall(box.bottom_left(), include_pit) ||
+                room.collide_with_wall(box.bottom_right(), include_pit) ||
                 wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_down))
             {
                 collided = true;
@@ -202,8 +211,9 @@ void terrain_detect_only(const cpn::room& room, const cfg::sprite_frame_datas& s
         // If moving up,
         else if (velocity.velocity.y() < 0)
         {
-            if (room.collide_with_wall({box.center_x(), box.top()}) || room.collide_with_wall(box.top_left()) ||
-                room.collide_with_wall(box.top_right()) ||
+            if (room.collide_with_wall({box.center_x(), box.top()}, include_pit) ||
+                room.collide_with_wall(box.top_left(), include_pit) ||
+                room.collide_with_wall(box.top_right(), include_pit) ||
                 wall_entity_collide(box, actor_reg, wall_entity_blocked_moving_up))
             {
                 collided = true;
@@ -238,10 +248,15 @@ void terrain_collide(actor_registry& actor_reg, singleton_registry& singleton_re
             if (spr_frame_datas.wallboxes.empty())
                 return;
 
+            const bool pass_pit =
+                actor_reg.try_get<cpn::critter_states>(entity)
+                    ? cfg::species_infos::get(actor_reg.try_get<cpn::critter_states>(entity)->species()).pass_pit()
+                    : true;
+
             if (coll_events.terrain_bounce_off)
-                terrain_bounce_off(*room, spr_frame_datas, velocity, sprite, coll_events, actor_reg);
+                terrain_bounce_off(*room, !pass_pit, spr_frame_datas, velocity, sprite, coll_events, actor_reg);
             else
-                terrain_detect_only(*room, spr_frame_datas, velocity, sprite, coll_events, actor_reg);
+                terrain_detect_only(*room, !pass_pit, spr_frame_datas, velocity, sprite, coll_events, actor_reg);
         });
 }
 
