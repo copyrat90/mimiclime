@@ -64,10 +64,16 @@
 					"height": 16,
 					"defUid": 34,
 					"px": [232,72],
-					"fieldInstances": [{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
-						"id": "V_String",
-						"params": ["wood_fence"]
-					}] }],
+					"fieldInstances": [
+						{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["wood_fence"]
+						}] },
+						{ "__identifier": "broken", "__type": "LocalEnum.game_flag", "__value": "room_4_east_wood_fence", "__tile": null, "defUid": 52, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["room_4_east_wood_fence"]
+						}] }
+					],
 					"__worldX": 504,
 					"__worldY": 584
 				},
@@ -83,10 +89,16 @@
 					"height": 16,
 					"defUid": 34,
 					"px": [232,88],
-					"fieldInstances": [{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
-						"id": "V_String",
-						"params": ["wood_fence"]
-					}] }],
+					"fieldInstances": [
+						{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["wood_fence"]
+						}] },
+						{ "__identifier": "broken", "__type": "LocalEnum.game_flag", "__value": "room_4_east_wood_fence", "__tile": null, "defUid": 52, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["room_4_east_wood_fence"]
+						}] }
+					],
 					"__worldX": 504,
 					"__worldY": 600
 				},
@@ -102,10 +114,16 @@
 					"height": 16,
 					"defUid": 34,
 					"px": [232,104],
-					"fieldInstances": [{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
-						"id": "V_String",
-						"params": ["wood_fence"]
-					}] }],
+					"fieldInstances": [
+						{ "__identifier": "kind", "__type": "LocalEnum.breakable_kind", "__value": "wood_fence", "__tile": null, "defUid": 35, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["wood_fence"]
+						}] },
+						{ "__identifier": "broken", "__type": "LocalEnum.game_flag", "__value": "room_4_east_wood_fence", "__tile": null, "defUid": 52, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["room_4_east_wood_fence"]
+						}] }
+					],
 					"__worldX": 504,
 					"__worldY": 616
 				},

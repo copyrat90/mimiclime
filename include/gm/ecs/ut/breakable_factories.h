@@ -10,7 +10,8 @@
 namespace mc::gm::ecs::ut
 {
 
-auto create_breakable(ldtk::gen::breakable_kind, const bn::fixed_point& position, actor_registry&, singleton_registry&,
+auto create_breakable(ldtk::gen::breakable_kind, bn::optional<ldtk::gen::game_flag> broken,
+                      const bn::fixed_point& position, actor_registry&, singleton_registry&,
                       const gba::entity singleton_entity) -> const gba::entity;
 
 }

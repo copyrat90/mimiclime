@@ -79,7 +79,7 @@ bool game::update()
     gm::ecs::sys::room_exit_collide(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::terrain_collide(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::projectile_update(_actor_registry);
-    gm::ecs::sys::breakable_update(_actor_registry);
+    gm::ecs::sys::breakable_update(_actor_registry, ctx.game_save());
     gm::ecs::sys::triggerable_update(_actor_registry, ctx.game_save());
     gm::ecs::sys::openable_update(_actor_registry, ctx.game_save());
     gm::ecs::sys::camera_target_update(_actor_registry);

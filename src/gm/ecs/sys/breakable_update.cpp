@@ -2,11 +2,12 @@
 
 #include "gm/cfg/breakable_infos.h"
 #include "gm/cfg/sprite_animation_info.h"
+#include "gm/game_save.h"
 
 namespace mc::gm::ecs::sys
 {
 
-void breakable_update(actor_registry& actor_reg)
+void breakable_update(actor_registry& actor_reg, game_save& save)
 {
     actor_reg.view<cpn::breakable_states>().each([&](const gba::entity breakable, cpn::breakable_states& states) {
         switch (states.state)
@@ -20,6 +21,9 @@ void breakable_update(actor_registry& actor_reg)
                     if (states.state != state_t::VANISH)
                     {
                         states.state = state_t::VANISH;
+
+                        if (states.broken_flag.has_value())
+                            save.set_game_flag(*states.broken_flag, true);
 
                         actor_reg.remove_unchecked(*coll_evs);
 

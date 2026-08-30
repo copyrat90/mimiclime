@@ -1,5 +1,7 @@
 #pragma once
 
+#include <bn_optional.h>
+
 #include <cstdint>
 
 #include "ldtk_gen_enums.h"
@@ -16,6 +18,8 @@ struct breakable_states final
     };
 
     ldtk::gen::breakable_kind kind;
+
+    bn::optional<ldtk::gen::game_flag> broken_flag;
 
     state_t state = state_t::IDLE;
 };
