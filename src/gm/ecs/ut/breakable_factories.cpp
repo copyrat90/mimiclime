@@ -10,8 +10,9 @@
 namespace mc::gm::ecs::ut
 {
 
-auto create_breakable(ldtk::gen::breakable_kind kind, const bn::fixed_point& position, actor_registry& actor_reg,
-                      singleton_registry& singleton_reg, const gba::entity singleton_entity) -> const gba::entity
+auto create_breakable(ldtk::gen::breakable_kind kind, bn::optional<ldtk::gen::game_flag> broken,
+                      const bn::fixed_point& position, actor_registry& actor_reg, singleton_registry& singleton_reg,
+                      const gba::entity singleton_entity) -> const gba::entity
 {
     const auto* camera = singleton_reg.try_get<bn::camera_ptr>(singleton_entity);
     BN_ASSERT(camera);
@@ -35,7 +36,7 @@ auto create_breakable(ldtk::gen::breakable_kind kind, const bn::fixed_point& pos
 
     actor_reg.emplace<cpn::collision_events>(breakable, gba::entity_null, true);
     actor_reg.emplace<cpn::wall>(breakable);
-    actor_reg.emplace<cpn::breakable_states>(breakable, kind);
+    actor_reg.emplace<cpn::breakable_states>(breakable, kind, broken);
 
     return breakable;
 }

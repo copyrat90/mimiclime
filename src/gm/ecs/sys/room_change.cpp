@@ -127,11 +127,23 @@ void room_change(singleton_registry& singleton_reg, const gba::entity singleton_
                     break;
 
                     case entity_ident::breakable: {
-                        const ldtk::gen::breakable_kind kind =
-                            entity.get_field(ldtk::gen::entity_field_ident::ENTITY_breakable_FIELD_kind)
-                                .get<ldtk::gen::breakable_kind>();
+                        const bn::optional<ldtk::gen::game_flag> broken_flag =
+                            entity.get_field(ldtk::gen::entity_field_ident::ENTITY_breakable_FIELD_broken).has_value()
+                                ? bn::optional(
+                                      entity.get_field(ldtk::gen::entity_field_ident::ENTITY_breakable_FIELD_broken)
+                                          .get<ldtk::gen::game_flag>())
+                                : bn::nullopt;
+                        const bool broken = broken_flag.has_value() ? save.game_flag(*broken_flag) : false;
 
-                        ut::create_breakable(kind, entity.px(), actor_reg, singleton_reg, singleton_entity);
+                        if (!broken)
+                        {
+                            const ldtk::gen::breakable_kind kind =
+                                entity.get_field(ldtk::gen::entity_field_ident::ENTITY_breakable_FIELD_kind)
+                                    .get<ldtk::gen::breakable_kind>();
+
+                            ut::create_breakable(kind, broken_flag, entity.px(), actor_reg, singleton_reg,
+                                                 singleton_entity);
+                        }
                     }
                     break;
 
@@ -152,8 +164,8 @@ void room_change(singleton_registry& singleton_reg, const gba::entity singleton_
                             entity.get_field(ldtk::gen::entity_field_ident::ENTITY_triggerable_FIELD_triggered)
                                 .get<ldtk::gen::game_flag>();
 
-                        ut::create_triggerable(kind, triggered, entity.px(), actor_reg, singleton_reg,
-                                               singleton_entity, save);
+                        ut::create_triggerable(kind, triggered, entity.px(), actor_reg, singleton_reg, singleton_entity,
+                                               save);
                     }
                     break;
 
@@ -165,7 +177,8 @@ void room_change(singleton_registry& singleton_reg, const gba::entity singleton_
                             entity.get_field(ldtk::gen::entity_field_ident::ENTITY_openable_FIELD_opened)
                                 .get<ldtk::gen::game_flag>();
 
-                        ut::create_openable(kind, opened, entity.px(), actor_reg, singleton_reg, singleton_entity, save);
+                        ut::create_openable(kind, opened, entity.px(), actor_reg, singleton_reg, singleton_entity,
+                                            save);
                     }
                     break;
 

@@ -75,7 +75,7 @@ auto room::dimensions() const -> bn::fixed_point
     return {dimensions.width(), dimensions.height()};
 }
 
-bool room::collide_with_wall(const bn::fixed_point& position) const
+bool room::collide_with_wall(const bn::fixed_point& position, bool include_pit) const
 {
     const int cell_int = get_terrain_cell(position);
     if (cell_int == -1)
@@ -85,8 +85,10 @@ bool room::collide_with_wall(const bn::fixed_point& position) const
     if (!cell_info)
         return false;
 
-    return cell_info->group_uid() ==
-           (int)ldtk::gen::layer_int_grid_value_group_ident::LAYER_terrain_INT_GRID_VALUE_GROUP_walls;
+    const auto& cell_ident = cell_info->identifier();
+
+    return cell_ident == ldtk::gen::layer_int_grid_value_ident::LAYER_terrain_INT_GRID_VALUE_wall ||
+           (include_pit && cell_ident == ldtk::gen::layer_int_grid_value_ident::LAYER_terrain_INT_GRID_VALUE_pit);
 }
 
 auto room::collide_with_exit(const bn::top_left_fixed_rect& collision) const -> bn::optional<cfg::room_entrance>
