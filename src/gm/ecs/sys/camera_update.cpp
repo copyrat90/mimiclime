@@ -3,6 +3,7 @@
 #include "gm/lerp.h"
 
 #include <bn_display.h>
+#include <bn_math.h>
 
 #include <limits>
 #include <utility>
@@ -82,10 +83,26 @@ void camera_update(singleton_registry& singleton_reg, const gba::entity singleto
             snapped_pos.set_y(level_dimensions.y() - bn::display::height());
     }
 
-    // TODO: Apply shake effect
+    // Apply shake effect
+    bn::fixed_point shaked_pos = snapped_pos;
+    if (auto* shaker = singleton_reg.try_get<cpn::camera_shaker>(singleton_entity); shaker)
+    {
+        auto* rng = singleton_reg.try_get<bn::random>(singleton_entity);
+        BN_ASSERT(rng);
+
+        const int angle = rng->get_unbiased_int(bn::sin_lut_size - 1);
+        const auto [nx, ny] = bn::lut_sin_and_cos(angle);
+
+        const bn::fixed_point shake_diff(nx * shaker->amplitude, ny * shaker->amplitude);
+        shaked_pos += shake_diff;
+
+        shaker->amplitude = lerp(shaker->amplitude, 0, shaker->lerp_to_zero_ratio);
+        if (shaker->amplitude == 0)
+            singleton_reg.remove_unchecked(*shaker);
+    }
 
     // Set the final result
-    camera->set_position(snapped_pos);
+    camera->set_position(shaked_pos);
 }
 
 } // namespace mc::gm::ecs::sys
