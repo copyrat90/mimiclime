@@ -98,13 +98,52 @@
 							"id": "V_String",
 							"params": ["설정"]
 						} ] },
-						{ "__identifier": "title_options_menus", "__type": "Array<String>", "__value": [ "Licenses", "라이선스" ], "__tile": null, "defUid": 11, "realEditorValues": [ {
+						{ "__identifier": "title_options_menus", "__type": "Array<String>", "__value": [ "Credits", "Licenses", "크레딧", "라이선스" ], "__tile": null, "defUid": 11, "realEditorValues": [ {
+							"id": "V_String",
+							"params": ["Credits"]
+						}, {
 							"id": "V_String",
 							"params": ["Licenses"]
 						}, {
 							"id": "V_String",
+							"params": ["크레딧"]
+						}, {
+							"id": "V_String",
 							"params": ["라이선스"]
 						} ] },
+						{ "__identifier": "title_credits", "__type": "Array<String>", "__value": [
+							"copyrat90",
+							"fixx",
+							"Programming",
+							"Graphics",
+							"프로그래밍",
+							"그래픽"
+						], "__tile": null, "defUid": 57, "realEditorValues": [
+							{
+								"id": "V_String",
+								"params": ["copyrat90"]
+							},
+							{
+								"id": "V_String",
+								"params": ["fixx"]
+							},
+							{
+								"id": "V_String",
+								"params": ["Programming"]
+							},
+							{
+								"id": "V_String",
+								"params": ["Graphics"]
+							},
+							{
+								"id": "V_String",
+								"params": ["프로그래밍"]
+							},
+							{
+								"id": "V_String",
+								"params": ["그래픽"]
+							}
+						] },
 						{ "__identifier": "ingame_texts", "__type": "Array<String>", "__value": [
 							"Hold : Devour",
 							" 홀드: 삼키기",

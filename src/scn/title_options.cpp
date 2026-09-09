@@ -46,9 +46,10 @@ static_assert(TITLE_OPTIONS_MENUS.size() ==
 
 constexpr bn::fixed MENUS_X = 40;
 constexpr bn::array<bn::fixed, ut::size_of_enum<ldtk::gen::title_options_menu>() + 1> MENUS_Y{
-    60,  // Lang: English
-    80,  // Licenses
-    100, // Back
+    50,  // Lang: English
+    70,  // Credits
+    90,  // Licenses
+    110, // Back
 };
 
 constexpr bn::fixed_point HEADING_POS(20, 20);
@@ -89,6 +90,9 @@ bool title_options::update()
             redraw_all();
             break;
         }
+        case ldtk::gen::title_options_menu::credits:
+            scene_stack.reserve_replace_top_with_delay<scn::title_credits>(context());
+            break;
         case ldtk::gen::title_options_menu::licenses:
             scene_stack.reserve_replace_top_with_delay<scn::title_licenses_list>(0, context());
             break;
