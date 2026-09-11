@@ -20,6 +20,7 @@ struct ui_states final
     std::uint16_t last_player_hp = 0;
     std::uint16_t last_status_mob_hp = 0;
 
+    gba::entity last_nearby_sign;
     gba::entity last_nearby_interactable;
     bn::fixed_point last_nearby_interactable_position;
 
@@ -29,6 +30,7 @@ struct ui_states final
     bn::vector<bn::sprite_ptr, 8> status_mob_texts;
 
     bn::vector<bn::sprite_ptr, 8> interactable_tooltip_texts;
+    bn::vector<bn::sprite_ptr, 32> sign_tooltip_texts;
 };
 
 } // namespace mc::gm::ecs::cpn

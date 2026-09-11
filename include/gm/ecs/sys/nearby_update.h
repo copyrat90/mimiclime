@@ -6,6 +6,6 @@
 namespace mc::gm::ecs::sys
 {
 
-void nearby_interactable_update(singleton_registry&, const gba::entity singleton_entity, actor_registry&);
+void nearby_update(singleton_registry&, const gba::entity singleton_entity, actor_registry&);
 
 }

@@ -154,7 +154,7 @@
 							"id": "V_String",
 							"params": ["wood_fence"]
 						}] },
-						{ "__identifier": "broken", "__type": "LocalEnum.game_flag", "__value": null, "__tile": null, "defUid": 52, "realEditorValues": [] }
+						{ "__identifier": "broken", "__type": "LocalEnum.game_flag", "__value": null, "__tile": null, "defUid": 52, "realEditorValues": [null] }
 					],
 					"__worldX": 392,
 					"__worldY": 416
@@ -176,7 +176,7 @@
 							"id": "V_String",
 							"params": ["wood_fence"]
 						}] },
-						{ "__identifier": "broken", "__type": "LocalEnum.game_flag", "__value": null, "__tile": null, "defUid": 52, "realEditorValues": [] }
+						{ "__identifier": "broken", "__type": "LocalEnum.game_flag", "__value": null, "__tile": null, "defUid": 52, "realEditorValues": [null] }
 					],
 					"__worldX": 392,
 					"__worldY": 448

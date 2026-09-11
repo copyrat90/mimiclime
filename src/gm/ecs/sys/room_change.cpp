@@ -5,6 +5,7 @@
 #include "gm/ecs/ut/critter_factories.h"
 #include "gm/ecs/ut/interactable_factories.h"
 #include "gm/ecs/ut/openable_factories.h"
+#include "gm/ecs/ut/sign_factories.h"
 #include "gm/ecs/ut/triggerable_factories.h"
 #include "gm/game_save.h"
 
@@ -153,6 +154,15 @@ void room_change(singleton_registry& singleton_reg, const gba::entity singleton_
                                 .get<ldtk::entity_ref>());
 
                         ut::create_save_point(entity.px(), entrance, actor_reg, singleton_reg, singleton_entity);
+                    }
+                    break;
+
+                    case entity_ident::sign: {
+                        const auto descriptions =
+                            entity.get_field(ldtk::gen::entity_field_ident::ENTITY_sign_FIELD_descriptions)
+                                .get<bn::span<const bn::string_view>>();
+
+                        ut::create_sign(entity.px(), descriptions, actor_reg, singleton_reg, singleton_entity);
                     }
                     break;
 

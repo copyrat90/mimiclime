@@ -51,7 +51,30 @@
 			"seed": 2642756,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
-			"entityInstances": []
+			"entityInstances": [
+				{
+					"__identifier": "sign",
+					"__grid": [160,80],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": { "tilesetUid": 4, "x": 160, "y": 16, "w": 16, "h": 16 },
+					"__smartColor": "#733E39",
+					"iid": "46144e60-96d0-11f1-8d9f-7bbcbdea5870",
+					"width": 16,
+					"height": 16,
+					"defUid": 58,
+					"px": [160,80],
+					"fieldInstances": [{ "__identifier": "descriptions", "__type": "Array<String>", "__value": [ " Move\n Attack", " 이동\n 공격" ], "__tile": null, "defUid": 60, "realEditorValues": [ {
+						"id": "V_String",
+						"params": [" Move\n Attack"]
+					}, {
+						"id": "V_String",
+						"params": [" 이동\n 공격"]
+					} ] }],
+					"__worldX": 432,
+					"__worldY": 272
+				}
+			]
 		},
 		{
 			"__identifier": "entrances",
@@ -79,7 +102,7 @@
 			"entityInstances": [
 				{
 					"__identifier": "entrance",
-					"__grid": [120,80],
+					"__grid": [80,80],
 					"__pivot": [0.5,0.5],
 					"__tags": ["entrance"],
 					"__tile": { "tilesetUid": 4, "x": 0, "y": 112, "w": 16, "h": 16 },
@@ -88,9 +111,9 @@
 					"width": 12,
 					"height": 12,
 					"defUid": 18,
-					"px": [120,80],
+					"px": [80,80],
 					"fieldInstances": [],
-					"__worldX": 392,
+					"__worldX": 352,
 					"__worldY": 272
 				},
 				{

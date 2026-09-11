@@ -12,7 +12,7 @@
 #include "gm/ecs/sys/critter_knockback.h"
 #include "gm/ecs/sys/critter_take_damage.h"
 #include "gm/ecs/sys/hitbox_to_hurtbox_collision_detect.h"
-#include "gm/ecs/sys/nearby_interactable_update.h"
+#include "gm/ecs/sys/nearby_update.h"
 #include "gm/ecs/sys/openable_update.h"
 #include "gm/ecs/sys/player_dead_respawn.h"
 #include "gm/ecs/sys/projectile_generate.h"
@@ -76,7 +76,7 @@ bool game::update()
     gm::ecs::sys::collision_detect_clear(_actor_registry);
     gm::ecs::sys::hitbox_to_hurtbox_collision_detect(_actor_registry);
     gm::ecs::sys::critter_take_damage(_actor_registry, _singleton_registry, _singleton_entity);
-    gm::ecs::sys::nearby_interactable_update(_singleton_registry, _singleton_entity, _actor_registry);
+    gm::ecs::sys::nearby_update(_singleton_registry, _singleton_entity, _actor_registry);
     gm::ecs::sys::player_dead_respawn(_actor_registry, _singleton_registry, _singleton_entity, ctx.game_save());
     gm::ecs::sys::room_exit_collide(_actor_registry, _singleton_registry, _singleton_entity);
     gm::ecs::sys::terrain_collide(_actor_registry, _singleton_registry, _singleton_entity);

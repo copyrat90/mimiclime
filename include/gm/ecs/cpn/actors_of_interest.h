@@ -9,6 +9,7 @@ struct actors_of_interest final
 {
     gba::entity status_mob;
     gba::entity nearby_interactable;
+    gba::entity nearby_sign;
 };
 
 } // namespace mc::gm::ecs::cpn
