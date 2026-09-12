@@ -184,6 +184,22 @@
 					"fieldInstances": [],
 					"__worldX": 520,
 					"__worldY": 728
+				},
+				{
+					"__identifier": "entrance",
+					"__grid": [28,192],
+					"__pivot": [0.5,0.5],
+					"__tags": ["entrance"],
+					"__tile": { "tilesetUid": 4, "x": 0, "y": 112, "w": 16, "h": 16 },
+					"__smartColor": "#B57A29",
+					"iid": "1acc5480-96d0-11f1-b18c-e32c582bbf6c",
+					"width": 12,
+					"height": 12,
+					"defUid": 18,
+					"px": [28,192],
+					"fieldInstances": [],
+					"__worldX": 364,
+					"__worldY": 704
 				}
 			]
 		},
@@ -258,6 +274,30 @@
 					}] }],
 					"__worldX": 496,
 					"__worldY": 751
+				},
+				{
+					"__identifier": "exit",
+					"__grid": [0,176],
+					"__pivot": [0,0],
+					"__tags": ["exit"],
+					"__tile": null,
+					"__smartColor": "#6ABDD3",
+					"iid": "0215bb20-96d0-11f1-b18c-6b704fc09dfc",
+					"width": 1,
+					"height": 32,
+					"defUid": 19,
+					"px": [0,176],
+					"fieldInstances": [{ "__identifier": "destination", "__type": "EntityRef", "__value": {
+						"entityIid": "85239d40-96d0-11f1-82c3-5d66eec9e368",
+						"layerIid": "fbfe0e61-96d0-11f1-82c3-65dede532544",
+						"levelIid": "fbfde750-96d0-11f1-82c3-479d0fda7d1c",
+						"worldIid": "140c68a1-48b0-11f1-a411-f37bc73a2017"
+					}, "__tile": null, "defUid": 21, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["85239d40-96d0-11f1-82c3-5d66eec9e368"]
+					}] }],
+					"__worldX": 336,
+					"__worldY": 688
 				}
 			]
 		},
@@ -400,5 +440,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelIid": "e5f6f4f0-48b0-11f1-83b8-39e1954076dc", "dir": "n" }, { "levelIid": "3a9637b0-96d0-11f1-94e6-b5c50f4a4205", "dir": "s" } ]
+	"__neighbours": [ { "levelIid": "e5f6f4f0-48b0-11f1-83b8-39e1954076dc", "dir": "n" }, { "levelIid": "3a9637b0-96d0-11f1-94e6-b5c50f4a4205", "dir": "s" }, { "levelIid": "fbfde750-96d0-11f1-82c3-479d0fda7d1c", "dir": "w" } ]
 }
