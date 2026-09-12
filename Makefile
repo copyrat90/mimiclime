@@ -82,7 +82,7 @@ else
 	USERFLAGS	+=  -DMC_DEVBUILD=false -DIBN_CFG_STATS_ENABLED=false
 endif
 
-MC_LTO      	:=  $(if $(MC_DEVBUILD),,true)
+MC_LTO      	:=
 ifneq ($(strip $(MC_LTO)),)
 	USERFLAGS	+=  -flto=auto
 	USERLDFLAGS	+=  -flto=auto
