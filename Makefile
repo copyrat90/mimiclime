@@ -17,8 +17,6 @@
 # AUDIOTOOL is the path to the tool used process the audio files.
 # DMGAUDIO is a list of files and directories containing files to be processed by the DMG audio backend.
 # DMGAUDIOBACKEND specifies the backend used for DMG audio playback. Supported backends: default, null.
-# DMGAUDIOSYNC enables synchronization of audio and DMG audio playback when it is not empty.
-#     Keep in mind that you can't use link cable features with this enabled.
 # ROMTITLE is a uppercase ASCII, max 12 characters text string containing the output ROM title.
 # ROMCODE is a uppercase ASCII, max 4 characters text string containing the output ROM code.
 # USERFLAGS is a list of additional compiler flags:
@@ -59,14 +57,13 @@ TEXTS       	:=  include/txt src/txt $(BUILDLDTK)/src $(BUILDLDTK)/include $(LIC
 GRAPHICS_ROOT	:=  graphics
 GRAPHICS    	:=  graphics graphics/bg graphics/spr graphics/pal graphics/tile $(BUILDLDTK)/graphics $(BUILDFONTS)/fonts
 AUDIO       	:=  audio
-AUDIOBACKEND	:=  maxmod
+AUDIOBACKEND	:=  null
 AUDIOTOOL   	:=  
 DMGAUDIO    	:=  dmg_audio
-DMGAUDIOBACKEND	:=  default
-DMGAUDIOSYNC	:=  true
+DMGAUDIOBACKEND	:=  null
 ROMTITLE    	:=  MIMICLIME
 ROMCODE     	:=  2MCE
-USERFLAGS   	:=  -DBN_CFG_AUDIO_MIXING_RATE=BN_AUDIO_MIXING_RATE_31_KHZ
+USERFLAGS   	:=  
 USERCXXFLAGS	:=  -std=c++26 -freflection
 USERASFLAGS 	:=  
 USERLDFLAGS 	:=  
