@@ -19,7 +19,6 @@ where you play as a slime who becomes a monster it devours.
 [See this gist.](https://gist.github.com/copyrat90/eee49d92846ca3585a69d5bea001710d)
 
 * Change the `"cppStandard"` to `"c++26"`.
-* Add `"BN_DMG_AUDIO_SYNC"` to `"commonDefines"`.
 
 ### Setting up debugger
 
