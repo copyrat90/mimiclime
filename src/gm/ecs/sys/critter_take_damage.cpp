@@ -80,10 +80,7 @@ void critter_take_damage(actor_registry& actor_reg, singleton_registry& singleto
                 if (states.is_player())
                 {
                     static constexpr cpn::camera_shaker CAM_SHAKER{.amplitude = 2.5f, .lerp_to_zero_ratio = 0.2f};
-                    if (auto* cam_shaker = singleton_reg.try_get<cpn::camera_shaker>(singleton_entity); cam_shaker)
-                        *cam_shaker = CAM_SHAKER;
-                    else
-                        singleton_reg.emplace<cpn::camera_shaker>(singleton_entity, CAM_SHAKER);
+                    singleton_reg.emplace_or_replace<cpn::camera_shaker>(singleton_entity, CAM_SHAKER);
                 }
 
                 break;

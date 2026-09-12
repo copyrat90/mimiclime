@@ -123,21 +123,10 @@ void critter_act(actor_registry& actor_reg)
                     PROGRESS_TO_PRE_CHANGE_SPECIES:
                         velocity->velocity = bn::fixed_point(0, 0);
 
-                        auto* devouring_critter_flicker = actor_reg.try_get<cpn::sprite_flicker>(critter);
-                        if (devouring_critter_flicker)
-                            *devouring_critter_flicker =
-                                cpn::sprite_flicker(PRE_CHANGE_SPECIES_COUNTDOWN, FLICKER_TOGGLE_TICKS);
-                        else
-                            actor_reg.emplace<cpn::sprite_flicker>(critter, PRE_CHANGE_SPECIES_COUNTDOWN,
-                                                                   FLICKER_TOGGLE_TICKS);
-
-                        auto* devoured_critter_flicker = actor_reg.try_get<cpn::sprite_flicker>(states.devour_critter);
-                        if (devoured_critter_flicker)
-                            *devoured_critter_flicker =
-                                cpn::sprite_flicker(PRE_CHANGE_SPECIES_COUNTDOWN, FLICKER_TOGGLE_TICKS);
-                        else
-                            actor_reg.emplace<cpn::sprite_flicker>(states.devour_critter, PRE_CHANGE_SPECIES_COUNTDOWN,
-                                                                   FLICKER_TOGGLE_TICKS);
+                        actor_reg.emplace_or_replace<cpn::sprite_flicker>(critter, PRE_CHANGE_SPECIES_COUNTDOWN,
+                                                                          FLICKER_TOGGLE_TICKS);
+                        actor_reg.emplace_or_replace<cpn::sprite_flicker>(
+                            states.devour_critter, PRE_CHANGE_SPECIES_COUNTDOWN, FLICKER_TOGGLE_TICKS);
 
                         states.executing_action = critter_action::PRE_CHANGE_SPECIES;
                         states.devour_countdown = PRE_CHANGE_SPECIES_COUNTDOWN;
@@ -188,12 +177,8 @@ void critter_act(actor_registry& actor_reg)
                         actor_reg.destroy(states.devour_critter);
                         states.devour_critter = gba::entity_null;
 
-                        auto* critter_flicker = actor_reg.try_get<cpn::sprite_flicker>(critter);
-                        if (critter_flicker)
-                            *critter_flicker = cpn::sprite_flicker(PRE_CHANGE_SPECIES_COUNTDOWN, FLICKER_TOGGLE_TICKS);
-                        else
-                            actor_reg.emplace<cpn::sprite_flicker>(critter, PRE_CHANGE_SPECIES_COUNTDOWN,
-                                                                   FLICKER_TOGGLE_TICKS);
+                        actor_reg.emplace_or_replace<cpn::sprite_flicker>(critter, PRE_CHANGE_SPECIES_COUNTDOWN,
+                                                                          FLICKER_TOGGLE_TICKS);
 
                         states.executing_action = critter_action::POST_CHANGE_SPECIES;
                         states.devour_countdown = POST_CHANGE_SPECIES_COUNTDOWN;

@@ -115,8 +115,10 @@ namespace gba::ecs {
         template<typename Includes, typename Excludes, typename Query, typename... Rest>
         struct split_query_acc<Includes, Excludes, Query, Rest...> {
             using next = typename split_query_one<Includes, Excludes, Query>::type;
-            using includes = typename split_query_acc<typename next::includes, typename next::excludes, Rest...>::includes;
-            using excludes = typename split_query_acc<typename next::includes, typename next::excludes, Rest...>::excludes;
+            using includes =
+                typename split_query_acc<typename next::includes, typename next::excludes, Rest...>::includes;
+            using excludes =
+                typename split_query_acc<typename next::includes, typename next::excludes, Rest...>::excludes;
         };
 
         template<typename... Queries>
@@ -130,10 +132,8 @@ namespace gba::ecs {
 
         template<typename... Includes, typename... Excludes>
         struct view_query<group<Includes...>, group<Excludes...>> {
-            static_assert(
-                (include_exclude_disjoint<Includes, Excludes...>::value && ...),
-                "view cannot include and exclude the same component"
-            );
+            static_assert((include_exclude_disjoint<Includes, Excludes...>::value && ...),
+                          "view cannot include and exclude the same component");
 
             using includes = group<Includes...>;
             using excludes = group<Excludes...>;
@@ -153,10 +153,8 @@ namespace gba::ecs {
     class registry_impl {
         static_assert(Capacity > 0 && Capacity <= 255, "capacity must be in [1, 255]");
         static_assert(sizeof...(Components) > 0 && sizeof...(Components) <= 31, "component count must be in [1, 31]");
-        static_assert(
-            detail::supports_constexpr_byte_lifetime || (std::is_default_constructible_v<Components> && ...),
-            "non-default-constructible ECS components require C++26 constexpr byte-lifetime features"
-        );
+        static_assert(detail::supports_constexpr_byte_lifetime || (std::is_default_constructible_v<Components> && ...),
+                      "non-default-constructible ECS components require C++26 constexpr byte-lifetime features");
 
         /// @brief Power-of-two stride used for shift-based pool indexing.
         template<typename C>
@@ -181,7 +179,8 @@ namespace gba::ecs {
             }
 #else
             template<typename T>
-            struct [[deprecated("gba::ecs: implicit pool padding is active for this component; it increases memory usage. Prefer a power-of-two-sized component or reorder its fields.")]] padded_slot {
+            struct [[deprecated("gba::ecs: implicit pool padding is active for this component; it increases memory "
+                                "usage. Prefer a power-of-two-sized component or reorder its fields.")]] padded_slot {
                 T value{};
                 [[no_unique_address]] std::array<std::byte, stride_of<T> - sizeof(T)> pad{};
             };
@@ -343,8 +342,8 @@ namespace gba::ecs {
                     if (m_all_match) return;
                     while (m_idx < m_end) {
                         const auto slot = m_reg->m_alive_list[m_idx];
-                        if ((m_reg->m_mask[slot] & required) == required
-                            && (m_reg->m_mask[slot] & forbidden) == 0) return;
+                        if ((m_reg->m_mask[slot] & required) == required && (m_reg->m_mask[slot] & forbidden) == 0)
+                            return;
                         ++m_idx;
                     }
                 }
@@ -372,8 +371,8 @@ namespace gba::ecs {
             };
 
             [[nodiscard]] constexpr iterator begin() const noexcept {
-                const bool allMatch = ((m_reg->m_component_count[index_of<ViewCs>] == m_reg->m_alive) && ...)
-                                   && ((m_reg->m_component_count[index_of<ExcludeCs>] == 0) && ...);
+                const bool allMatch = ((m_reg->m_component_count[index_of<ViewCs>] == m_reg->m_alive) && ...) &&
+                                      ((m_reg->m_component_count[index_of<ExcludeCs>] == 0) && ...);
                 return {m_reg, 0u, m_reg->m_alive, allMatch};
             }
 
@@ -391,8 +390,8 @@ namespace gba::ecs {
             template<typename Fn>
             [[gnu::always_inline]] constexpr void each(Fn&& fn) const {
                 const unsigned int count = m_reg->m_alive;
-                const bool allMatch = ((m_reg->m_component_count[index_of<ViewCs>] == m_reg->m_alive) && ...)
-                                   && ((m_reg->m_component_count[index_of<ExcludeCs>] == 0) && ...);
+                const bool allMatch = ((m_reg->m_component_count[index_of<ViewCs>] == m_reg->m_alive) && ...) &&
+                                      ((m_reg->m_component_count[index_of<ExcludeCs>] == 0) && ...);
 
                 auto invoke = [&](unsigned int slot) {
                     if constexpr (std::is_invocable_v<Fn, const entity, ViewCs&...>) {
@@ -412,8 +411,7 @@ namespace gba::ecs {
                 } else {
                     for (unsigned int j = 0; j < count; ++j) {
                         const unsigned int slot = m_reg->m_alive_list[j];
-                        if ((m_reg->m_mask[slot] & required) == required
-                            && (m_reg->m_mask[slot] & forbidden) == 0)
+                        if ((m_reg->m_mask[slot] & required) == required && (m_reg->m_mask[slot] & forbidden) == 0)
                             invoke(slot);
                     }
                 }
@@ -440,8 +438,8 @@ namespace gba::ecs {
             [[gnu::target("arm"), gnu::section(".iwram._gba_ecs_each"), gnu::noinline, gnu::flatten, gnu::noipa]]
             void each_arm(Fn&& fn) const {
                 const unsigned int count = m_reg->m_alive;
-                const bool allMatch = ((m_reg->m_component_count[index_of<ViewCs>] == m_reg->m_alive) && ...)
-                                   && ((m_reg->m_component_count[index_of<ExcludeCs>] == 0) && ...);
+                const bool allMatch = ((m_reg->m_component_count[index_of<ViewCs>] == m_reg->m_alive) && ...) &&
+                                      ((m_reg->m_component_count[index_of<ExcludeCs>] == 0) && ...);
 
                 auto invoke = [&](unsigned int slot) {
                     if constexpr (std::is_invocable_v<Fn, const entity, ViewCs&...>) {
@@ -461,8 +459,7 @@ namespace gba::ecs {
                 } else {
                     for (unsigned int j = 0; j < count; ++j) {
                         const unsigned int slot = m_reg->m_alive_list[j];
-                        if ((m_reg->m_mask[slot] & required) == required
-                            && (m_reg->m_mask[slot] & forbidden) == 0)
+                        if ((m_reg->m_mask[slot] & required) == required && (m_reg->m_mask[slot] & forbidden) == 0)
                             invoke(slot);
                     }
                 }
@@ -471,8 +468,7 @@ namespace gba::ecs {
 
         /// @brief Create a new entity. Returns its id.
         ///
-        /// Consteval: throws if capacity exceeded. Runtime: UB if exceeded
-        /// (no runtime capacity check).
+        /// Assert is triggered if capacity exceeded.
         [[nodiscard]] constexpr const entity create() {
             BN_ASSERT(m_alive < static_cast<std::uint8_t>(Capacity), "registry::create: capacity exceeded");
             const auto slot = allocate_slot();
@@ -486,10 +482,8 @@ namespace gba::ecs {
         template<typename... Cs, typename... Values>
         [[nodiscard]] constexpr const entity create_emplace(Values&&... values) {
             static_assert(sizeof...(Cs) > 0, "create_emplace requires at least one component");
-            static_assert(
-                sizeof...(Values) == 0 || sizeof...(Cs) == sizeof...(Values),
-                "create_emplace requires either zero values or one value per component"
-            );
+            static_assert(sizeof...(Values) == 0 || sizeof...(Cs) == sizeof...(Values),
+                          "create_emplace requires either zero values or one value per component");
             if constexpr (sizeof...(Values) == 0) {
                 static_assert((std::is_default_constructible_v<Cs> && ...),
                               "create_emplace without values requires default-constructible components");
@@ -507,7 +501,8 @@ namespace gba::ecs {
                 }
             } else {
                 if constexpr (detail::supports_constexpr_byte_lifetime) {
-                    (std::construct_at(std::get<index_of<Cs>>(m_pools).ptr_at(slot), std::forward<Values>(values)), ...);
+                    (std::construct_at(std::get<index_of<Cs>>(m_pools).ptr_at(slot), std::forward<Values>(values)),
+                     ...);
                 } else {
                     ((std::get<index_of<Cs>>(m_pools)[slot] = Cs{std::forward<Values>(values)}), ...);
                 }
@@ -553,6 +548,9 @@ namespace gba::ecs {
 
         /// @brief Number of currently alive entities.
         [[nodiscard]] constexpr std::size_t size() const noexcept { return m_alive; }
+
+        /// @brief True when no additional entities can be created.
+        [[nodiscard]] constexpr bool full() const noexcept { return m_alive >= Capacity; }
 
         /// @brief Destroy all entities, incrementing their generations.
         constexpr void clear() {
@@ -607,9 +605,9 @@ namespace gba::ecs {
             const auto slot = e.slot;
             constexpr std::uint32_t clear_mask = (bit_of<Cs> | ...);
             if constexpr (detail::supports_constexpr_byte_lifetime) {
-                ((std::is_trivially_destructible_v<Cs>
-                      ? void()
-                      : std::destroy_at(std::get<index_of<Cs>>(m_pools).ptr_at(slot))), ...);
+                ((std::is_trivially_destructible_v<Cs> ? void()
+                                                       : std::destroy_at(std::get<index_of<Cs>>(m_pools).ptr_at(slot))),
+                 ...);
             }
             m_mask[slot] &= ~clear_mask;
             (--m_component_count[index_of<Cs>], ...);
@@ -727,7 +725,8 @@ namespace gba::ecs {
     /// Supports component groups for better organization:
     ///
     /// Registry method names: `create`, `destroy`, `valid`, `emplace`,
-    /// `remove`, `remove_unchecked`, `get`, `try_get`, `with`, `match`, `match_arm`, `all_of`, `any_of`, `view`, `size`, `clear`.
+    /// `remove`, `remove_unchecked`, `get`, `try_get`, `with`, `match`, `match_arm`, `all_of`, `any_of`, `view`,
+    /// `size`, `clear`.
     ///
     /// @tparam Capacity Maximum number of live entities (1-255).
     /// @tparam ComponentsAndGroups All component types and/or component groups.
@@ -767,36 +766,38 @@ namespace gba::ecs {
         static auto make_impl(std::index_sequence<Is...>)
             -> registry_impl<Capacity, std::tuple_element_t<Is, Tuple>...>;
 
-        using impl_type = decltype(make_impl<components_tuple>(std::make_index_sequence<std::tuple_size_v<components_tuple>>{}));
+        using impl_type =
+            decltype(make_impl<components_tuple>(std::make_index_sequence<std::tuple_size_v<components_tuple>>{}));
 
         impl_type m_impl;
 
         template<typename... IncludeCs, typename... ExcludeCs>
-        [[nodiscard]] constexpr auto view_flat_impl(
-            group<IncludeCs...>*, group<ExcludeCs...>*) noexcept {
+        [[nodiscard]] constexpr auto view_flat_impl(group<IncludeCs...>*, group<ExcludeCs...>*) noexcept {
             using query = detail::view_query<group<IncludeCs...>, group<ExcludeCs...>>;
             return m_impl.template view<query>();
         }
 
         template<typename... IncludeCs, typename... ExcludeCs>
-        [[nodiscard]] constexpr auto view_flat_impl(
-            group<IncludeCs...>*, group<ExcludeCs...>*) const noexcept {
+        [[nodiscard]] constexpr auto view_flat_impl(group<IncludeCs...>*, group<ExcludeCs...>*) const noexcept {
             using query = detail::view_query<group<IncludeCs...>, group<ExcludeCs...>>;
             return m_impl.template view<query>();
         }
 
         template<typename... Query, typename... Cs, std::size_t... Is>
-        [[nodiscard]] constexpr bool all_of_flat_impl(const entity e, std::index_sequence<Is...>*, std::tuple<Cs...>*) const noexcept {
+        [[nodiscard]] constexpr bool all_of_flat_impl(const entity e, std::index_sequence<Is...>*,
+                                                      std::tuple<Cs...>*) const noexcept {
             return m_impl.template all_of<std::tuple_element_t<Is, std::tuple<Cs...>>...>(e);
         }
 
         template<typename... Query, typename... Cs, std::size_t... Is>
-        [[nodiscard]] constexpr bool any_of_flat_impl(const entity e, std::index_sequence<Is...>*, std::tuple<Cs...>*) const noexcept {
+        [[nodiscard]] constexpr bool any_of_flat_impl(const entity e, std::index_sequence<Is...>*,
+                                                      std::tuple<Cs...>*) const noexcept {
             return m_impl.template any_of<std::tuple_element_t<Is, std::tuple<Cs...>>...>(e);
         }
 
         template<typename... Query, typename... Cs, std::size_t... Is>
-        [[nodiscard]] constexpr decltype(auto) get_flat_impl(entity e, std::index_sequence<Is...>*, std::tuple<Cs...>*) noexcept {
+        [[nodiscard]] constexpr decltype(auto) get_flat_impl(entity e, std::index_sequence<Is...>*,
+                                                             std::tuple<Cs...>*) noexcept {
             if constexpr (sizeof...(Is) == 1) {
                 return (m_impl.template get<std::tuple_element_t<0, std::tuple<Cs...>>>(e));
             } else {
@@ -805,7 +806,8 @@ namespace gba::ecs {
         }
 
         template<typename... Query, typename... Cs, std::size_t... Is>
-        [[nodiscard]] constexpr decltype(auto) get_flat_impl(entity e, std::index_sequence<Is...>*, std::tuple<Cs...>*) const noexcept {
+        [[nodiscard]] constexpr decltype(auto) get_flat_impl(entity e, std::index_sequence<Is...>*,
+                                                             std::tuple<Cs...>*) const noexcept {
             if constexpr (sizeof...(Is) == 1) {
                 return (m_impl.template get<std::tuple_element_t<0, std::tuple<Cs...>>>(e));
             } else {
@@ -814,7 +816,8 @@ namespace gba::ecs {
         }
 
         template<typename... Query, typename... Cs, std::size_t... Is>
-        [[nodiscard]] constexpr decltype(auto) try_get_flat_impl(entity e, std::index_sequence<Is...>*, std::tuple<Cs...>*) noexcept {
+        [[nodiscard]] constexpr decltype(auto) try_get_flat_impl(entity e, std::index_sequence<Is...>*,
+                                                                 std::tuple<Cs...>*) noexcept {
             if constexpr (sizeof...(Is) == 1) {
                 return (m_impl.template try_get<std::tuple_element_t<0, std::tuple<Cs...>>>(e));
             } else {
@@ -823,7 +826,8 @@ namespace gba::ecs {
         }
 
         template<typename... Query, typename... Cs, std::size_t... Is>
-        [[nodiscard]] constexpr decltype(auto) try_get_flat_impl(entity e, std::index_sequence<Is...>*, std::tuple<Cs...>*) const noexcept {
+        [[nodiscard]] constexpr decltype(auto) try_get_flat_impl(entity e, std::index_sequence<Is...>*,
+                                                                 std::tuple<Cs...>*) const noexcept {
             if constexpr (sizeof...(Is) == 1) {
                 return (m_impl.template try_get<std::tuple_element_t<0, std::tuple<Cs...>>>(e));
             } else {
@@ -847,7 +851,8 @@ namespace gba::ecs {
         constexpr bool with_flat_impl(entity e, std::index_sequence<Is...>*, std::tuple<Cs...>*, Fn&& fn) const {
             auto ptrs = std::tuple{m_impl.template try_get<std::tuple_element_t<Is, std::tuple<Cs...>>>(e)...};
             if (!((std::get<Is>(ptrs) != nullptr) && ...)) return false;
-            if constexpr (std::is_invocable_v<Fn, const entity, const std::tuple_element_t<Is, std::tuple<Cs...>>&...>) {
+            if constexpr (std::is_invocable_v<Fn, const entity,
+                                              const std::tuple_element_t<Is, std::tuple<Cs...>>&...>) {
                 fn(e, (*std::get<Is>(ptrs))...);
             } else {
                 fn((*std::get<Is>(ptrs))...);
@@ -856,8 +861,10 @@ namespace gba::ecs {
         }
 
         template<typename... Query, typename... Cs, std::size_t... Is, typename... Values>
-        [[nodiscard]] constexpr const entity create_emplace_flat_impl(std::index_sequence<Is...>*, std::tuple<Cs...>*, Values&&... values) {
-            return m_impl.template create_emplace<std::tuple_element_t<Is, std::tuple<Cs...>>...>(std::forward<Values>(values)...);
+        [[nodiscard]] constexpr const entity create_emplace_flat_impl(std::index_sequence<Is...>*, std::tuple<Cs...>*,
+                                                                      Values&&... values) {
+            return m_impl.template create_emplace<std::tuple_element_t<Is, std::tuple<Cs...>>...>(
+                std::forward<Values>(values)...);
         }
 
         template<typename... Query, typename... Cs, std::size_t... Is>
@@ -871,7 +878,8 @@ namespace gba::ecs {
         }
 
         template<typename... Cs, std::size_t... Is>
-        [[nodiscard]] constexpr bool case_matches_flat_impl(entity e, std::index_sequence<Is...>*, std::tuple<Cs...>*) const {
+        [[nodiscard]] constexpr bool case_matches_flat_impl(entity e, std::index_sequence<Is...>*,
+                                                            std::tuple<Cs...>*) const {
             return m_impl.template all_of<std::tuple_element_t<Is, std::tuple<Cs...>>...>(e);
         }
 
@@ -880,11 +888,7 @@ namespace gba::ecs {
             using flattened = flatten_groups<Case>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            return case_matches_flat_impl(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr
-            );
+            return case_matches_flat_impl(e, (std::make_index_sequence<count>*)nullptr, (components_tpl*)nullptr);
         }
 
         template<typename Case>
@@ -892,11 +896,7 @@ namespace gba::ecs {
             using flattened = flatten_groups<Case>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            return case_matches_flat_impl(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr
-            );
+            return case_matches_flat_impl(e, (std::make_index_sequence<count>*)nullptr, (components_tpl*)nullptr);
         }
 
         template<typename... Cs, std::size_t... Is, typename Fn>
@@ -910,7 +910,8 @@ namespace gba::ecs {
 
         template<typename... Cs, std::size_t... Is, typename Fn>
         constexpr void invoke_case_flat_impl(entity e, std::index_sequence<Is...>*, std::tuple<Cs...>*, Fn&& fn) const {
-            if constexpr (std::is_invocable_v<Fn, const entity, const std::tuple_element_t<Is, std::tuple<Cs...>>&...>) {
+            if constexpr (std::is_invocable_v<Fn, const entity,
+                                              const std::tuple_element_t<Is, std::tuple<Cs...>>&...>) {
                 fn(e, m_impl.template get<std::tuple_element_t<Is, std::tuple<Cs...>>>(e)...);
             } else {
                 fn(m_impl.template get<std::tuple_element_t<Is, std::tuple<Cs...>>>(e)...);
@@ -922,12 +923,8 @@ namespace gba::ecs {
             using flattened = flatten_groups<Case>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            invoke_case_flat_impl(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr,
-                std::forward<Fn>(fn)
-            );
+            invoke_case_flat_impl(e, (std::make_index_sequence<count>*)nullptr, (components_tpl*)nullptr,
+                                  std::forward<Fn>(fn));
         }
 
         template<typename Case, typename Fn>
@@ -935,36 +932,27 @@ namespace gba::ecs {
             using flattened = flatten_groups<Case>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            invoke_case_flat_impl(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr,
-                std::forward<Fn>(fn)
-            );
+            invoke_case_flat_impl(e, (std::make_index_sequence<count>*)nullptr, (components_tpl*)nullptr,
+                                  std::forward<Fn>(fn));
         }
 
         template<typename... Cases, typename FnTuple, std::size_t... Is>
-        [[nodiscard]] constexpr bool invoke_matched_cases(entity e,
-                                                          const std::array<bool, sizeof...(Cases)>& matched,
-                                                          FnTuple&& fns,
-                                                          std::index_sequence<Is...>) {
+        [[nodiscard]] constexpr bool invoke_matched_cases(entity e, const std::array<bool, sizeof...(Cases)>& matched,
+                                                          FnTuple&& fns, std::index_sequence<Is...>) {
             bool any = false;
             ((matched[Is] ? (invoke_case<Cases>(e, std::get<Is>(fns)), any = true, void()) : void()), ...);
             return any;
         }
 
         template<typename... Cases, typename FnTuple, std::size_t... Is>
-        [[nodiscard]] constexpr bool invoke_matched_cases(entity e,
-                                                          const std::array<bool, sizeof...(Cases)>& matched,
-                                                          FnTuple&& fns,
-                                                          std::index_sequence<Is...>) const {
+        [[nodiscard]] constexpr bool invoke_matched_cases(entity e, const std::array<bool, sizeof...(Cases)>& matched,
+                                                          FnTuple&& fns, std::index_sequence<Is...>) const {
             bool any = false;
             ((matched[Is] ? (invoke_case<Cases>(e, std::get<Is>(fns)), any = true, void()) : void()), ...);
             return any;
         }
 
     public:
-
         /// @brief Create a new entity.
         [[nodiscard]] constexpr const entity create() { return m_impl.create(); }
 
@@ -979,11 +967,8 @@ namespace gba::ecs {
             using flattened = flatten_groups<Query...>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            return create_emplace_flat_impl<Query...>(
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr,
-                std::forward<Values>(values)...
-            );
+            return create_emplace_flat_impl<Query...>((std::make_index_sequence<count>*)nullptr,
+                                                      (components_tpl*)nullptr, std::forward<Values>(values)...);
         }
 
         /// @brief Destroy an entity.
@@ -995,12 +980,27 @@ namespace gba::ecs {
         /// @brief Number of alive entities.
         [[nodiscard]] constexpr std::size_t size() const noexcept { return m_impl.size(); }
 
+        /// @brief True when registry has reached entity capacity.
+        [[nodiscard]] constexpr bool full() const noexcept { return m_impl.full(); }
+
         /// @brief Clear all entities.
         constexpr void clear() { m_impl.clear(); }
 
         /// @brief Attach a component to an entity.
         template<typename C, typename... Args>
         constexpr C& emplace(const entity e, Args&&... args) {
+            return m_impl.template emplace<C>(e, std::forward<Args>(args)...);
+        }
+
+        /// @brief Emplace or replace a component on an entity.
+        ///
+        /// Creates the component when missing, otherwise assigns a new value.
+        template<typename C, typename... Args>
+        constexpr C& emplace_or_replace(const entity e, Args&&... args) {
+            if (auto* existing = m_impl.template try_get<C>(e)) {
+                *existing = C{std::forward<Args>(args)...};
+                return *existing;
+            }
             return m_impl.template emplace<C>(e, std::forward<Args>(args)...);
         }
 
@@ -1018,11 +1018,8 @@ namespace gba::ecs {
             using flattened = flatten_groups<Query...>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            remove_unchecked_flat_impl<Query...>(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr
-            );
+            remove_unchecked_flat_impl<Query...>(e, (std::make_index_sequence<count>*)nullptr,
+                                                 (components_tpl*)nullptr);
         }
 
         /// @brief Remove a component by reference without checks.
@@ -1040,11 +1037,7 @@ namespace gba::ecs {
             using flattened = flatten_groups<Query...>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            return get_flat_impl<Query...>(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr
-            );
+            return get_flat_impl<Query...>(e, (std::make_index_sequence<count>*)nullptr, (components_tpl*)nullptr);
         }
 
         /// @brief Get one or more components using a mixed component/group query pack. Const overload.
@@ -1053,11 +1046,7 @@ namespace gba::ecs {
             using flattened = flatten_groups<Query...>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            return get_flat_impl<Query...>(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr
-            );
+            return get_flat_impl<Query...>(e, (std::make_index_sequence<count>*)nullptr, (components_tpl*)nullptr);
         }
 
         /// @brief Try to get one or more components using a mixed component/group query pack.
@@ -1069,11 +1058,7 @@ namespace gba::ecs {
             using flattened = flatten_groups<Query...>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            return try_get_flat_impl<Query...>(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr
-            );
+            return try_get_flat_impl<Query...>(e, (std::make_index_sequence<count>*)nullptr, (components_tpl*)nullptr);
         }
 
         /// @brief Try to get one or more components using a mixed component/group query pack. Const overload.
@@ -1082,11 +1067,7 @@ namespace gba::ecs {
             using flattened = flatten_groups<Query...>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            return try_get_flat_impl<Query...>(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr
-            );
+            return try_get_flat_impl<Query...>(e, (std::make_index_sequence<count>*)nullptr, (components_tpl*)nullptr);
         }
 
         /// @brief Run callback if all components from a mixed component/group query pack are present.
@@ -1098,12 +1079,8 @@ namespace gba::ecs {
             using flattened = flatten_groups<Query...>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            return with_flat_impl<Query...>(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr,
-                std::forward<Fn>(fn)
-            );
+            return with_flat_impl<Query...>(e, (std::make_index_sequence<count>*)nullptr, (components_tpl*)nullptr,
+                                            std::forward<Fn>(fn));
         }
 
         /// @brief Run callback if all components from a mixed component/group query pack are present. Const overload.
@@ -1112,12 +1089,8 @@ namespace gba::ecs {
             using flattened = flatten_groups<Query...>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            return with_flat_impl<Query...>(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr,
-                std::forward<Fn>(fn)
-            );
+            return with_flat_impl<Query...>(e, (std::make_index_sequence<count>*)nullptr, (components_tpl*)nullptr,
+                                            std::forward<Fn>(fn));
         }
 
         /// @brief Match an entity against ordered component/group query cases.
@@ -1172,11 +1145,7 @@ namespace gba::ecs {
             using flattened = flatten_groups<Query...>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            return all_of_flat_impl<Query...>(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr
-            );
+            return all_of_flat_impl<Query...>(e, (std::make_index_sequence<count>*)nullptr, (components_tpl*)nullptr);
         }
 
         /// @brief Check if entity has ANY component from a mixed component/group query pack.
@@ -1185,33 +1154,22 @@ namespace gba::ecs {
             using flattened = flatten_groups<Query...>;
             using components_tpl = typename detail::extract_components<flattened>::type;
             constexpr std::size_t count = std::tuple_size_v<components_tpl>;
-            return any_of_flat_impl<Query...>(
-                e,
-                (std::make_index_sequence<count>*) nullptr,
-                (components_tpl*) nullptr
-            );
+            return any_of_flat_impl<Query...>(e, (std::make_index_sequence<count>*)nullptr, (components_tpl*)nullptr);
         }
 
         /// @brief Create a view over matching entities from a mixed component/group query pack.
         template<typename... Query>
         [[nodiscard]] constexpr auto view() noexcept {
             using split = detail::split_query<Query...>;
-            return view_flat_impl(
-                (typename split::includes*) nullptr,
-                (typename split::excludes*) nullptr
-            );
+            return view_flat_impl((typename split::includes*)nullptr, (typename split::excludes*)nullptr);
         }
 
         /// @brief Create a view over matching entities from a mixed component/group query pack. Const overload.
         template<typename... Query>
         [[nodiscard]] constexpr auto view() const noexcept {
             using split = detail::split_query<Query...>;
-            return view_flat_impl(
-                (typename split::includes*) nullptr,
-                (typename split::excludes*) nullptr
-            );
+            return view_flat_impl((typename split::includes*)nullptr, (typename split::excludes*)nullptr);
         }
-
     };
 
 } // namespace gba::ecs
