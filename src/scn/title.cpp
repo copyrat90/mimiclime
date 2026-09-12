@@ -18,6 +18,9 @@ namespace mc::scn
 namespace
 {
 
+constexpr auto TITLE_FONT = ut::text_generators::font::GALMURI_11;
+constexpr bn::fixed_point TITLE_POSITION(30, 30);
+
 constexpr auto GIT_VER_FONT = ut::text_generators::font::GALMURI_7;
 constexpr bn::color GIT_VER_COLOR = bn::colors::gray;
 constexpr bn::fixed_point GIT_VER_POSITION(bn::display::width() - 8, 8);
@@ -45,6 +48,18 @@ title::title(ldtk::gen::title_menu cursor, scene_context& ctx) : scene(ctx), _cu
 
     auto& gens = ctx.text_generators();
 
+    // title sprites
+    {
+        auto& gen = gens.get(TITLE_FONT);
+
+        const auto prev_alignment = gen.alignment();
+        gen.set_left_alignment();
+
+        gen.generate_top_left(TITLE_POSITION, "mimiclime", _static_sprites);
+
+        gen.set_alignment(prev_alignment);
+    }
+
     // git ver sprites
     {
         auto& gen = gens.get(GIT_VER_FONT);
@@ -55,9 +70,9 @@ title::title(ldtk::gen::title_menu cursor, scene_context& ctx) : scene(ctx), _cu
         gen.set_right_alignment();
         gens.set_text_color(GIT_VER_FONT, GIT_VER_COLOR);
 
-        gen.generate_top_left(GIT_VER_POSITION, GIT_VER, _git_ver_sprites);
+        gen.generate_top_left(GIT_VER_POSITION, GIT_VER, _static_sprites);
 #if MC_DEVBUILD
-        gen.generate_top_left(GIT_VER_POSITION + bn::fixed_point(0, 12), "devbuild", _git_ver_sprites);
+        gen.generate_top_left(GIT_VER_POSITION + bn::fixed_point(0, 12), "devbuild", _static_sprites);
 #endif
 
         gen.set_alignment(prev_alignment);
@@ -127,7 +142,8 @@ bool title::update()
 
 void title::move_cursor_idx(int diff)
 {
-    _cursor_idx = (_cursor_idx + diff + ut::size_of_enum<ldtk::gen::title_menu>()) % ut::size_of_enum<ldtk::gen::title_menu>();
+    _cursor_idx =
+        (_cursor_idx + diff + ut::size_of_enum<ldtk::gen::title_menu>()) % ut::size_of_enum<ldtk::gen::title_menu>();
 }
 
 void title::recolor_menu(int menu_idx)

@@ -29,7 +29,7 @@ private:
     void recolor_menu(int menu_idx);
 
 private:
-    bn::vector<bn::sprite_ptr, 28> _git_ver_sprites;
+    bn::vector<bn::sprite_ptr, 28> _static_sprites;
 
     bn::vector<bn::sprite_ptr, 100> _menus_sprites;
     bn::array<std::uint8_t, ut::size_of_enum<ldtk::gen::title_menu>() + 1> _menu_start_idxes;
