@@ -2,6 +2,7 @@
 
 This source is an *altered version* of stdgba ECS registry, edited by copyrat90.
 * Compile-time asserts are replaced with run-time `BN_ASSERT`s
+* Fixed `slot` calculation bug in `registry_impl::remove_unchecked(C&)` (This breaks `constexpr` support)
 
 It isn't well tested, so use it at your own risk.
 

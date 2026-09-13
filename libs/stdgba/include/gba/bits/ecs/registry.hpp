@@ -3,6 +3,7 @@
 
 // This source is an altered version of stdgba ECS registry, edited by copyrat90.
 // * Compile-time asserts are replaced with run-time `BN_ASSERT`s
+// * Fixed `slot` calculation bug in `registry_impl::remove_unchecked(C&)` (This breaks `constexpr` support)
 //
 // It isn't well tested, so use it at your own risk.
 
@@ -618,7 +619,10 @@ namespace gba::ecs {
         constexpr void remove_unchecked(C& component) noexcept {
             auto* base = std::get<index_of<C>>(m_pools).data();
             auto* ptr = std::addressof(component);
-            const auto slot = static_cast<unsigned int>(ptr - base);
+            // Quick `slot` calculation fix (it breaks `constexpr` support)
+            const auto base_addr = reinterpret_cast<std::uintptr_t>(base);
+            const auto ptr_addr = reinterpret_cast<std::uintptr_t>(ptr);
+            const auto slot = (ptr_addr - base_addr) / stride_of<C>;
             if constexpr (detail::supports_constexpr_byte_lifetime && !std::is_trivially_destructible_v<C>) {
                 std::destroy_at(ptr);
             }
