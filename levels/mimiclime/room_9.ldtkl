@@ -332,7 +332,7 @@
 				},
 				{
 					"__identifier": "exit",
-					"__grid": [287,144],
+					"__grid": [287,160],
 					"__pivot": [0,0],
 					"__tags": ["exit"],
 					"__tile": null,
@@ -341,7 +341,7 @@
 					"width": 1,
 					"height": 48,
 					"defUid": 19,
-					"px": [287,144],
+					"px": [287,160],
 					"fieldInstances": [{ "__identifier": "destination", "__type": "EntityRef", "__value": {
 						"entityIid": "fa00cfa0-96d0-11f1-9039-aff04c019831",
 						"layerIid": "a1c8e341-96d0-11f1-9039-657ec57ba4c2",
@@ -352,7 +352,7 @@
 						"params": ["fa00cfa0-96d0-11f1-9039-aff04c019831"]
 					}] }],
 					"__worldX": 927,
-					"__worldY": 912
+					"__worldY": 928
 				}
 			]
 		},
