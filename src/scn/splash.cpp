@@ -10,11 +10,8 @@
 #include <bn_dmg_music.h>
 #include <bn_keypad.h>
 #include <bn_music.h>
-#include <bn_regular_bg_builder.h>
 
 #include <cstdint>
-
-#include "bn_regular_bg_items_gba_jam_2026_logo.h"
 
 namespace mc::scn
 {
@@ -28,19 +25,34 @@ constexpr int FADE_IN_DURATION_UPDATES = 60;
 constexpr int WAITING_DURATION_UPDATES = 240;
 constexpr int FADE_OUT_DURATION_UPDATES = 60;
 
-auto create_bg() -> bn::regular_bg_ptr
-{
-    static constexpr const auto& splash = bn::regular_bg_items::gba_jam_2026_logo;
-
-    return bn::regular_bg_builder(splash).set_blending_top_enabled(true).release_build();
-}
-
 } // namespace
 
-splash::splash(scene_context& ctx) : scene(ctx), _bg(create_bg())
+splash::splash(scene_context& ctx) : scene(ctx)
 {
     bn::music::stop();
     bn::dmg_music::stop();
+
+    auto& text_gens = ctx.text_generators();
+    auto& text_gen_small = text_gens.get(ut::text_generators::font::GALMURI_7);
+    auto& text_gen_big = text_gens.get(ut::text_generators::font::GALMURI_11_BOLD);
+
+    const bool prev_blending_enabled_small = text_gen_small.blending_enabled();
+    const bool prev_blending_enabled_big = text_gen_big.blending_enabled();
+    const auto prev_align_small = text_gen_small.alignment();
+    const auto prev_align_big = text_gen_big.alignment();
+    text_gen_small.set_blending_enabled(true);
+    text_gen_big.set_blending_enabled(true);
+    text_gen_small.set_center_alignment();
+    text_gen_big.set_center_alignment();
+
+    text_gen_small.generate(0, -20, "A submission to", _text_sprites);
+    text_gen_big.generate(0, -5, "GBA Jam 2026", _text_sprites);
+    text_gen_small.generate(0, 20, "https://copyrat90.itch.io/mimiclime", _text_sprites);
+
+    text_gen_small.set_blending_enabled(prev_blending_enabled_small);
+    text_gen_big.set_blending_enabled(prev_blending_enabled_big);
+    text_gen_small.set_alignment(prev_align_small);
+    text_gen_big.set_alignment(prev_align_big);
 
     auto& transitions = context().transitions();
     transitions.set_alpha(TRANSITION_KINDS, 1);
@@ -90,7 +102,7 @@ void splash::update_fade_out()
 {
     if (context().transitions().done())
     {
-        _bg.set_visible(false);
+        _text_sprites.clear();
         context().transitions().set_alpha(TRANSITION_KINDS, 0);
 
         auto& scene_stack = context().stack();

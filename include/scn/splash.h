@@ -2,7 +2,8 @@
 
 #include "scn/scene.h"
 
-#include <bn_regular_bg_ptr.h>
+#include <bn_sprite_ptr.h>
+#include <bn_vector.h>
 
 #include <cstdint>
 
@@ -34,7 +35,7 @@ private:
     };
 
 private:
-    bn::regular_bg_ptr _bg;
+    bn::vector<bn::sprite_ptr, 128> _text_sprites;
 
     state _state = state::FADE_IN;
     bool _key_ever_pressed = false;
